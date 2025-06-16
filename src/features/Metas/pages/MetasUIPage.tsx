@@ -33,14 +33,22 @@ import { obtenerMarcas } from "../services/servicioMetas";
 import { Datum, Marcas } from "../interfaces/marcas.interface";
 import Paginador from "@/shared/components/Paginador/Paginador";
 import { Llave } from "../interfaces/llaves.inteface";
+import toast, { Toaster } from "react-hot-toast";
+import formatoMoneda from "@/utils/formatoMoneda";
 
 export default function MetasUIPage() {
   const [selectedMarcaMonturas, setselectedMarcaMonturas] = useState<string[]>(
     []
   );
   const [selectedMarcaGafas, setselectedMarcaGafas] = useState<string[]>([]);
+  const [sucursalSeleccionada, setSucursalSeleccionada] = useState<string>("");
+  const [cantidadMonturas, setCantidadMonturas] = useState<number>(0);
+  const [precioMonturas, setPrecioMonturas] = useState<number>(0);
+  const [cantidadGafas, setCantidadGafas] = useState<number>(0);
+  const [precioGafas, setPrecioGafas] = useState<number>(0);
+  const [cantidadLentes, setCantidadLentes] = useState<number>(0);
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
-  const [listarLLaves, setListarLLaves] = useState<Llave[]>([]);
+  const [llaves, setLlaves] = useState<Llave[]>([]);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<string>("");
   const { register } = useForm<any>();
@@ -115,12 +123,50 @@ export default function MetasUIPage() {
     refetch();
   }, [page, filter]);
 
-  // TODO: Completar la funcion de listar llaves
+  const listarLLaves = async () => {
+    if (!sucursalSeleccionada){
+      toast.error("Seleccione una sucursal");
+      return;
+    };
+    const llave: Llave = {
+      montura: Number(cantidadMonturas),
+      precioMontura: Number(precioMonturas),
+      gafa: Number(cantidadGafas),
+      precioGafa: Number(precioGafas),
+      lenteDeContacto: Number(cantidadLentes),
+      marcaMonturas: selectedMarcaMonturas,
+      marcaGafas: selectedMarcaGafas,
+      sucursal: sucursalSeleccionada,
+    };
+    setLlaves((prev) => [...prev, llave]);
+    console.log(llaves);
+  };
+  const eliminarLLave = (index: number) => {
+    const newLlaves = [...llaves];
+    newLlaves.splice(index, 1);
+    setLlaves(newLlaves);
+  };
+  const editarLLave = (index: number) => {
+    const newLlaves = [...llaves];
+    newLlaves.splice(index, 1);
+    setLlaves(newLlaves);
+  };
+  const registrarLLaves = async () => {
+    const llavesRegistradas = await registrarLlaves(llaves);
+    console.log(llavesRegistradas);
+    toast.success("Llaves registradas exitosamente");
+    setLlaves([]);
+  };
 
   const marcasList: Datum[] = marcas?.data || [];
 
+  function formatNumber(precioGafa: number): import("react").ReactNode {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-6">
+      <Toaster />
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
@@ -175,6 +221,7 @@ export default function MetasUIPage() {
                     </Label>
                     <select
                       {...register("sucursal", { required: true })}
+                      onChange={(e) => setSucursalSeleccionada(e.target.value)}
                       className="mt-1 block w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                     >
                       <option value="" disabled selected>
@@ -196,7 +243,7 @@ export default function MetasUIPage() {
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-slate-700">
                   <Package className="h-5 w-5 text-green-600" />
-                  Información de Inventario
+                  Información de Llaves
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -212,6 +259,7 @@ export default function MetasUIPage() {
                         Cantidad
                       </Label>
                       <Input
+                        onChange={(e) => setCantidadMonturas(Number(e.target.value))}
                         type="number"
                         placeholder="0"
                         className="border-slate-200 focus:border-amber-500 focus:ring-amber-500"
@@ -224,6 +272,7 @@ export default function MetasUIPage() {
                       <div className="relative">
                         <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <Input
+                          onChange={(e) => setPrecioMonturas(Number(e.target.value))}
                           type="number"
                           placeholder="0.00"
                           className="pl-10 border-slate-200 focus:border-amber-500 focus:ring-amber-500"
@@ -247,6 +296,7 @@ export default function MetasUIPage() {
                         Cantidad
                       </Label>
                       <Input
+                        onChange={(e) => setCantidadGafas(Number(e.target.value))}
                         type="number"
                         placeholder="0"
                         className="border-slate-200 focus:border-purple-500 focus:ring-purple-500"
@@ -259,6 +309,7 @@ export default function MetasUIPage() {
                       <div className="relative">
                         <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <Input
+                          onChange={(e) => setPrecioGafas(Number(e.target.value))}
                           type="number"
                           placeholder="0.00"
                           className="pl-10 border-slate-200 focus:border-purple-500 focus:ring-purple-500"
@@ -283,6 +334,7 @@ export default function MetasUIPage() {
                       Cantidad
                     </Label>
                     <Input
+                      onChange={(e) => setCantidadLentes(Number(e.target.value))}
                       type="number"
                       placeholder="0"
                       className="border-slate-200 focus:border-teal-500 focus:ring-teal-500"
@@ -426,7 +478,8 @@ export default function MetasUIPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-sm">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-sm"
+          onClick={listarLLaves}>
             <List className="mr-2 h-4 w-4" />
             Listar Llaves
           </Button>
@@ -475,54 +528,62 @@ export default function MetasUIPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {branches.map((branch) => (
-                    <TableRow key={branch.id} className="border-slate-200">
-                      <TableCell className="font-medium text-slate-700">
-                        {branch.name}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.frameQty}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        ${branch.framePrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.glassesQty}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        ${branch.glassesPrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.contactLensQty}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {branch.frameBrands.map((brand) => (
-                            <Badge
-                              key={brand}
-                              variant="secondary"
-                              className="text-xs bg-amber-100 text-amber-800"
-                            >
-                              {brand}
-                            </Badge>
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {branch.glassesBrands.map((brand) => (
-                            <Badge
-                              key={brand}
-                              variant="secondary"
-                              className="text-xs bg-purple-100 text-purple-800"
-                            >
-                              {brand}
-                            </Badge>
-                          ))}
-                        </div>
+                  {llaves.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={8} className="h-24 text-center">
+                        No hay llaves registradas
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ) : (
+                    llaves.map((llave, index) => (
+                      <TableRow key={index} className="border-slate-200">
+                        <TableCell className="font-medium text-slate-700">
+                          {sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre}
+                        </TableCell>
+                        <TableCell className="text-slate-600">
+                          {llave.montura}
+                        </TableCell>
+                        <TableCell className="text-slate-600">
+                          {formatoMoneda(llave.precioMontura, sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre)}
+                        </TableCell>
+                        <TableCell className="text-slate-600">
+                          {llave.gafa}
+                        </TableCell>
+                        <TableCell className="text-slate-600">
+                          {formatoMoneda(llave.precioGafa, sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre)}
+                        </TableCell>
+                        <TableCell className="text-slate-600">
+                          {llave.lenteDeContacto}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {llave.marcaMonturas.map((brand) => (
+                              <Badge
+                                key={brand}
+                                variant="secondary"
+                                className="text-xs bg-amber-100 text-amber-800"
+                              >
+                                {brand}
+                              </Badge>
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1">
+                            {llave.marcaGafas.map((brand) => (
+                              <Badge
+                                key={brand}
+                                variant="secondary"
+                                className="text-xs bg-purple-100 text-purple-800"
+                              >
+                                {brand}
+                              </Badge>
+                            ))}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </div>
