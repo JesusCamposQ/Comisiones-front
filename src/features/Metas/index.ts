@@ -1,0 +1,1 @@
+export { RegistroMetasPage } from './pages/RegistroMetasPage';
