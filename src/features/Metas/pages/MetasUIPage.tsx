@@ -32,7 +32,7 @@ import { useForm } from "react-hook-form";
 import { obtenerMarcas } from "../services/servicioMetas";
 import { Datum, Marcas } from "../interfaces/marcas.interface";
 import Paginador from "@/shared/components/Paginador/Paginador";
-import { Llave } from "../interfaces/llaves.inteface";
+//import { Llave } from "../interfaces/llaves.inteface";
 
 export default function MetasUIPage() {
   const [selectedMarcaMonturas, setselectedMarcaMonturas] = useState<string[]>(
@@ -40,7 +40,7 @@ export default function MetasUIPage() {
   );
   const [selectedMarcaGafas, setselectedMarcaGafas] = useState<string[]>([]);
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
-  const [listarLLaves, setListarLLaves] = useState<Llave[]>([]);
+  //const [listarLLaves, setListarLLaves] = useState<Llave[]>([]);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<string>("");
   const { register } = useForm<any>();
