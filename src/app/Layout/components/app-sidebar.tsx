@@ -53,10 +53,6 @@ const data = {
               title: "Recetas sin Comisión",
               url: "/comision/registro/receta",
             },
-            {
-              title: "Productos sin Comisión",
-              url: "/comision/registro/producto",
-            },
           ],
         },
         {

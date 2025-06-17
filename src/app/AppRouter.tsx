@@ -3,7 +3,6 @@ import VentaPage from '../features/Venta/VentaPage';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout/Layout';
-import { RegistroMetasPage } from '@/features/Metas/pages/RegistroMetasPage';
 import { CombinacionRecetaPage } from '@/features/CombinacionReceta';
 import { Autenticacion } from '@/features/Autenticacion/components/Autenticacion';
 import { UsuarioPage } from '@/features/Usuario/UsuarioPage';
@@ -26,6 +25,7 @@ import { SinComisionLenteContactoPage } from '@/features/ComisionProducto/pages/
 import { ComisionServicioSinComisionPage } from '@/features/ComisionServicio/pages/ComisionServicioSinComisionPage';
 import { RegistarComisionServicioPage } from '@/features/ComisionServicio/pages/RegistarComisionServicioPage';
 import MetasUIPage from '@/features/Metas/pages/MetasUIPage';
+import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 function AppRouter() {
 
   const { isAunteticacion, token } = useContext(TokenContext)
@@ -43,8 +43,9 @@ function AppRouter() {
             <Route index element={<CombinacionRecetaPage />} />
             <Route path="combinacion-receta" element={<CombinacionRecetaPage />} />
           </Route>
-          <Route path="/metas/registro" element={<RegistroMetasPage />} />
-          <Route path="/metas" element={<MetasUIPage />} />
+          {/* <Route path="/metas/registro" element={<RegistroMetasPage />} /> */}
+          <Route path="/metas/registro" element={<MetasUIPage />} />
+          <Route path="/metas" element={<MetasListadoPage />} />
           <Route path="/usuarios">
             <Route index element={<UsuarioPage />} />
             <Route path="registro" element={<UsuarioRegistroPage />} />

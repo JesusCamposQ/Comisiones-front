@@ -217,7 +217,7 @@ export default function FiltroOC({ setFiltros, initialFilters }: FiltroProps) {
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-xl font-medium">Filtros de Ventas</CardTitle>
                     <div className="text-sm text-muted-foreground">
-                        Actualizado al:{" "}
+                        Hoy es:{" "}
                         {new Date().toLocaleDateString("es-ES", {
                             weekday: "long",
                             year: "numeric",
