@@ -1,19 +1,18 @@
 import api from "@/app/service/api";
 import { Datum, Metas } from "../interfaces/metas.interface";
 import { Marcas } from "../interfaces/marcas.interface";
+import { Llave, LlavesData } from "../interfaces/llaves.inteface";
 
 export const registrarMetas = async (data: Metas) => {
-  console.log("Esta es la Data: "+data)
-  try{
-    const response = await api.post("/api/metas/producto/vip", 
-      data
-    );
-    return response.data;	
-  }catch(error){
-    console.log(error)
+  console.log("Esta es la Data: " + data);
+  try {
+    const response = await api.post("/api/metas/producto/vip", data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
 };
- 
+
 export const obtenerMetas = async () => {
   try {
     const response = await api.get("/api/metas/producto/vip");
@@ -25,42 +24,66 @@ export const obtenerMetas = async () => {
 };
 
 export const editarMetas = async (data: Datum) => {
-  console.log(data)
-  console.log("Esta es la MonturaMasGafa: "+data.monturaMasGafa)
-  console.log("Esta es la LenteDeContacto: "+data.lenteDeContacto)
+  console.log(data);
+  console.log("Esta es la MonturaMasGafa: " + data.monturaMasGafa);
+  console.log("Esta es la LenteDeContacto: " + data.lenteDeContacto);
 
-  try{
-    const response = await api.patch(`/api/metas/producto/vip/${data._id}`, 
-      {
-        monturaMasGafa: Number(data.monturaMasGafa),
-        lenteDeContacto: Number(data.lenteDeContacto)
-      }
-    );
+  try {
+    const response = await api.patch(`/api/metas/producto/vip/${data._id}`, {
+      monturaMasGafa: Number(data.monturaMasGafa),
+      lenteDeContacto: Number(data.lenteDeContacto),
+    });
     console.log(response);
     return response;
-  }catch(error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const eliminarMetas = async (id: string) => {
-  console.log("Esta es la Data: "+id)
-  try{
+  console.log("Esta es la Data: " + id);
+  try {
     const response = await api.delete(`/api/metas/producto/vip/${id}`);
     return response;
-  }catch(error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
 };
 
-export const obtenerMarcas = async (limite: number, pagina: number, filter:string): Promise<Marcas> => {
-    const response = await api.get("/api/marca", {
+export const obtenerMarcas = async (
+  limite: number,
+  pagina: number,
+  filter: string
+): Promise<Marcas> => {
+  const response = await api.get("/api/marca", {
     params: {
       limite,
       pagina,
-      nombre: filter
-    }
+      nombre: filter,
+    },
   });
-  console.log(response.data)
+  console.log(response.data);
   return response.data;
+};
+
+export const registrarLlaves = async (data: LlavesData) => {
+  console.log("Esta es la Data: " + data);
+  try {
+    const response = await api.post("/api/metas/producto/vip", data);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const obtenerLlaves = async (): Promise<Llave[]> => {
+  try {
+    const response = await api.get("/api/metas/producto/vip");
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };

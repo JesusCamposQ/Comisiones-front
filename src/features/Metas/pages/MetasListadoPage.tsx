@@ -1,0 +1,132 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useQuery } from "@tanstack/react-query";
+import { obtenerLlaves } from "../services/servicioMetas";
+import type { Llave } from "../interfaces/llaves.inteface";
+import { Badge } from "@/components/ui/badge";
+
+export const MetasListadoPage = () => {
+
+  const { data: llaves = [] } = useQuery<Llave[]>({
+    queryKey: ["llaves"],
+    queryFn: () => obtenerLlaves(),
+  });
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-8">
+      <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-xl text-slate-700">
+            Resumen de Llaves
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-slate-200">
+                  <TableHead className="font-semibold text-slate-700">
+                    Sucursal
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Cant. Monturas
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Precio Monturas
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Cant. Gafas
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Precio Gafas
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Cant. Lentes
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Marcas Monturas
+                  </TableHead>
+                  <TableHead className="font-semibold text-slate-700">
+                    Marcas Gafas
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {llaves.length === 0 ? (
+                  <TableRow>
+                    <TableCell
+                      colSpan={9}
+                      className="h-24 text-center bg-yellow-50 border-2 border-yellow-200 rounded-lg"
+                    >
+                      <p className="text-yellow-700 font-medium text-sm">
+                        Aun no hay llaves listadas
+                      </p>
+                      <p className="text-yellow-500 text-xs">
+                        Comienza agregando llaves para cada sucursal
+                      </p>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  llaves.map((llave, index) => (
+                    <TableRow key={index} className="border-slate-200">
+                      <TableCell className="font-medium text-slate-700 text-xs">
+                        {llave.sucursal}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-xs">
+                        {llave.montura}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-xs">
+                        {llave.precioMontura}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-xs">
+                        {llave.gafa}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-xs">
+                        {llave.precioGafa}
+                      </TableCell>
+                      <TableCell className="text-slate-600 text-xs">
+                        {llave.lenteDeContacto}
+                      </TableCell>
+                      <TableCell className="text-xs">
+                        <div className="flex flex-wrap gap-1">
+                          {llave.marcaMonturas.map((brand) => (
+                            <Badge
+                              key={brand}
+                              variant="secondary"
+                              className="text-xs bg-amber-100 text-amber-800"
+                            >
+                              {brand}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex flex-wrap gap-1 text-xs">
+                          {llave.marcaGafas.map((brand) => (
+                            <Badge
+                              key={brand}
+                              variant="secondary"
+                              className="text-xs bg-purple-100 text-purple-800"
+                            >
+                              {brand}
+                            </Badge>
+                          ))}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};

@@ -23,63 +23,36 @@ import {
   Save,
   List,
   Search,
+  Trash,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { obtenerEmpresas } from "@/features/Empresa/services/obternerEmpresas";
 import { obtenerSucursalByEmpresa } from "@/features/Sucursal/services/obtenerSurcusal";
 import { Sucursal } from "@/features/Sucursal/interfaces/sucursal.interface";
-import { useForm } from "react-hook-form";
-import { obtenerMarcas } from "../services/servicioMetas";
+import { obtenerMarcas, registrarLlaves } from "../services/servicioMetas";
 import { Datum, Marcas } from "../interfaces/marcas.interface";
 import Paginador from "@/shared/components/Paginador/Paginador";
-//import { Llave } from "../interfaces/llaves.inteface";
+import { Llave, LlavesData } from "../interfaces/llaves.inteface";
+import toast, { Toaster } from "react-hot-toast";
+import formatoMoneda from "@/utils/formatoMoneda";
+
 
 export default function MetasUIPage() {
   const [selectedMarcaMonturas, setselectedMarcaMonturas] = useState<string[]>(
     []
   );
   const [selectedMarcaGafas, setselectedMarcaGafas] = useState<string[]>([]);
+  const [selectedComisionar, setSelectedComisionar] = useState<string>("");
+  const [sucursalSeleccionada, setSucursalSeleccionada] = useState<string>("");
+  const [cantidadMonturas, setCantidadMonturas] = useState<number>(0);
+  const [precioMonturas, setPrecioMonturas] = useState<number>(0);
+  const [cantidadGafas, setCantidadGafas] = useState<number>(0);
+  const [precioGafas, setPrecioGafas] = useState<number>(0);
+  const [cantidadLentes, setCantidadLentes] = useState<number>(0);
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
-  //const [listarLLaves, setListarLLaves] = useState<Llave[]>([]);
+  const [llaves, setLlaves] = useState<Llave[]>([]);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState<string>("");
-  const { register } = useForm<any>();
-
-  const branches = [
-    {
-      id: 1,
-      name: "Sucursal 1",
-      frameQty: 10,
-      framePrice: 30000,
-      glassesQty: 5,
-      glassesPrice: 5000,
-      contactLensQty: 4,
-      frameBrands: ["Gucci", "Ray-Ban", "Prada"],
-      glassesBrands: ["Gucci", "Oakley"],
-    },
-    {
-      id: 2,
-      name: "Sucursal 2",
-      frameQty: 10,
-      framePrice: 30000,
-      glassesQty: 5,
-      glassesPrice: 5000,
-      contactLensQty: 4,
-      frameBrands: ["Gucci"],
-      glassesBrands: ["Gucci"],
-    },
-    {
-      id: 3,
-      name: "Sucursal 3",
-      frameQty: 10,
-      framePrice: 30000,
-      glassesQty: 5,
-      glassesPrice: 5000,
-      contactLensQty: 4,
-      frameBrands: ["Gucci", "Ray-Ban", "Prada"],
-      glassesBrands: ["Gucci", "Oakley"],
-    },
-  ];
 
   const removeBrand = (brand: string, type: "frame" | "glasses") => {
     if (type === "frame") {
@@ -115,12 +88,81 @@ export default function MetasUIPage() {
     refetch();
   }, [page, filter]);
 
-  // TODO: Completar la funcion de listar llaves
+  const listarLLaves = async () => {
+    if (!sucursalSeleccionada){
+      toast.error("Seleccione una sucursal");
+      return;
+    };
+    const llave: Llave = {
+      montura: Number(cantidadMonturas),
+      precioMontura: Number(precioMonturas),
+      gafa: Number(cantidadGafas),
+      precioGafa: Number(precioGafas),
+      lenteDeContacto: Number(cantidadLentes),
+      marcaMonturas: selectedMarcaMonturas,
+      marcaGafas: selectedMarcaGafas,
+      sucursal: sucursalSeleccionada,
+    };
+    setLlaves((prev) => [...prev, llave]);
+    console.log(llaves);
+  };
+  
+  const eliminarLLave = (index: number) => {
+    const newLlaves = [...llaves];
+    newLlaves.splice(index, 1);
+    setLlaves(newLlaves);
+  };
+  const registrarLLaves = async () => {
+    const data: LlavesData = {
+      data: llaves
+    }
+    const llavesRegistradas = await registrarLlaves(data);
+    if(llavesRegistradas.status === 201){
+      toast.success("Llaves registradas exitosamente");
+      limpiarCampos();
+
+    }else{
+      toast.error("Error al registrar llaves");
+    }
+
+  };
+  const limpiarCampos = () => {
+    setLlaves([]);
+    setSucursalSeleccionada("");
+    setselectedMarcaGafas([]);
+    setselectedMarcaMonturas([]);
+    setCantidadGafas(0);
+    setCantidadLentes(0);
+    setCantidadMonturas(0);
+    setPrecioGafas(0);
+    setPrecioMonturas(0);
+    setSelectedComisionar("");
+    document.querySelectorAll("select").forEach((select) => {
+      select.value = select.getAttribute("defaultValue") || "";
+    });
+    (document.getElementById("cantidadMonturas") as HTMLInputElement).value = "";
+    (document.getElementById("cantidadGafas") as HTMLInputElement).value = "";
+    (document.getElementById("cantidadLentes") as HTMLInputElement).value = "";
+    (document.getElementById("precioMonturas") as HTMLInputElement).value = "";
+    (document.getElementById("precioGafas") as HTMLInputElement).value = "";
+    (document.getElementById("precioLentes") as HTMLInputElement).value = "";
+  };
+  useEffect(() => {
+    if(selectedComisionar === "precio"){
+      setselectedMarcaGafas([]);
+      setselectedMarcaMonturas([]);
+    }
+    if(selectedComisionar === "marca"){
+      setPrecioMonturas(0);
+      setPrecioGafas(0);
+    }
+  }, [selectedComisionar]);
 
   const marcasList: Datum[] = marcas?.data || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-6">
+      <Toaster />
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
@@ -174,7 +216,7 @@ export default function MetasUIPage() {
                       Sucursal
                     </Label>
                     <select
-                      {...register("sucursal", { required: true })}
+                      onChange={(e) => setSucursalSeleccionada(e.target.value)}
                       className="mt-1 block w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
                     >
                       <option value="" disabled selected>
@@ -192,14 +234,28 @@ export default function MetasUIPage() {
             </Card>
 
             {/* Inventory Information */}
+
             <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-slate-700">
                   <Package className="h-5 w-5 text-green-600" />
-                  Información de Inventario
+                  Información de Llaves
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Eye className="h-4 w-4 text-amber-600" />
+                    <h3 className="font-semibold text-slate-700">Comisionar por:</h3>
+                  </div>
+                  <select 
+                  onChange={(e) => setSelectedComisionar(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500">
+                    <option value="">Seleccione una opción</option>
+                    <option value="precio">Precio</option>
+                    <option value="marca">Marca</option>
+                  </select>
+                </div>
                 {/* Frames Section */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
@@ -212,11 +268,14 @@ export default function MetasUIPage() {
                         Cantidad
                       </Label>
                       <Input
+                        id="cantidadMonturas"
+                        onChange={(e) => setCantidadMonturas(Number(e.target.value))}
                         type="number"
                         placeholder="0"
                         className="border-slate-200 focus:border-amber-500 focus:ring-amber-500"
                       />
                     </div>
+                    {selectedComisionar === "precio" ? (
                     <div className="space-y-2">
                       <Label className="text-sm font-medium text-slate-700">
                         Precio
@@ -224,12 +283,29 @@ export default function MetasUIPage() {
                       <div className="relative">
                         <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <Input
+                          id="precioMonturas"
+                          onChange={(e) => setPrecioMonturas(Number(e.target.value))}
                           type="number"
                           placeholder="0.00"
                           className="pl-10 border-slate-200 focus:border-amber-500 focus:ring-amber-500"
+                          disabled={selectedComisionar !== "precio"}
                         />
                       </div>
                     </div>
+                    ):(
+                      <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                          <p className="text-gray-700 text-sm">
+                            Para comisionar precios, activa primero 
+                            <span className="font-semibold text-indigo-600 ml-1">Comisionar por precio</span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    )}
+
                   </div>
                 </div>
 
@@ -247,11 +323,14 @@ export default function MetasUIPage() {
                         Cantidad
                       </Label>
                       <Input
+                        id="cantidadGafas"
+                        onChange={(e) => setCantidadGafas(Number(e.target.value))}
                         type="number"
                         placeholder="0"
                         className="border-slate-200 focus:border-purple-500 focus:ring-purple-500"
                       />
                     </div>
+                    {selectedComisionar === "precio" ? (
                     <div className="space-y-2">
                       <Label className="text-sm font-medium text-slate-700">
                         Precio
@@ -259,12 +338,29 @@ export default function MetasUIPage() {
                       <div className="relative">
                         <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <Input
+                          id="precioGafas"
+                          onChange={(e) => setPrecioGafas(Number(e.target.value))}
                           type="number"
                           placeholder="0.00"
                           className="pl-10 border-slate-200 focus:border-purple-500 focus:ring-purple-500"
+                          disabled={selectedComisionar !== "precio"}
                         />
                       </div>
                     </div>
+                  ):(
+                    <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                        <p className="text-gray-700 text-sm">
+                          Para comisionar precios, activa primero 
+                          <span className="font-semibold text-indigo-600 ml-1">Comisionar por precio</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  )
+                }
                   </div>
                 </div>
 
@@ -283,6 +379,8 @@ export default function MetasUIPage() {
                       Cantidad
                     </Label>
                     <Input
+                      id="cantidadLentes"
+                      onChange={(e) => setCantidadLentes(Number(e.target.value))}
                       type="number"
                       placeholder="0"
                       className="border-slate-200 focus:border-teal-500 focus:ring-teal-500"
@@ -376,48 +474,64 @@ export default function MetasUIPage() {
               <CardContent>
                 <div className="pr-4">
                   <div className="space-y-3">
-                    {marcasList?.map((brand) => (
-                      <div
-                        key={brand._id}
-                        className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50/50"
-                      >
-                        <span className="font-medium text-slate-700 text-xs">
-                          {brand.nombre}
-                        </span>
-                        <div className="flex gap-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-xs border-amber-200 text-amber-700 hover:bg-amber-50"
-                            onClick={() => addBrand(brand.nombre, "frame")}
-                            disabled={selectedMarcaMonturas.includes(
-                              brand.nombre
-                            )}
-                          >
-                            + Montura
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-xs border-purple-200 text-purple-700 hover:bg-purple-50"
-                            onClick={() => addBrand(brand.nombre, "glasses")}
-                            disabled={selectedMarcaGafas.includes(brand.nombre)}
-                          >
-                            + Gafa
-                          </Button>
+                    {selectedComisionar === "marca" && marcasList ? (
+                      marcasList.map((brand) => (
+                        <div
+                          key={brand._id}
+                          className="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50/50"
+                        >
+                          <span className="font-medium text-slate-700 text-xs">
+                            {brand.nombre}
+                          </span>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs border-amber-200 text-amber-700 hover:bg-amber-50"
+                              onClick={() => addBrand(brand.nombre, "frame")}
+                              disabled={selectedMarcaMonturas.includes(
+                                brand.nombre
+                              )}
+                            >
+                              + Montura
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="text-xs border-purple-200 text-purple-700 hover:bg-purple-50"
+                              onClick={() => addBrand(brand.nombre, "glasses")}
+                              disabled={selectedMarcaGafas.includes(brand.nombre)}
+                            >
+                              + Gafa
+                            </Button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex items-center justify-center">
+                        <div className="bg-yellow-100 border border-yellow-200 rounded-lg p-4">
+                          <p className="text-yellow-700 font-medium text-xs">
+                          <strong>Recuerda</strong> que debes seleccionar la opción <strong>"Comisionar por marca"</strong> 
+                          para poder ver las marcas disponibles y elegir aquellas que deseas comisionar.
+                          </p>
                         </div>
                       </div>
-                    ))}
+                    )}
                   </div>
-                  <div>
-                    <Paginador
-                      page={page}
-                      setPage={setPage}
+                  {selectedComisionar === "marca" && (
+                    <>
+                      <Separator className="mt-4" />
+                      <div>
+                        <Paginador
+                          page={page}
+                          setPage={setPage}
                       itemsPerPage={10}
                       filtrar={marcasList || []}
                       totalPages={marcas?.pagina}
                     />
                   </div>
+                  </>
+                )}
                 </div>
               </CardContent>
             </Card>
@@ -426,11 +540,14 @@ export default function MetasUIPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-sm">
+          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-sm"
+          onClick={listarLLaves}>
             <List className="mr-2 h-4 w-4" />
             Listar Llaves
           </Button>
-          <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg shadow-sm">
+          <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg shadow-sm"
+          onClick={registrarLLaves}
+          disabled={llaves.length === 0}>
             <Save className="mr-2 h-4 w-4" />
             Registrar
           </Button>
@@ -472,57 +589,82 @@ export default function MetasUIPage() {
                     <TableHead className="font-semibold text-slate-700">
                       Marcas Gafas
                     </TableHead>
+                    <TableHead className="font-semibold text-slate-700">
+                      Acciones
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {branches.map((branch) => (
-                    <TableRow key={branch.id} className="border-slate-200">
-                      <TableCell className="font-medium text-slate-700">
-                        {branch.name}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.frameQty}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        ${branch.framePrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.glassesQty}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        ${branch.glassesPrice.toLocaleString()}
-                      </TableCell>
-                      <TableCell className="text-slate-600">
-                        {branch.contactLensQty}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {branch.frameBrands.map((brand) => (
-                            <Badge
-                              key={brand}
-                              variant="secondary"
-                              className="text-xs bg-amber-100 text-amber-800"
-                            >
-                              {brand}
-                            </Badge>
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1">
-                          {branch.glassesBrands.map((brand) => (
-                            <Badge
-                              key={brand}
-                              variant="secondary"
-                              className="text-xs bg-purple-100 text-purple-800"
-                            >
-                              {brand}
-                            </Badge>
-                          ))}
-                        </div>
+                  {llaves.length === 0 ? (
+                    <TableRow >
+                      <TableCell colSpan={9} className="h-24 text-center bg-yellow-50 border-2 border-yellow-200 rounded-lg">
+                        <p className="text-yellow-700 font-medium text-sm">
+                          Aun no hay llaves listadas
+                        </p>
+                        <p className="text-yellow-500 text-xs">
+                          Comienza agregando llaves para cada sucursal
+                        </p>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ) : (
+                    llaves.map((llave, index) => (
+                      <TableRow key={index} className="border-slate-200">
+                        <TableCell className="font-medium text-slate-700 text-xs">
+                          {sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre}
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs">
+                          {llave.montura}
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs">
+                          {llave.precioMontura ? formatoMoneda(llave.precioMontura, sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre) : 0.00}
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs">
+                          {llave.gafa}
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs">
+                          {llave.precioGafa ? formatoMoneda(llave.precioGafa, sucursales.find((sucursal) => sucursal._id === llave.sucursal)?.nombre) : 0.00}
+                        </TableCell>
+                        <TableCell className="text-slate-600 text-xs">
+                          {llave.lenteDeContacto}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          <div className="flex flex-wrap gap-1">
+                            {llave.marcaMonturas.map((brand) => (
+                              <Badge
+                                key={brand}
+                                variant="secondary"
+                                className="text-xs bg-amber-100 text-amber-800"
+                              >
+                                {brand}
+                              </Badge>
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-wrap gap-1 text-xs">
+                            {llave.marcaGafas.map((brand) => (
+                              <Badge
+                                key={brand}
+                                variant="secondary"
+                                className="text-xs bg-purple-100 text-purple-800"
+                              >
+                                {brand}
+                              </Badge>
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell className="flex items-center justify-center text-xs">
+                          <Button
+                            variant="outline"
+                            className="text-xs border-red-200 text-red-700 hover:bg-red-50 hover:text-red-500 hover:border-red-500 transition duration-300 ease-in-out flex items-center justify-center"
+                            onClick={() => eliminarLLave(index)}
+                          >
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </div>

@@ -5,3 +5,8 @@ export const obtenerSucursalByEmpresa = async (empresaId: string): Promise<Sucur
   const resultado = await api.get(`api/sucursal/empresa/${empresaId}`);
   return resultado.data;
 };
+
+export const obtenerSucursal = async (): Promise<Sucursal[]> => {
+  const resultado = await api.get(`api/sucursal`);
+  return resultado.data;
+};

@@ -1,8 +1,9 @@
 export interface Llave {
+    _id?: string;
     montura: number;
-    precioMontura: number;
+    precioMontura?: number;
     gafa: number;
-    precioGafa: number;
+    precioGafa?: number;
     lenteDeContacto: number;
     marcaMonturas: string[];
     marcaGafas: string[];
