@@ -57,5 +57,5 @@ export const exportarSinServiciosExcel = async (servicios: ComisionSinServicio) 
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   })
   
-  saveAs(blob, `OPTICENTRO-Servicios`);
+  saveAs(blob, `comisionesSinServicios`);
 };
