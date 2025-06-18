@@ -87,3 +87,13 @@ export const obtenerLlaves = async (): Promise<Llave[]> => {
     throw error;
   }
 };
+
+export const eliminarLlave = async (id: string): Promise<any> => {
+  console.log("Esta es la Data: " + id);
+  try {
+    const response = await api.delete(`/api/metas/producto/vip/${id}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

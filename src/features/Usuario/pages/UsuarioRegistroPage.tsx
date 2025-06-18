@@ -222,7 +222,6 @@ export const UsuarioRegistroPage = () => {
                 </p>
               )}
             </div>
-
             <Button
               type="submit"
               className="w-full mt-8 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 flex items-center justify-center gap-2"

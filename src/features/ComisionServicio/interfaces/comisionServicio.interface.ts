@@ -6,6 +6,8 @@ export interface ComisionServicio {
     servicio?: string;
     diferencia?: number;
     comision?: number;
+    comision1?: number;
+    comision2?: number;
     fecha?: string;
     flag?: string;
     __v?: number;

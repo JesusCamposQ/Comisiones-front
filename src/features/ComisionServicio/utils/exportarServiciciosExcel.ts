@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import { Servicio } from "../interfaces/comisionServicio.interface";
 
 export const exportarServiciosExcel = async (servicios: Servicio[]) => {
+  console.log(servicios);
   const workbook = new ExcelJS.Workbook();
   const worksheetOne = workbook.addWorksheet("Comision Servicios",{
     properties:{
@@ -14,8 +15,9 @@ export const exportarServiciosExcel = async (servicios: Servicio[]) => {
     { header: "Id", key: "id" },
     { header: "Nombre", key: "nombre" },
     { header: "Tipo Precio", key: "tipo_precio" },
-    { header: "Tipo Comision", key: "tipo_comision" },
     { header: "Monto", key: "monto" },
+    { header: "Comision 1", key: "comision1" },
+    { header: "Comision 2", key: "comision2" },
   ];
 
   console.log(servicios);
@@ -24,22 +26,25 @@ export const exportarServiciosExcel = async (servicios: Servicio[]) => {
   
   servicios?.forEach((servicio) => {
     if (servicio.comisonServicio && servicio.comisonServicio.length > 0) {
-      servicio.comisonServicio.forEach((comision) => {
-        rows.push({
-          id: servicio._id,
-          nombre: servicio.nombre,
-          tipo_precio: comision.precio,
-          tipo_comision: comision.comision,
-          monto: comision.monto, 
-        });
+      const comision1 = servicio.comisonServicio[0].monto;
+      const comision2 = servicio.comisonServicio[1].monto;
+      const precio = servicio.comisonServicio[0].precio;
+      rows.push({
+        id: servicio._id,
+        nombre: servicio.nombre,
+        tipo_precio: precio,
+        monto: "", 
+        comision1: comision1,
+        comision2: comision2,
       });
     } else {
       rows.push({
         id: servicio._id,
         nombre: servicio.nombre,
         tipo_precio: "",
-        tipo_comision: "",
         monto: "",
+        comision1: "",
+        comision2: "",
       });
     }
   });

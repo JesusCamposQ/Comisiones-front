@@ -12,12 +12,12 @@ import { useEffect, useState } from "react";
 import { BookPlus } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Banner } from "@/shared/components/Banner/Banner";
-import { exportarServiciosExcel } from "../utils/exportarServiciciosExcel";
 import { FiltroComisionServicio } from "../components/FiltroComisionServicio";
 import { useFiltrarSinServicios } from "../hooks/FiltrarSinServicios";
 import { Datum } from "../interfaces/comisionSinServicio";
 import { ModalRegistroSinComisionServicio } from "../components/ModalRegistroSinComisionServicio";
 import { obtenerServiciosSinComision } from "../services/servicios";
+import { exportarSinServiciosExcel } from "../utils/exportarSinServiciciosExcel";
 
 interface FormValues {
   idcombinacion: string;
@@ -39,14 +39,14 @@ export const ComisionServicioSinComisionPage = () => {
   });
 
   const { data: dataServicios, refetch } = useQuery({
-    queryKey: ["comisiones-servicio", page],
+    queryKey: ["comisiones-sin-comision-servicio", page],
     queryFn: () => obtenerServiciosSinComision(20, page),
     staleTime: 60 * 60 * 1000,
   });
   const descargar = async () => {
     setIsDownload(true);
     if (dataServicios) {
-      exportarServiciosExcel(dataServicios?.data);
+      exportarSinServiciosExcel(dataServicios);
     }
     setIsDownload(false);
   };

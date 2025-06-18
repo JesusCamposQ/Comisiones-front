@@ -119,6 +119,10 @@ const data = {
               title: "Servicios sin Comisión",
               url: "/comision/gestion/servicio/sin-comision",
             },
+            {
+              title: "Cargar Comision Servicio",
+              url: "/cargar/comision/servicio",
+            },
           ],
         },
       ],
