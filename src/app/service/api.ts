@@ -23,8 +23,6 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log("ite", error);
-
     return error;
   }
 );
@@ -38,6 +36,8 @@ api.interceptors.response.use(
     if (a.status === 401) {
       window.localStorage.removeItem('token')
       window.location.href = "/";
+    }else {
+      throw error
     }
   }
 );

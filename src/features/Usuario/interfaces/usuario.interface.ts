@@ -12,3 +12,15 @@ export enum Role {
     ADMIN = "admin",
     USER = "user",
 }
+
+
+export interface ErrorUser {
+    statusCode: number;
+    message:    string;
+    errors:     Error[];
+}
+
+export interface Error {
+    propiedad: string;
+    errors:    string[];
+}
