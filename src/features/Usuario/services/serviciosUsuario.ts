@@ -16,7 +16,8 @@ export const crearUsuario = async (usuario: Usuario) => {
         const resultado = await api.post("api/usuario", usuario);
         return resultado;
     } catch (error) {
-        console.log(error);
+         throw error
+     
     }
 }
 

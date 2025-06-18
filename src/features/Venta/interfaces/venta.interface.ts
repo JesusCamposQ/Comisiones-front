@@ -65,6 +65,7 @@ export interface Combinacion {
   id:             string;
   descripcion:       string;
   tipo:       string;
+     medioPar: boolean
 }
 
 export interface Comision {

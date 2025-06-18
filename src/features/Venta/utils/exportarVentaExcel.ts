@@ -1,48 +1,57 @@
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import { Venta } from "../interfaces/venta.interface";
-import { calcularComision, calcularComisionTotal, porcentaje, totalImporte } from "./ventaUtils";
-export const exportarVentaExcel = async (ventas: Venta[], fechaI:string,fechaF:string) => {
-
+import {
+  calcularComision,
+  calcularComisionTotal,
+  extraerLlave,
+  porcentaje,
+  totalImporte,
+} from "./ventaUtils";
+export const exportarVentaExcel = async (
+  ventas: Venta[],
+  fechaI: string,
+  fechaF: string
+) => {
   const workbook = new ExcelJS.Workbook();
   const worksheetOne = workbook.addWorksheet("Total ventas");
   const worksheetTwo = workbook.addWorksheet("Comisiones");
   worksheetOne.columns = [
-    { header: "Sucursal", key: "sucursal"  },
-    { header: "Asesor", key: "asesor"  },
-    { header: "Tickets", key: "tickets"  },
+    { header: "Sucursal", key: "sucursal" },
+    { header: "Asesor", key: "asesor" },
+    { header: "Tickets", key: "tickets" },
     { header: "Importe Total", key: "importe_total" },
     { header: "Descuento", key: "descuento" },
-    { header: "Gran Total", key: "gran_total"},
+    { header: "Gran Total", key: "gran_total" },
     { header: "Total comisión", key: "total_comisión" },
+    { header: "Llave", key: "llave" },
   ];
 
   worksheetTwo.columns = [
     { header: "Sucursal", key: "sucursal" },
     { header: "Asesor", key: "asesor" },
     { header: "ID Venta", key: "id_Venta" },
-    { header: "Tipo precio", key: "tipo_precio"},
+    { header: "Tipo precio", key: "tipo_precio" },
     { header: "Importe Total", key: "importeTotal" },
     { header: "Descuento", key: "descuento" },
     { header: "% Descuento", key: "porcentaje_descuento" },
     { header: "Gran Total", key: "gran_total" },
-        { header: "Rubro", key: "rubro" },
-    { header: "Descripcion", key: "descripcion"},
+    { header: "Rubro", key: "rubro" },
+    { header: "Descripcion", key: "descripcion" },
     { header: "Importe", key: "importe" },
     { header: "comision", key: "comision" },
-    { header: "Porcentaje", key: "porcentaje"},
-      { header: "llave desbloqueda", key: "llave"},
-        { header: "fecha de  finalizacion", key: "fecha"},
+    { header: "Porcentaje", key: "porcentaje" },
+    { header: "llave desbloqueda", key: "llave" },
+        { header: "Medio par", key: "medioPar" },
+    { header: "fecha de  finalizacion", key: "fecha" },
   ];
 
-  console.log(ventas);
-  
   for (const venta of ventas) {
-    const gafaVip = venta.gafaVip
-    let monturaVip= venta.monturaVip
-    const lenteDeContacto = venta.lenteDeContacto
-    const metaProductosVip= venta.metaProductosVip
-    const empresa = venta.empresa
+    const gafaVip = venta.gafaVip;
+    let monturaVip = venta.monturaVip;
+    const lenteDeContacto = venta.lenteDeContacto;
+    const metaProductosVip = venta.metaProductosVip;
+    const empresa = venta.empresa;
     worksheetOne.addRow({
       sucursal: venta.sucursal,
       asesor: venta.asesor,
@@ -58,15 +67,51 @@ export const exportarVentaExcel = async (ventas: Venta[], fechaI:string,fechaF:s
         venta.monturaVip,
         venta.lenteDeContacto,
         venta.empresa,
-       venta.sucursal
+        venta.sucursal
       ),
+      llave: extraerLlave(
+        venta.ventas,
+        venta.metaProductosVip,
+        venta.gafaVip,
+        venta.monturaVip,
+        venta.lenteDeContacto,
+        venta.empresa,
+        venta.sucursal
+      )
+        ? "SI"
+        : "NO",
     });
     for (const detalle of venta.ventas) {
-
-        
       for (const item of detalle.detalle) {
-        const comision = calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(detalle.detalle.reduce((acc, item) => acc + item.importe, 0), detalle.descuento), venta.sucursal)
-       const comision1=   calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(detalle.detalle.reduce((acc, item) => acc + item.importe, 0), detalle.descuento), venta.sucursal)
+        
+        const comision = calcularComision(
+          item.comisiones,
+          gafaVip,
+          monturaVip,
+          lenteDeContacto,
+          metaProductosVip,
+          empresa,
+          porcentaje(
+            detalle.detalle.reduce((acc, item) => acc + item.importe, 0),
+            detalle.descuento
+          ),
+          venta.sucursal
+        );
+        const comision1 = calcularComision(
+          item.comisiones,
+          gafaVip,
+          monturaVip,
+          lenteDeContacto,
+          metaProductosVip,
+          empresa,
+          porcentaje(
+            detalle.detalle.reduce((acc, item) => acc + item.importe, 0),
+            detalle.descuento
+          ),
+          venta.sucursal
+        ) ;
+        const llave =  comision1.llave  ? 'SI':'NO'
+      
         worksheetTwo.addRow({
           sucursal: venta.sucursal,
           asesor: venta.asesor,
@@ -82,7 +127,7 @@ export const exportarVentaExcel = async (ventas: Venta[], fechaI:string,fechaF:s
             detalle.descuento
           ),
           gran_total: detalle.montoTotal,
-          rubro:item.producto
+          rubro: item.producto
             ? `${item.producto.tipo}`
             : item.combinacion
             ? `${item.combinacion.tipo}`
@@ -100,14 +145,13 @@ export const exportarVentaExcel = async (ventas: Venta[], fechaI:string,fechaF:s
             : item.otros
             ? `${item.otros.descripcion}`
             : "Información no disponible",
-          importe:item.importe,
+          importe: item.importe,
           comision: comision.comison,
-          porcentaje: porcentaje(item.importe,comision1.comison).toFixed(2),
-          llave:comision1.llave ? 'si':'no',
+          porcentaje: porcentaje(item.importe, comision1.comison).toFixed(2),
+          llave: llave,
+          medioPar: item.combinacion ? item.combinacion.medioPar ? 'SI'  :'NO':'' ,
           fecha: detalle.fechaFinalizacion,
-        })
-        
-        
+        });
       }
     }
   }
@@ -120,5 +164,5 @@ export const exportarVentaExcel = async (ventas: Venta[], fechaI:string,fechaF:s
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
 
-  saveAs(blob, `OFEROPTICA-${fechaI}_${fechaF})`);
+  saveAs(blob, `Comisiones-${fechaI}_${fechaF})`);
 };
