@@ -33,7 +33,7 @@ export const exportarServiciosExcel = async (servicios: Servicio[]) => {
         id: servicio._id,
         nombre: servicio.nombre,
         tipo_precio: precio,
-        monto: servicio.comisonServicio[0].monto, 
+        monto: "", 
         comision1: comision1,
         comision2: comision2,
       });
