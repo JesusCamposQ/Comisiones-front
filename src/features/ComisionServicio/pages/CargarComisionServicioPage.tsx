@@ -115,7 +115,7 @@ export default function CargarComisionServicioPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-4">
               <Cloud className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Cargar Comisiones Producto</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Cargar Comisiones Servicio</h1>
             <p className="text-gray-600 text-sm">Selecciona o arrastra tu archivo aquí</p>
           </div>
 
