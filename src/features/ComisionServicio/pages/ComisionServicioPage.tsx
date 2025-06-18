@@ -14,11 +14,11 @@ import { DetalleComisionServicio } from "../components/DetalleComisionServicio";
 import { Servicio } from "../interfaces/comisionServicio.interface";
 import { Toaster } from "react-hot-toast";
 import { Banner } from "@/shared/components/Banner/Banner";
-import { exportarServiciosExcel } from "../utils/exportarServiciciosExcel";
 import { FiltroComisionServicio } from "../components/FiltroComisionServicio";
 import { FiltrarServicios } from "../hooks/FiltrarServicios";
 import { Button } from "@/components/ui/button";
 import obtenerServicios from "../services/servicios";
+import { descargarServicios } from "../services/descargarServicios";
 
 export const ComisionServicioPage = () => {
   const [page, setPage] = useState(1);
@@ -37,7 +37,7 @@ export const ComisionServicioPage = () => {
   const descargar = async () => {
     setIsDownload(true);
     if (dataServicios) {
-      exportarServiciosExcel(dataServicios?.data);
+      descargarServicios();
     }
     setIsDownload(false);
   };

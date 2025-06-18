@@ -4,32 +4,41 @@ import { autenticacion } from "@/features/Autenticacion/service/autenticaiconSer
 import { TokenContext } from "../context/TokenProvider";
 import { useContext, useState } from "react";
 import { AxiosError } from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 export const Autenticacion = () => {
+  let navigate = useNavigate();
   const { asignarToken } = useContext(TokenContext);
   const [mensaje, setMensaje] = useState('');
-  const { register, handleSubmit } = useForm<AutenticacionI>();
+  const { register, handleSubmit, formState: { errors } } = useForm<AutenticacionI>();
 
   const onSubmit = async (data: AutenticacionI) => {
-   
+   console.log(data);
     try {
       const response = await autenticacion(data);
       localStorage.setItem('username', data.username);
+      console.log(response);
+      
       if (response.status === 200) {
         asignarToken(response.token);
-        window.location.href = 'ventas';
+        toast.success('Inicio de sesión exitoso');
+        navigate("/ventas");
       }
     } catch (error) {
       const e = error as AxiosError;
-      if (e.status === 401) {
+      if (e.status === 403) {
+        toast.error('Credenciales invalidas');
         setMensaje('Credenciales invalidas');
       }
-      console.log(error);
+      console.log("Error al iniciar sesión", e.status);
     }
+    console.log("Error al iniciar sesión");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-200">
+      <Toaster position="top-center"/>
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Sistema de Comisiones</h2>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -42,6 +51,7 @@ export const Autenticacion = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               required
             />
+            {errors.username && <p className="text-red-500 text-sm text-center">{errors.username.message}</p>}
           </div>
 
           <div>
