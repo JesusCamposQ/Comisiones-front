@@ -34,6 +34,7 @@ export const UsuarioRegistroPage = () => {
 
       if (response?.status === 201) {
         setError([])
+        setErrorUser('')
         toast.success("Usuario creado exitosamente");
         setTimeout(() => {
           navigate("/usuarios");
@@ -54,6 +55,7 @@ export const UsuarioRegistroPage = () => {
       }
 
       if (e.status == 409) {
+         setErrorUser('')
         setErrorUser('El usuario ya existe')
       }
       toast.error("Error al crear el usuario");
