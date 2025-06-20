@@ -37,6 +37,7 @@ api.interceptors.response.use(
     if (a.status === 401) {
       window.localStorage.removeItem('token')
       window.location.href = "/";
+      return
     }else {
       throw error
     }
