@@ -137,8 +137,6 @@ export default function MetasUIPage() {
     const e = error as AxiosError;
     if(e.status === 409){
       toast.error("Error: En alguna sucursal ya se han registrado las llaves");
-    }else{
-      toast.error("Error al registrar llaves");
     }
   }
 
