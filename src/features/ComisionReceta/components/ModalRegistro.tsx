@@ -33,7 +33,6 @@ export function ModalRegistro({ setValor}: ModalProps) {
     staleTime: 60 * 1000 * 10, // 10 minutos
   })
   const combinaciones: CombinacionResponse[] = combinacionReceta || [];
-  console.log(filtro)
   const onSubmit = () => {
     setClose(false)
     setValor({idcombinacion: '', codigo: ''}) // se debe eliminar luego esta linea

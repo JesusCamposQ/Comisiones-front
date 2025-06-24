@@ -75,7 +75,6 @@ export function ModalRegistroSinComisionServicio({ valor, open, setOpen, setActu
   }
   const registrarComision = async () => {
     const data: DatumSinComision[] = []
-    console.log("Comisiones 54355: ",comisiones);
     
     comisiones.forEach((comision: Datum) => {
       const { importe, tipoPrecio, nombre } = comision

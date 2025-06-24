@@ -27,8 +27,6 @@ export const FiltrarCombinacion = ({ combinaciones, filtro, setFiltrarCombinacio
           (!filtro.importe || combinacion.importe?.toString().includes(filtro.importe.toString()))
         );
       });
-      console.log('Filtro', filtro);
-      console.log('Here', Object.keys(filtro).length === 0);
       if (Object.keys(filtro).length === 0) {
         const datosPaginados = paginador(combinaciones, limite, page);
         setFiltrarCombinacion(datosPaginados);

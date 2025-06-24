@@ -11,7 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Save } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
-import { editarComisionProducto } from "@/features/ComisionProducto/services/serviciosComisionProducto";
+import { editarCombinacionReceta } from "@/features/CombinacionReceta/services/serviciosCombinacionReceta";
 
 
 interface FormValues {
@@ -39,7 +39,7 @@ export function ModalEditar({ valor, open, setOpen, setActualizar }: ModalProps)
 
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        const { status } = await editarComisionProducto(valor.idComision, Number(data.monto))
+        const { status } = await editarCombinacionReceta(valor.idComision, Number(data.monto))
         if (status === 200) {
             toast.success("Comision editada exitosamente");
             setOpen(false)

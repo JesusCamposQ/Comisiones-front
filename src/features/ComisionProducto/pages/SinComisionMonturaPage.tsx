@@ -52,7 +52,6 @@ export const SinComisionMonturaPage = () => {
     setTimeout(() => {
       if (actualizar) {
         toast.success("Comisiones actualizadas exitosamente");
-        console.log("refetch");
         refetch();
       }
       setActualizar(false);
@@ -85,6 +84,7 @@ export const SinComisionMonturaPage = () => {
       handleDownload={descargar}
       isDownload={isDownload}
       />
+      
       <FiltroComisionProducto setFiltro={setFiltro} />
       {isLoading ? (
         <div className="flex items-center justify-center h-[600px] m-auto">

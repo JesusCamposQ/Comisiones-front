@@ -88,7 +88,6 @@ const ComisionGafasPage = () => {
           </TableHeader>
           <TableBody>
             {combinacion.map((combinacion: Datum, index: number) => (
-              console.log(combinacion.comisionProducto),
               <>
                 <TableRow key={combinacion._id} className="border-b-indigo-100 hover:bg-indigo-50">
                   <TableCell className="font-medium">{combinacion.tipoProducto}</TableCell>

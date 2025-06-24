@@ -134,17 +134,17 @@ const data = {
     //   items: [],
     // },
     {
-      title: "Metas",
-      url: "/metas",
+      title: "Llaves",
+      url: "/llaves",
       icon: Target,
       items: [
         {
-          title: "Ver Metas",
-          url: "/metas",
+          title: "Ver Llaves",
+          url: "/llaves",
         },
         {
-          title: "Registrar Metas",
-          url: "/metas/registro",
+          title: "Registrar Llaves",
+          url: "/llaves/registro",
         },
       ],
     },

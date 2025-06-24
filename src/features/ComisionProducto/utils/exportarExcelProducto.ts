@@ -19,7 +19,7 @@ export const exportarExcelProducto = async (productos: Datum[]) => {
     { header: "Comision fija 2", key: "comision_fija_2" },
   ];
 
-  console.log(productos);
+  
   
   worksheetOne.addRows(
     productos.map((producto) => ({

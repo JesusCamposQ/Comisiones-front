@@ -12,6 +12,8 @@ import {
 } from "../interfaces/comisionReceta.interface";
 import { Banner } from "@/shared/components/Banner/Banner";
 import { BookPlus } from "lucide-react";
+import Paginador from "@/shared/components/Paginador/Paginador";
+import { paginador } from "@/shared/utils/paginador";
 
 interface FormValues {
   idcombinacion: string;
@@ -20,6 +22,9 @@ interface FormValues {
 
 export const RegistroSinComisionReceta = () => {
   const [filtro, setFiltro] = useState<ComsionRecetaFiltro>({});
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [filtrarCombinacion, setFiltrarCombinacion] = useState<CombinacionResponse[]>([]);
   const [isDownload, setIsDownload] = useState(false);
   const [actualizar, setActualizar] = useState(false);
   const [open, setOpen] = useState(false);
@@ -31,6 +36,7 @@ export const RegistroSinComisionReceta = () => {
     data: combinacionReceta,
     isLoading,
     refetch,
+    isSuccess,
   } = useQuery<CombinacionResponse[]>({
     queryKey: ["combinacion-receta"],
     queryFn: () => obtenerSinComsion() as any,
@@ -48,6 +54,11 @@ export const RegistroSinComisionReceta = () => {
   useEffect(() => {
     refetch();
   }, [filtro]);
+  useEffect(() => {
+    if (isSuccess) {
+      setTotalPages(Math.ceil(combinacionReceta?.length / 10 || 0));
+    }
+  }, [combinacionReceta]);
 
   const agregarComision = (combinacion: CombinacionResponse) => {
     const descripcion = `${combinacion.tipoLente} / ${combinacion.material} / ${combinacion.tratamiento} / ${combinacion.marcaLente} / ${combinacion.tipoColorLente} / ${combinacion.rango} / ${combinacion.colorLente}`;
@@ -61,7 +72,29 @@ export const RegistroSinComisionReceta = () => {
       setIsDownload(false);
     }
   };
-
+useEffect(() => {
+ if(!combinacionReceta) return;
+    const filtrar = () => {
+      const combinacionesFiltradas = combinacionReceta.filter((combinacion) => {
+        return (
+          (!filtro.tipoLente || combinacion.tipoLente?.toLowerCase().includes(filtro.tipoLente.toLowerCase())) &&
+          (!filtro.material || combinacion.material?.toLowerCase().includes(filtro.material.toLowerCase())) &&
+          (!filtro.tratamiento || combinacion.tratamiento?.toLowerCase().includes(filtro.tratamiento.toLowerCase())) &&
+          (!filtro.marcaLente || combinacion.marcaLente?.toLowerCase().includes(filtro.marcaLente.toLowerCase())) &&
+          (!filtro.tipoColorLente || combinacion.tipoColorLente?.toLowerCase().includes(filtro.tipoColorLente.toLowerCase())) &&
+          (!filtro.rango || combinacion.rango?.toLowerCase().includes(filtro.rango.toLowerCase()))
+        );
+      });
+      if (Object.keys(filtro).length === 0) {
+        const datosPaginados = paginador(combinacionReceta, 10, page);
+        setFiltrarCombinacion(datosPaginados);
+        return;
+      }
+      setFiltrarCombinacion(combinacionesFiltradas);
+      setPage(1);
+    };
+    filtrar();
+}, [combinacionReceta, filtro, page]);
   
   return (
     <div className="mx-auto flex flex-col gap-4">
@@ -95,8 +128,8 @@ export const RegistroSinComisionReceta = () => {
             </tr>
           </thead>
           <tbody>
-            {combinacionReceta?.map((combinacion: CombinacionResponse) => (
-              <tr key={combinacion._id} className="border-b border-gray-200">
+            {filtrarCombinacion?.map((combinacion: CombinacionResponse, index) => (
+              <tr key={index} className="border-b border-gray-200">
                 <td className="px-6 py-4 text-xs">{combinacion.tipoLente}</td>
                 <td className="px-6 py-4 text-xs">{combinacion.material}</td>
                 <td className="px-6 py-4 text-xs">{combinacion.tratamiento}</td>
@@ -122,7 +155,14 @@ export const RegistroSinComisionReceta = () => {
               </tr>
             ))}
           </tbody>
-          
+          {totalPages > 1 && (
+            <Paginador
+              page={page}
+              totalPages={totalPages}
+              setPage={setPage}
+              filtrar={filtrarCombinacion}
+            />
+          )}
         </table>
       )}
       <div className="flex items-center justify-center">

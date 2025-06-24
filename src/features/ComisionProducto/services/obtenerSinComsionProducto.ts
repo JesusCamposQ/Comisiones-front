@@ -15,7 +15,6 @@ const obtenerSinComsionProducto = async (limite: number, pagina: number, filtro?
         color: filtro?.color?.toUpperCase()
       }
     });
-    console.log(response.data)
     return response.data;
   } catch (error) {
     console.log(error);

@@ -46,7 +46,6 @@ export const UsuarioRegistroPage = () => {
     } catch (error) {
        setError([])
       const e = error as AxiosError<ErrorUser>;
-      console.log(e.response?.data);
       
       if (e.status == 400) {
         e.response?.data.errors &&

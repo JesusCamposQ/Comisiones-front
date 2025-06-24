@@ -52,7 +52,6 @@ export default function CargarComisionProductoPage() {
     formData.append("file", selectedFile);
     try {
         const response = await cargarSinComisionProducto(formData)
-        console.log(response.status);
 
         if (response.status === 200) {
             toast.success(
