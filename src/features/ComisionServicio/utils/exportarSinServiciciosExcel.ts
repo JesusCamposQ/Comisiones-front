@@ -20,8 +20,6 @@ export const exportarSinServiciosExcel = async (servicios: ComisionSinServicio) 
     { header: "comision2", key: "comision2" },
   ];
 
-  console.log(servicios);
-
   const rows: any[] = [];
   
     if (servicios.data && servicios.data.length > 0) {

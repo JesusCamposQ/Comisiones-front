@@ -35,6 +35,7 @@ import Paginador from "@/shared/components/Paginador/Paginador";
 import { Llave, LlavesData } from "../interfaces/llaves.inteface";
 import toast, { Toaster } from "react-hot-toast";
 import formatoMoneda from "@/utils/formatoMoneda";
+import { AxiosError } from "axios";
 
 
 export default function MetasUIPage() {
@@ -84,11 +85,22 @@ export default function MetasUIPage() {
     }
   };
   useEffect(() => {
-    console.log(filter);
     refetch();
   }, [page, filter]);
 
   const listarLLaves = async () => {
+    if(cantidadMonturas < 0){
+      toast.error("Debe agregar al menos 1 montura");
+      return;
+    }
+    if(cantidadGafas < 0){
+      toast.error("Debe agregar al menos 1 gafa");
+      return;
+    }
+    if(cantidadLentes < 0){
+      toast.error("Debe agregar al menos 1 lente de contacto");
+      return;
+    }
     if (!sucursalSeleccionada){
       toast.error("Seleccione una sucursal");
       return;
@@ -104,7 +116,6 @@ export default function MetasUIPage() {
       sucursal: sucursalSeleccionada,
     };
     setLlaves((prev) => [...prev, llave]);
-    console.log(llaves);
   };
   
   const eliminarLLave = (index: number) => {
@@ -116,14 +127,20 @@ export default function MetasUIPage() {
     const data: LlavesData = {
       data: llaves
     }
+  try{
     const llavesRegistradas = await registrarLlaves(data);
     if(llavesRegistradas.status === 201){
       toast.success("Llaves registradas exitosamente");
       limpiarCampos();
-
+    }
+  }catch(error){
+    const e = error as AxiosError;
+    if(e.status === 409){
+      toast.error("Error: En alguna sucursal ya se han registrado las llaves");
     }else{
       toast.error("Error al registrar llaves");
     }
+  }
 
   };
   const limpiarCampos = () => {
@@ -164,20 +181,20 @@ export default function MetasUIPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4 md:p-6">
       <Toaster />
       <div className="mx-auto max-w-7xl space-y-6">
-        {/* Header */}
+        {/* Encabezado */}
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent uppercase">
-            Gestión de Metas
+            Gestión de Llaves
           </h1>
           <p className="text-slate-600">
-            Administra tus metas de manera eficiente
+            Administra tus llaves de manera eficiente
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Form */}
+          {/* Columna izquierda - Formulario */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Company and Branch Info */}
+            {/* Información de Empresa y Sucursal */}
             <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
               <CardHeader className="pb-4">
                 <CardTitle className="flex items-center gap-2 text-slate-700">
@@ -233,7 +250,7 @@ export default function MetasUIPage() {
               </CardContent>
             </Card>
 
-            {/* Inventory Information */}
+            {/* Información de Llaves */}
 
             <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
               <CardHeader className="pb-4">
@@ -256,7 +273,7 @@ export default function MetasUIPage() {
                     <option value="marca">Marca</option>
                   </select>
                 </div>
-                {/* Frames Section */}
+                {/* Sección de Monturas */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Eye className="h-4 w-4 text-amber-600" />
@@ -269,7 +286,9 @@ export default function MetasUIPage() {
                       </Label>
                       <Input
                         id="cantidadMonturas"
-                        onChange={(e) => setCantidadMonturas(Number(e.target.value))}
+                        onChange={(e) => {
+                          setCantidadMonturas(Number(e.target.value));
+                        }}
                         type="number"
                         placeholder="0"
                         className="border-slate-200 focus:border-amber-500 focus:ring-amber-500"
@@ -284,7 +303,10 @@ export default function MetasUIPage() {
                         <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                         <Input
                           id="precioMonturas"
-                          onChange={(e) => setPrecioMonturas(Number(e.target.value))}
+                          onChange={(e) => {
+                            setPrecioMonturas(Number(e.target.value));
+                          }}
+                          min={1}
                           type="number"
                           placeholder="0.00"
                           className="pl-10 border-slate-200 focus:border-amber-500 focus:ring-amber-500"
@@ -311,7 +333,7 @@ export default function MetasUIPage() {
 
                 <Separator className="bg-slate-200" />
 
-                {/* Glasses Section */}
+                {/* Sección de Gafas */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Eye className="h-4 w-4 text-purple-600" />
@@ -366,7 +388,7 @@ export default function MetasUIPage() {
 
                 <Separator className="bg-slate-200" />
 
-                {/* Contact Lenses Section */}
+                {/* Sección de Lentes de Contacto */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Contact className="h-4 w-4 text-teal-600" />
@@ -390,9 +412,9 @@ export default function MetasUIPage() {
               </CardContent>
             </Card>
 
-            {/* Brand Selection */}
+            {/* Sección de Marcas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Frame Brands */}
+              {/* Marcas de Monturas */}
               <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-slate-700">
@@ -422,7 +444,7 @@ export default function MetasUIPage() {
                 </CardContent>
               </Card>
 
-              {/* Glasses Brands */}
+              {/* Marcas de Gafas */}
               <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
                 <CardHeader className="pb-4">
                   <CardTitle className="text-lg text-slate-700">
@@ -454,7 +476,7 @@ export default function MetasUIPage() {
             </div>
           </div>
 
-          {/* Right Column - Brand Lists */}
+          {/* Columna derecha - Listas de Marcas */}
           <div className="space-y-6">
             <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
               <CardHeader className="pb-4">
@@ -538,7 +560,7 @@ export default function MetasUIPage() {
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Botones de Acción */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-sm"
           onClick={listarLLaves}>
@@ -553,7 +575,7 @@ export default function MetasUIPage() {
           </Button>
         </div>
 
-        {/* Data Table */}
+        {/* Tabla de Datos */}
         <Card className="shadow-sm border-0 bg-white/70 backdrop-blur-sm">
           <CardHeader className="pb-4">
             <CardTitle className="text-xl text-slate-700">

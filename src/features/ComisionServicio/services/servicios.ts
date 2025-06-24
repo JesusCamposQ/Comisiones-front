@@ -35,7 +35,6 @@ export const obtenerServiciosSinComision = async (limite: number, pagina: number
 export const registrarComisionServicio = async (data: ServicioSinComision) => {
     try {
         const response = await api.post("/api/comision/servicio", data);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);

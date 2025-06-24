@@ -29,7 +29,6 @@ export const MetasListadoPage = () => {
     }else{
       toast.error("Error al eliminar llave");
     }
-    console.log(response);
   }
 
   return (

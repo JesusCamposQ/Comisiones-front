@@ -4,7 +4,6 @@ import { Marcas } from "../interfaces/marcas.interface";
 import { Llave, LlavesData } from "../interfaces/llaves.inteface";
 
 export const registrarMetas = async (data: Metas) => {
-  console.log("Esta es la Data: " + data);
   try {
     const response = await api.post("/api/metas/producto/vip", data);
     return response.data;
@@ -24,16 +23,11 @@ export const obtenerMetas = async () => {
 };
 
 export const editarMetas = async (data: Datum) => {
-  console.log(data);
-  console.log("Esta es la MonturaMasGafa: " + data.monturaMasGafa);
-  console.log("Esta es la LenteDeContacto: " + data.lenteDeContacto);
-
   try {
     const response = await api.patch(`/api/metas/producto/vip/${data._id}`, {
       monturaMasGafa: Number(data.monturaMasGafa),
       lenteDeContacto: Number(data.lenteDeContacto),
     });
-    console.log(response);
     return response;
   } catch (error) {
     console.log(error);
@@ -41,7 +35,6 @@ export const editarMetas = async (data: Datum) => {
 };
 
 export const eliminarMetas = async (id: string) => {
-  console.log("Esta es la Data: " + id);
   try {
     const response = await api.delete(`/api/metas/producto/vip/${id}`);
     return response;
@@ -62,12 +55,10 @@ export const obtenerMarcas = async (
       nombre: filter,
     },
   });
-  console.log(response.data);
   return response.data;
 };
 
 export const registrarLlaves = async (data: LlavesData) => {
-  console.log("Esta es la Data: " + data);
   try {
     const response = await api.post("/api/metas/producto/vip", data);
     return response;
@@ -80,7 +71,6 @@ export const registrarLlaves = async (data: LlavesData) => {
 export const obtenerLlaves = async (): Promise<Llave[]> => {
   try {
     const response = await api.get("/api/metas/producto/vip");
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -89,7 +79,6 @@ export const obtenerLlaves = async (): Promise<Llave[]> => {
 };
 
 export const eliminarLlave = async (id: string): Promise<any> => {
-  console.log("Esta es la Data: " + id);
   try {
     const response = await api.delete(`/api/metas/producto/vip/${id}`);
     return response;

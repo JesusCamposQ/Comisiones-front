@@ -45,8 +45,8 @@ function AppRouter() {
             <Route path="combinacion-receta" element={<CombinacionRecetaPage />} />
           </Route>
           {/* <Route path="/metas/registro" element={<RegistroMetasPage />} /> */}
-          <Route path="/metas/registro" element={<MetasUIPage />} />
-          <Route path="/metas" element={<MetasListadoPage />} />
+          <Route path="/llaves/registro" element={<MetasUIPage />} />
+          <Route path="/llaves" element={<MetasListadoPage />} />
           <Route path="/usuarios">
             <Route index element={<UsuarioPage />} />
             <Route path="registro" element={<UsuarioRegistroPage />} />

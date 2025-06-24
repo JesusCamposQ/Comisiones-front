@@ -14,11 +14,9 @@ export const Autenticacion = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<AutenticacionI>();
 
   const onSubmit = async (data: AutenticacionI) => {
-   console.log(data);
     try {
       const response = await autenticacion(data);
       localStorage.setItem('username', data.username);
-      console.log(response);
       
       if (response.status === 200) {
         asignarToken(response.token);

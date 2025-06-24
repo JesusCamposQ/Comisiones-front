@@ -31,7 +31,6 @@ export const MetasPages = () => {
       toast.success("Metas eliminadas correctamente");
       refetch();
     }
-    console.log(response);
   };
 
   const handleEdit = (item: Datum) => {

@@ -3,7 +3,6 @@ import { saveAs } from "file-saver";
 import { Servicio } from "../interfaces/comisionServicio.interface";
 
 export const exportarServiciosExcel = async (servicios: Servicio[]) => {
-  console.log(servicios);
   const workbook = new ExcelJS.Workbook();
   const worksheetOne = workbook.addWorksheet("Comision Servicios",{
     properties:{
@@ -19,8 +18,6 @@ export const exportarServiciosExcel = async (servicios: Servicio[]) => {
     { header: "Comision 1", key: "comision1" },
     { header: "Comision 2", key: "comision2" },
   ];
-
-  console.log(servicios);
 
   const rows: any[] = [];
   

@@ -35,7 +35,6 @@ export function ModalRegistro({ setValor, refrescar }: ModalProps) {
     staleTime: 60 * 1000 * 10, // 10 minutos
   })
   const combinaciones: Datum[] = combinacionProducto?.data || [];
-  console.log(filtro)
   const onSubmit = () => {
     setClose(false)
     setFiltro({})

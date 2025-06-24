@@ -15,8 +15,6 @@ export const obtenerCombinacionReceta = async (limite: number, pagina: number, f
 export const eliminarCombinacionReceta = async (id: string) => {
   try {
     const response = await api.delete(`/api/comision/receta/${id}`);
-    console.log(response);
-    
     return response;
   } catch (error) {
     console.log(error);
@@ -28,8 +26,6 @@ export const eliminarCombinacionReceta = async (id: string) => {
 export const editarCombinacionReceta = async (idComision: string, monto: number) => {
   try {
     const response = await api.patch(`/api/comision/receta/`, { monto , idComision});
-    console.log(response);
-    
     return response;
   } catch (error) {
     console.log(error);

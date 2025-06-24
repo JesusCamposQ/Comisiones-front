@@ -38,7 +38,6 @@ export const ModalUsuarioEditar = ({
     try {
       data._id = usuario._id;
       const response = await editarUsuario(data);
-      console.log(response);
       if (response?.status === 200) {
         toast.success("Usuario editado exitosamente");
         setOpen(false);

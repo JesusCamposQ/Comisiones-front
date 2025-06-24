@@ -52,7 +52,6 @@ const RegistroComisionProductoPage = () => {
       limpiarComisiones();
       setRefrescar(!refrescar);
     }
-    console.log("Data Combinacion: ", dataCombinacion)
     queryClient.invalidateQueries({ queryKey: ["comisiones"] });
   }
   const eliminarComision = (index: number) => {

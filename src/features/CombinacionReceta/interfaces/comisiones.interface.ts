@@ -30,13 +30,13 @@ export interface ComisionReceta {
 
 
 export interface filtroCombinacionRecetaI {
-    material?:       string;
     tipoLente?:      string;
+    material?:       string;
+    tratamiento?:    string;
+    marcaLente?:     string;
+    tipoColorLente?: string;
     rango?:          string;
     colorLente?:     string;
-    marcaLente?:     string;
-    tratamiento?:    string;
-    tipoColorLente?: string;
 }
 
 

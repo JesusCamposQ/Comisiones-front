@@ -44,13 +44,11 @@ const ComisionRecetaPage = () => {
       combinacionReceta: valor.idcombinacion,
       data: comisiones || []
     }
-    console.log("Data Combinacion: ", dataCombinacion)
     const { status } = await registrarComisionReceta(dataCombinacion)
     if (status === 201) {
       toast.success("Comisiones registradas exitosamente");
       limpiarComisiones();
     }
-    console.log("Data Combinacion: ", dataCombinacion)
     queryClient.invalidateQueries({ queryKey: ["comisiones"] });
   }
   const eliminarComision = (index: number) => {

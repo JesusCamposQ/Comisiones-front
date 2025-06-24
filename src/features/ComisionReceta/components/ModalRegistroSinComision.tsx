@@ -122,9 +122,6 @@ const onSubmit: SubmitHandler<IComisionReceta> = (data) => {
       combinacionReceta: valor.idcombinacion,
       data: data,
     };
-    console.log(dataCombinacion);
-
-    console.log("Data Combinacion: ", dataCombinacion);
     try {
         const { status } = await registrarComisionReceta(dataCombinacion);
     if (status === 201) {
@@ -137,7 +134,7 @@ const onSubmit: SubmitHandler<IComisionReceta> = (data) => {
       console.log(error);
       
     }
-    console.log("Data Combinacion: ", dataCombinacion);
+
   };
 
   const limpiarComisiones = () => {

@@ -19,8 +19,6 @@ export const FiltrarServicios  = ({ servicios, filtro, setFiltrarServicio, page,
           (!filtro.nombre || servicio.nombre?.toLowerCase().includes(filtro.nombre.toLowerCase())) 
         );
       });
-      console.log('Filtro', filtro);
-      console.log('Here', Object.keys(filtro).length === 0);
       if (Object.keys(filtro).length === 0) {
         const datosPaginados = paginador(servicios, limite, page);
         setFiltrarServicio(datosPaginados);

@@ -22,7 +22,6 @@ const CombinacionProductoPage = () => {
     queryFn: () => obtenerComisionProductoMontura(20, page),
     staleTime: 60 * 1000 * 10,
   })
-  console.log(combinacionProducto);
   const combinacion: Datum[] = combinacionProducto?.data || [];
   if (isLoading) {
     return (

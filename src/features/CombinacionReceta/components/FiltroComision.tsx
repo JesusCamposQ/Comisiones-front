@@ -1,16 +1,16 @@
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Dispatch, SetStateAction } from "react";
-import { ComsionRecetaFiltro } from "../interfaces/comsionRecetaFiltro";
+import { filtroCombinacionRecetaI } from "../interfaces/comisiones.interface";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
-  setFiltro: Dispatch<SetStateAction<ComsionRecetaFiltro>>;
+  setFiltro: Dispatch<SetStateAction<filtroCombinacionRecetaI>>;
   className?: string;
 }
 
 export const FiltroComision = ({ setFiltro, className = "w-full text-left text-sm" }: Props) => {
-  const onChange = (field: keyof ComsionRecetaFiltro, value: string) => {
+  const onChange = (field: keyof filtroCombinacionRecetaI, value: string) => {
     if (!value.trim()) {
       setFiltro((prev) => {
         const newFiltro = { ...prev };
