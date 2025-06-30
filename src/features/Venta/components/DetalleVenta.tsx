@@ -21,6 +21,8 @@ export const DetalleVenta = ({
   lenteDeContacto,
   monturaVip,
   sucursal,
+  gestor,
+  asesor
 }: {
   ventas: VentaElement[];
   metaProductosVip: MetaProductosVip | null;
@@ -29,8 +31,11 @@ export const DetalleVenta = ({
   lenteDeContacto: number;
   empresa: string;
   sucursal: string;
-
+  gestor:boolean,
+  asesor:string
 }) => {
+  console.log('detalle gestor', asesor, gestor);
+  
   return (
     <div className="w-[98%] m-auto p-4 my-4 bg-gray-50 rounded-lg shadow-md">
       <Table>
@@ -70,7 +75,7 @@ export const DetalleVenta = ({
                       {
 
                         venta.detalle.map((item, i) => {
-                          const comision = calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento), sucursal)
+                          const comision = calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento), sucursal,gestor )
 
                           return <TableRow key={i} className="border-t border-zinc-300">
                             <TableCell className="px-2 py-1 bg-gray-100 text-left w-[500px] whitespace-pre-wrap break-words text-xs font-semibold" colSpan={2} >
@@ -88,7 +93,7 @@ export const DetalleVenta = ({
                             </TableCell>
                             <TableCell className="px-2 py-1 text-right">{item.importe}</TableCell>
                             <TableCell className="px-4 py-1 text-right">{comision.comison}</TableCell>
-                            <TableCell className="px-4 py-1 text-right">{porcentaje(item.importe, calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento),sucursal).comison).toFixed(2)} %</TableCell>
+                            <TableCell className="px-4 py-1 text-right">{porcentaje(item.importe, calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento),sucursal,gestor).comison).toFixed(2)} %</TableCell>
                           </TableRow>
                         })
 

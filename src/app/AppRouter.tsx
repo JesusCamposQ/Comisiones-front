@@ -27,6 +27,8 @@ import { RegistarComisionServicioPage } from '@/features/ComisionServicio/pages/
 import MetasUIPage from '@/features/Metas/pages/MetasUIPage';
 import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 import CargarComisionServicioPage from '@/features/ComisionServicio/pages/CargarComisionServicioPage';
+import { ListarAsesorPage } from '@/features/Asesor/page/ListarAsesorPage';
+
 function AppRouter() {
 
   const { isAunteticacion, token } = useContext(TokenContext)
@@ -68,6 +70,7 @@ function AppRouter() {
           <Route path="/cargar/combinaciones" element={<CargarCombinacionesPage />} />
           <Route path="/cargar/comision/producto" element={<CargarComisionProductoPage/>} />
           <Route path="/actualizar/combinaciones" element={<ActualizarComisionesPage />} />
+          <Route path="/listar/asesores" element={<ListarAsesorPage />} />
         </Route> :
           <Route path="/" element={<Autenticacion />} />
         }

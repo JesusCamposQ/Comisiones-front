@@ -4,6 +4,7 @@ export interface Venta {
   sucursal:         string;
   empresa:          string
   asesor:           string;
+  gestor:boolean
   gafaVip:          number;
   monturaVip:       number;
   lenteDeContacto:  number;

@@ -40,8 +40,8 @@ export const calcularComision = (
   metaProductosVip: MetaProductosVip | null,
   empresa: string,
   porcentaje: number,
-  sucursal: string
-  //importe?:number
+  sucursal: string,
+  gestor: boolean
 ) => {
   let llave: boolean = false;
   const productovip = gafaVip + monturaVip;
@@ -51,8 +51,6 @@ export const calcularComision = (
     : 0;
 
   let comisionProducto = 0;
-
- 
 
   if (Array.isArray(comisiones) && comisiones.length > 0) {
     const [mayorMonto, menorMonto] = comisiones.reduce(
@@ -64,23 +62,33 @@ export const calcularComision = (
     );
 
     if (empresa === "OPTICENTRO") {
-      if (
-        metaProductosVip &&
-        productovip >= llaveVip &&
-        lenteDeContacto >= metaProductosVip.lenteDeContacto
-      ) {
+
+      
+        
+      if (gestor) {
+        
         comisionProducto += mayorMonto.monto;
         llave = true;
-      } else if (sucursal === "OPTICENTRO PARAGUAY") {
-        comisionProducto += mayorMonto.monto;
+  
       } else {
-        comisionProducto += menorMonto.monto;
+        if (
+          metaProductosVip && gestor== false &&  productovip >= llaveVip &&
+          lenteDeContacto >= metaProductosVip.lenteDeContacto
+        ) {
+          comisionProducto += mayorMonto.monto;
+          llave = true;
+        } else if (sucursal === "OPTICENTRO PARAGUAY") {
+          comisionProducto += mayorMonto.monto;
+        } else {
+          comisionProducto += menorMonto.monto;
+        }
       }
     } else {
       comisionProducto += mayorMonto.monto;
     }
   }
-
+  console.log(llave);
+  
   return {
     comison: descontarPorcentajeAcomision(comisionProducto, porcentaje),
     llave,
@@ -94,7 +102,8 @@ export function calcularComisionTotal(
   monturaVip: number,
   lenteDeContacto: number,
   empresa: string,
-  sucursal: string
+  sucursal: string,
+  gestor: boolean
 ) {
   return ventas.reduce((acc, venta) => {
     const importeTotal = venta.detalle.reduce(
@@ -113,8 +122,8 @@ export function calcularComisionTotal(
           metaProductosVip,
           empresa,
           porcentajeDescuento,
-          sucursal
-          // detalle.importe  // Pasamos el importe del detalle actual
+          sucursal,
+          gestor
         );
         return acc + comision.comison;
       }, 0)
@@ -129,10 +138,12 @@ export function extraerLlave(
   monturaVip: number,
   lenteDeContacto: number,
   empresa: string,
-  sucursal: string
+  sucursal: string,
+  gestor: boolean,
 ) {
   let llave: boolean = false;
 
+  
   for (const venta of ventas) {
     const importeTotal = venta.detalle.reduce(
       (acc, detalle) => acc + detalle.importe,
@@ -148,12 +159,14 @@ export function extraerLlave(
         metaProductosVip,
         empresa,
         porcentajeDescuento,
-        sucursal
+        sucursal,
+        gestor
       );
       llave = comison.llave;
     }
   }
 
+  
   return llave;
 }
 
