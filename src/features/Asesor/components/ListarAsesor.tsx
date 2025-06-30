@@ -71,7 +71,7 @@ export const ListarAsesor = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {asesoresFiltrados.map((a, i) => (
+          {asesoresFiltrados.map((a) => (
             <TableRow key={a._id.toString()}>
               <TableCell className="font-medium">{a.sucursalNombre}</TableCell>
               <TableCell>{a.nombre}</TableCell>
