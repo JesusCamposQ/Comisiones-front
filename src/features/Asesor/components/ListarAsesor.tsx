@@ -13,11 +13,12 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 export const ListarAsesor = () => {
   const [asesores, setAsesores] = useState<ListarAsesorI[]>([]);
+  const [flag, setFlag]= useState<boolean>(false)
   const [busqueda, setBusqueda] = useState("");
 
   useEffect(() => {
     listar();
-  }, []);
+  }, [flag]);
 
   const listar = async () => {
     try {
@@ -39,6 +40,7 @@ export const ListarAsesor = () => {
     try {
         const response = await gestor(id, isChecked)
         if(response.status == 200) {
+            setFlag(!flag)
             toast.success('Seleccionado correactamente')
         }
     } catch (error) {
