@@ -14,6 +14,7 @@ export interface combinacionRecetaI {
     marcaLente:     string;
     tratamiento:    string;
     tipoColorLente: string;
+    fecha: string
 }
 
 export interface ComisionReceta {

@@ -38,7 +38,8 @@ const crearDatosConCamposCalculados = (datosBase: Venta[]) => {
       item.monturaVip,
       item.lenteDeContacto,
       item.empresa,
-      item.sucursal
+      item.sucursal,
+      item.gestor
     ),
   }));
 };
@@ -94,7 +95,8 @@ const VentaPage = () => {
                 venta.monturaVip,
                 venta.lenteDeContacto,
                 venta.empresa,
-                venta.sucursal
+                venta.sucursal,
+                venta.gestor
               ),
             0
           )
@@ -131,6 +133,8 @@ const VentaPage = () => {
     setExpandedRowIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   
+    console.log(ventas);
+    
   return (
     <div className="flex flex-col w-full h-full gap-4 min-h-screen bg-gradient-to-br from-gray-50 to-neutral-50 p-4">
       <FiltroOC setFiltros={setFiltro} initialFilters={filtro} />
@@ -230,9 +234,12 @@ const VentaPage = () => {
                         venta.monturaVip,
                         venta.lenteDeContacto,
                         venta.empresa,
-                        venta.sucursal
+                        venta.sucursal,
+                        venta.gestor
                       ),
-                      venta.sucursal
+                      venta.sucursal,
+               
+                    
                     )}
                   </TableCell>
 
@@ -244,7 +251,9 @@ const VentaPage = () => {
                       venta.monturaVip,
                       venta.lenteDeContacto,
                       venta.empresa,
-                      venta.sucursal
+                      venta.sucursal,
+                      venta.gestor,
+         
                     )
                       ? "SI"
                       : "NO"}
@@ -269,6 +278,8 @@ const VentaPage = () => {
                         lenteDeContacto={venta.lenteDeContacto}
                         monturaVip={venta.monturaVip}
                         sucursal={venta.sucursal}
+                        gestor={venta.gestor}
+                        asesor={venta.asesor}
                       />
                     </TableCell>
                   </TableRow>

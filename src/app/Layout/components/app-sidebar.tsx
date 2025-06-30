@@ -157,6 +157,10 @@ const data = {
           title: "Usuarios",
           url: "/usuarios",
         },
+         {
+          title: "Asesor",
+          url: "/listar/asesores",
+        },
       ],
     },
   ]  

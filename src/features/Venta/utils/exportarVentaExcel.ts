@@ -67,7 +67,8 @@ export const exportarVentaExcel = async (
         venta.monturaVip,
         venta.lenteDeContacto,
         venta.empresa,
-        venta.sucursal
+        venta.sucursal,
+        venta.gestor
       ),
       llave: extraerLlave(
         venta.ventas,
@@ -76,14 +77,15 @@ export const exportarVentaExcel = async (
         venta.monturaVip,
         venta.lenteDeContacto,
         venta.empresa,
-        venta.sucursal
+        venta.sucursal,
+        venta.gestor,
+
       )
         ? "SI"
         : "NO",
     });
     for (const detalle of venta.ventas) {
       for (const item of detalle.detalle) {
-        
         const comision = calcularComision(
           item.comisiones,
           gafaVip,
@@ -95,7 +97,8 @@ export const exportarVentaExcel = async (
             detalle.detalle.reduce((acc, item) => acc + item.importe, 0),
             detalle.descuento
           ),
-          venta.sucursal
+          venta.sucursal,
+          venta.gestor
         );
         const comision1 = calcularComision(
           item.comisiones,
@@ -108,7 +111,8 @@ export const exportarVentaExcel = async (
             detalle.detalle.reduce((acc, item) => acc + item.importe, 0),
             detalle.descuento
           ),
-          venta.sucursal
+          venta.sucursal,
+          venta.gestor
         ) ;
         const llave =  comision1.llave  ? 'SI':'NO'
       
