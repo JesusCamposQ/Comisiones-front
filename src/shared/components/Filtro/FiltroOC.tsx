@@ -332,9 +332,15 @@ export default function FiltroOC({ setFiltros, initialFilters }: FiltroProps) {
                                     <span className="text-sm font-medium">Sucursales seleccionadas:</span>
                                 </div>
                                 {sucursalesFiltradas.map((sucursal) => (
-                                    <Badge key={sucursal._id} variant="secondary" className="flex items-center gap-1">
-                                        {sucursal.nombre}
-                                        <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilterSucursal(sucursal._id)} />
+                                    <Badge key={sucursal._id} variant="secondary" className="flex items-center gap-1 rounded-full">
+                                         {sucursal.nombre}
+                                        <Button 
+                                            onClick={()=>removeFilterSucursal(sucursal._id)} 
+                                            variant="ghost" 
+                                            className="rounded-full hover:bg-gray-200 cursor-pointer w-6 h-6"
+                                        >
+                                            <X className="h-3 w-3 cursor-pointer" />
+                                        </Button>
                                     </Badge>
                                 ))}
                             </div>
@@ -347,7 +353,13 @@ export default function FiltroOC({ setFiltros, initialFilters }: FiltroProps) {
                                     {tipoVentasFiltrados.map((tipoVenta) => (
                                         <Badge key={tipoVenta._id} variant="secondary" className="flex items-center gap-1">
                                             {tipoVenta.nombre}
-                                            <X className="h-3 w-3 cursor-pointer" onClick={() => removeFilterTipoVenta(tipoVenta._id)} />
+                                            <Button 
+                                                onClick={()=>removeFilterTipoVenta(tipoVenta._id)} 
+                                                variant="ghost" 
+                                                className="rounded-full hover:bg-gray-200 cursor-pointer w-6 h-6"
+                                            >
+                                                <X className="h-3 w-3 cursor-pointer" />
+                                            </Button>
                                         </Badge>
                                     ))}
                                 </div>
