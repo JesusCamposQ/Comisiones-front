@@ -87,8 +87,7 @@ export const calcularComision = (
       comisionProducto += mayorMonto.monto;
     }
   }
-  console.log(llave);
-  
+
   return {
     comison: descontarPorcentajeAcomision(comisionProducto, porcentaje),
     llave,

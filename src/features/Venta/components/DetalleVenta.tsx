@@ -22,7 +22,6 @@ export const DetalleVenta = ({
   monturaVip,
   sucursal,
   gestor,
-  asesor
 }: {
   ventas: VentaElement[];
   metaProductosVip: MetaProductosVip | null;
@@ -34,8 +33,7 @@ export const DetalleVenta = ({
   gestor:boolean,
   asesor:string
 }) => {
-  console.log('detalle gestor', asesor, gestor);
-  
+ 
   return (
     <div className="w-[98%] m-auto p-4 my-4 bg-gray-50 rounded-lg shadow-md">
       <Table>
@@ -56,9 +54,9 @@ export const DetalleVenta = ({
             <TableRow key={index}>
               <TableCell className="text-center" colSpan={2}>{venta.idVenta}</TableCell>
               <TableCell>{venta.precio}</TableCell>
-              <TableCell className="text-right">{venta.detalle.reduce((acc, item) => acc + item.importe, 0)}</TableCell>
+              <TableCell className="text-right">{venta.precioTotal}</TableCell>
               <TableCell className="text-right">{venta.descuento}</TableCell>
-              <TableCell className="text-right">{porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento)} %</TableCell>
+              <TableCell className="text-right">{porcentaje(venta.precioTotal, venta.descuento)} %</TableCell>
               <TableCell className="text-right font-semibold">{venta.montoTotal}</TableCell>
               <TableCell>
                 {venta.detalle && venta.detalle.length > 0 ? (
