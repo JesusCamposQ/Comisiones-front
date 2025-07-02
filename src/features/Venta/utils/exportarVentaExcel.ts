@@ -19,6 +19,7 @@ export const exportarVentaExcel = async (
   worksheetOne.columns = [
     { header: "Sucursal", key: "sucursal" },
     { header: "Asesor", key: "asesor" },
+    { header: "Puesto", key: "puesto" },
     { header: "Tickets", key: "tickets" },
     { header: "Importe Total", key: "importe_total" },
     { header: "Descuento", key: "descuento" },
@@ -30,6 +31,7 @@ export const exportarVentaExcel = async (
   worksheetTwo.columns = [
     { header: "Sucursal", key: "sucursal" },
     { header: "Asesor", key: "asesor" },
+    { header: "Puesto", key: "puesto" },
     { header: "ID Venta", key: "id_Venta" },
     { header: "Tipo precio", key: "tipo_precio" },
     { header: "Importe Total", key: "importeTotal" },
@@ -55,6 +57,7 @@ export const exportarVentaExcel = async (
     worksheetOne.addRow({
       sucursal: venta.sucursal,
       asesor: venta.asesor,
+      puesto: venta.gestor ? "Gestor" : "Asesor",
       tickets: venta.ventas.length,
       importe_total: totalImporte(venta.ventas),
       descuento: venta.totalDescuento,
@@ -119,6 +122,7 @@ export const exportarVentaExcel = async (
         worksheetTwo.addRow({
           sucursal: venta.sucursal,
           asesor: venta.asesor,
+          puesto: venta.gestor ? "Gestor" : "Asesor",
           id_Venta: detalle.idVenta,
           tipo_precio: detalle.precio,
           importeTotal: detalle.detalle.reduce(

@@ -26,6 +26,7 @@ import formatoMoneda from "@/utils/formatoMoneda";
 import { exportarVentaExcel } from "./utils/exportarVentaExcel";
 import { Ordenar } from "@/shared/components/Ordenar/Ordenar";
 import { ButtonDescarga } from "@/components/buttonDescarga";
+import { Badge } from "@/components/ui/badge";
 
 const crearDatosConCamposCalculados = (datosBase: Venta[]) => {
   return datosBase.map((item) => ({
@@ -211,7 +212,14 @@ const VentaPage = () => {
                   <TableCell className="font-medium">
                     {venta.sucursal}
                   </TableCell>
-                  <TableCell>{venta.asesor}</TableCell>
+                  <TableCell className="flex items-center gap-2">
+                    {venta.asesor}
+                    {venta.gestor && (
+                      <Badge className="bg-gradient-to-r from-emerald-600 to-green-400 text-white font-semibold uppercase">
+                        Gestor
+                      </Badge>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right">
                     {venta.ventas.length}
                   </TableCell>
@@ -255,8 +263,8 @@ const VentaPage = () => {
                       venta.gestor,
          
                     )
-                      ? "SI"
-                      : "NO"}
+                      ? <p className="text-green-500 font-semibold underline">SI</p>
+                      : <p>NO</p>}
                   </TableCell>
                   <TableCell className="text-right">
                     <button
