@@ -40,6 +40,7 @@ export interface MetaProductosVip {
 }
 
 export interface VentaElement {
+    precioTotal: number
   idVenta:       string;
   precio:    string
   descuento:     number;
