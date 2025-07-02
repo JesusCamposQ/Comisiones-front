@@ -1,10 +1,10 @@
-export interface Venta {
+  export interface Venta {
   _id: string;
   metaProductosVip: MetaProductosVip | null;
   sucursal:         string;
   empresa:          string
   asesor:           string;
-  gestor:boolean
+  gestor:           boolean;
   gafaVip:          number;
   monturaVip:       number;
   lenteDeContacto:  number;

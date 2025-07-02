@@ -52,7 +52,7 @@ export const calcularComision = (
 
   let comisionProducto = 0;
 
-  if (Array.isArray(comisiones) && comisiones.length > 0) {
+  if (Array.isArray(comisiones) && comisiones.length > 0 ) {
     const [mayorMonto, menorMonto] = comisiones.reduce(
       ([mayor, menor], actual) => [
         actual.monto > mayor.monto ? actual : mayor,
@@ -68,8 +68,7 @@ export const calcularComision = (
       if (gestor) {
         
         comisionProducto += mayorMonto.monto;
-        llave = true;
-  
+        llave = true;  
       } else {
         if (
           metaProductosVip && gestor== false &&  productovip >= llaveVip &&
@@ -88,6 +87,9 @@ export const calcularComision = (
     }
   }
   console.log(llave);
+  if(gestor || llave){
+    llave = true;
+  }
   
   return {
     comison: descontarPorcentajeAcomision(comisionProducto, porcentaje),
