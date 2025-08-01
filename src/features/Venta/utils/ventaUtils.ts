@@ -52,7 +52,7 @@ export const calcularComision = (
 
   let comisionProducto = 0;
 
-  if (Array.isArray(comisiones) && comisiones.length > 0 ) {
+  if (Array.isArray(comisiones) && comisiones.length > 0) {
     const [mayorMonto, menorMonto] = comisiones.reduce(
       ([mayor, menor], actual) => [
         actual.monto > mayor.monto ? actual : mayor,
@@ -60,18 +60,17 @@ export const calcularComision = (
       ],
       [{ monto: 0 }, { monto: Infinity }]
     );
+    console.log(empresa);
 
     if (empresa === "OPTICENTRO") {
-
-      
-        
       if (gestor) {
-        
         comisionProducto += mayorMonto.monto;
-        llave = true;  
+        llave = true;
       } else {
         if (
-          metaProductosVip && gestor== false &&  productovip >= llaveVip &&
+          metaProductosVip &&
+          gestor == false &&
+          productovip >= llaveVip &&
           lenteDeContacto >= metaProductosVip.lenteDeContacto
         ) {
           comisionProducto += mayorMonto.monto;
@@ -82,13 +81,15 @@ export const calcularComision = (
           comisionProducto += menorMonto.monto;
         }
       }
+    } else if (empresa === "TU OPTICA") {
+      comisionProducto += menorMonto.monto;
     } else {
       comisionProducto += mayorMonto.monto;
     }
   }
 
   console.log(llave);
-  if(gestor || llave){
+  if (gestor || llave) {
     llave = true;
   }
 
@@ -142,11 +143,10 @@ export function extraerLlave(
   lenteDeContacto: number,
   empresa: string,
   sucursal: string,
-  gestor: boolean,
+  gestor: boolean
 ) {
   let llave: boolean = false;
 
-  
   for (const venta of ventas) {
     const importeTotal = venta.detalle.reduce(
       (acc, detalle) => acc + detalle.importe,
@@ -169,7 +169,6 @@ export function extraerLlave(
     }
   }
 
-  
   return llave;
 }
 
