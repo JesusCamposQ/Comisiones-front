@@ -51,7 +51,8 @@ export const calcularComision = (
     : 0;
 
   let comisionProducto = 0;
-
+  console.log(empresa);
+  
   if (Array.isArray(comisiones) && comisiones.length > 0) {
     const [mayorMonto, menorMonto] = comisiones.reduce(
       ([mayor, menor], actual) => [
@@ -60,7 +61,7 @@ export const calcularComision = (
       ],
       [{ monto: 0 }, { monto: Infinity }]
     );
-    console.log(empresa);
+;
 
     if (empresa === "OPTICENTRO") {
       if (gestor) {
@@ -81,7 +82,7 @@ export const calcularComision = (
           comisionProducto += menorMonto.monto;
         }
       }
-    } else if (empresa === "TU OPTICA") {
+    } else if (empresa === "OPTISERVICE S.R.L") {
       comisionProducto += menorMonto.monto;
     } else {
       comisionProducto += mayorMonto.monto;
