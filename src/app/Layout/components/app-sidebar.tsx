@@ -43,6 +43,10 @@ const data = {
               title: "Comisiones Sucursal",
               url: "/ventas",
             },
+             {
+              title: "Ventas inválidas",
+              url: "/ventas/invalidas",
+            },
           ],
         },
         {

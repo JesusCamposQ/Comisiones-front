@@ -48,6 +48,7 @@ const AppRoutes = () => {
       <Route path="/tipomontura" element={<TipoMonturaPage />} />
       <Route path="/tratamiento" element={<TratamientoPage />} />
       <Route path="/venta" element={<VentaPage />} />
+     
     </Routes>
   );
 };

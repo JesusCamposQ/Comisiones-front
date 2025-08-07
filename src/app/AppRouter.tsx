@@ -28,17 +28,16 @@ import MetasUIPage from '@/features/Metas/pages/MetasUIPage';
 import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 import CargarComisionServicioPage from '@/features/ComisionServicio/pages/CargarComisionServicioPage';
 import { ListarAsesorPage } from '@/features/Asesor/page/ListarAsesorPage';
+import { VentasErrorPage } from '@/features/Venta/page/VentasErrorPage';
 
 function AppRouter() {
 
   const { isAunteticacion, token } = useContext(TokenContext)
-
-
-
   return (
     <BrowserRouter>
 
       <Routes>
+        
         <Route path="/" element={<Autenticacion />} />
         {token && isAunteticacion ? <Route path="/" element={<Layout />}>
           <Route path="/ventas" element={<VentaPage />} />
@@ -71,6 +70,7 @@ function AppRouter() {
           <Route path="/cargar/comision/producto" element={<CargarComisionProductoPage/>} />
           <Route path="/actualizar/combinaciones" element={<ActualizarComisionesPage />} />
           <Route path="/listar/asesores" element={<ListarAsesorPage />} />
+          <Route path="/ventas/invalidas" element={<VentasErrorPage/>} />
         </Route> :
           <Route path="/" element={<Autenticacion />} />
         }

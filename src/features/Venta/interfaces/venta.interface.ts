@@ -98,3 +98,14 @@ interface otrosI {
   descripcion:       string;
 }
 
+
+export interface VentasInvalidasI {
+  _id:string,
+  id_venta:string
+  montoTotal:number
+  precioTotal:number
+  fechaVenta:string
+  fechaFinalizacion:string
+  asesor:string
+  sucursal:string
+}
