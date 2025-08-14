@@ -10,20 +10,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Venta } from "./interfaces/venta.interface";
-import obtenerVentas from "./services/obtenerVentas";
-import { DetalleVenta } from "./components/DetalleVenta";
-import { FiltroI } from "./interfaces/filtro.interface";
+import { Venta } from "../interfaces/venta.interface";
+import obtenerVentas from "../services/obtenerVentas";
+import { DetalleVenta } from "../components/DetalleVenta";
+import { FiltroI } from "../interfaces/filtro.interface";
 import { formatDate } from "@/shared/utils/formatDate";
 import FiltroOC from "@/shared/components/Filtro/FiltroOC";
 import {
   calcularComisionTotal,
   extraerLlave,
   totalImporte,
-} from "./utils/ventaUtils";
-import { Totales } from "./interfaces/totales.interface";
+} from "../utils/ventaUtils";
+import { Totales } from "../interfaces/totales.interface";
 import formatoMoneda from "@/utils/formatoMoneda";
-import { exportarVentaExcel } from "./utils/exportarVentaExcel";
+import { exportarVentaExcel } from "../utils/exportarVentaExcel";
 import { Ordenar } from "@/shared/components/Ordenar/Ordenar";
 import { ButtonDescarga } from "@/components/buttonDescarga";
 import { Badge } from "@/components/ui/badge";
@@ -134,7 +134,7 @@ const VentaPage = () => {
     setExpandedRowIndex((prevIndex) => (prevIndex === index ? null : index));
   };
   
-    console.log(ventas);
+   
     
   return (
     <div className="flex flex-col w-full h-full gap-4 min-h-screen bg-gradient-to-br from-gray-50 to-neutral-50 p-4">

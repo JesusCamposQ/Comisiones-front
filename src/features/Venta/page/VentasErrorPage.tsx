@@ -1,4 +1,4 @@
-import { VentasInvalidas } from "../components/ventasInvalidas"
+import { VentasInvalidas } from "../components/VentasInvalidas"
 
 export const VentasErrorPage = () => {
   return (

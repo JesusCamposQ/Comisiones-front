@@ -1,5 +1,5 @@
 import ProductoPage from '../features/Producto/ProductoPage';
-import VentaPage from '../features/Venta/VentaPage';
+import VentaPage from '../features/Venta/page/VentaPage';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout/Layout';
