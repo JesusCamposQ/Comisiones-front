@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Loader = () => {
   return (
     <div className="fixed inset-0 flex justify-center items-center">
