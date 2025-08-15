@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { BookPlus, Frown } from "lucide-react";
-import { ComsionProductoFiltro } from "../interfaces/comsionProductoFiltro";
 import { Datum } from "../interfaces/producto.interface";
-import { FiltroComisionProducto } from "../components/FiltroComisionProducto";
 import { ModalRegistroSinComisionProducto } from "../components/ModalRegistroSinComisionProducto";
 import toast, { Toaster } from "react-hot-toast";
 import { Banner } from "@/shared/components/Banner/Banner";
 import { obtenerSinComisionProductoLenteContacto } from "../services/serviciosComisionProducto";
 import { exportarExcelProducto } from "../utils/exportarExcelProducto";
-import { FiltrarCombinacion } from "../hooks/FiltrarCombinacion";
-import { useQuery } from "@tanstack/react-query";
 import Paginador from "@/shared/components/Paginador/Paginador";
 import { Mensaje } from "@/shared/components/Mensaje/Mensaje";
+import { SelectFilter } from "@/components/Filtro/SelectFilter";
 
 interface FormValues {
   idcombinacion: string;
@@ -21,40 +18,41 @@ interface FormValues {
 }
 
 export const SinComisionLenteContactoPage = () => {
-  const [filtro, setFiltro] = useState<ComsionProductoFiltro>({});
   const [actualizar, setActualizar] = useState(false);
   const [isDownload, setIsDownload] = useState(false);
   const [open, setOpen] = useState(false);
-  const [filtrarCombinacion, setFiltrarCombinacion] = useState<Datum[]>([]);
+  const [combinacionProducto, setCombinacionProducto] = useState<Datum[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [valor, setValor] = useState<FormValues>({
     idcombinacion: "",
     codigo: "",
     tipoPrecio: "",
   });
   const [page, setPage] = useState(1);
-  const itemsPerPage = 10; // Número de elementos por página
-
-  const {
-    data: combinacionProducto,
-    isLoading,
-    refetch,
-  } = useQuery<Datum[]>({
-    queryKey: ["combinacion-sin-comision-producto-lente-contacto", page],
-    queryFn: () => obtenerSinComisionProductoLenteContacto(),
-    staleTime: 60 * 1000 * 10, // 10 minutos
-  });
 
   useEffect(() => {
+    const fetchCombinaciones = async () => {
+      const response = await obtenerSinComisionProductoLenteContacto();
+      setCombinacionProducto(response);
+      setIsLoading(false);
+    };
+    fetchCombinaciones();
+  }, [page]);
+
+  useEffect(() => {
+
     setTimeout(() => {
       if (actualizar) {
+        refetch();
         toast.success("Comisiones actualizadas exitosamente");
       }
       setActualizar(false);
     }, 50);
   }, [actualizar]);
-  useEffect(() => {
-    refetch();
-  }, [filtro]);
+
+  const refetch = () => {
+    obtenerSinComisionProductoLenteContacto();
+  };
 
   const agregarComision = (combinacion: Datum) => {
     const descripcion = `${combinacion.tipoProducto} / ${combinacion.serie} / ${combinacion.codigoQR} / ${combinacion.marca} / ${combinacion.color}`;
@@ -68,16 +66,177 @@ export const SinComisionLenteContactoPage = () => {
 
   const descargar = async () => {
     setIsDownload(true);
-    if (!combinacionProducto) return;
-    await exportarExcelProducto(combinacionProducto);
+    if (filteredData) {
+      exportarExcelProducto(filteredData);
+    }
     setIsDownload(false);
   };
   const combinaciones: Datum[] = combinacionProducto || [];
-  FiltrarCombinacion({ combinaciones, filtro, setFiltrarCombinacion, setPage, page });
-  // Calcular datos paginados
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const datosPaginados = filtrarCombinacion.slice(startIndex, endIndex);
+
+  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
+  const filteredData = useMemo(() => {
+    let result = combinaciones;
+
+    // Aplicar filtros en el orden correcto
+    const filterOrder = ['tipoPrecio', 'marca', 'color', 'tipoMontura', 'serie', 'importe'];
+
+    filterOrder.forEach(column => {
+      const filterValues = activeFilters[column];
+      if (filterValues && filterValues.length > 0) {
+        result = result.filter(item => {
+          const value = item[column as keyof typeof item];
+          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+          return filterValues.includes(normalizedValue);
+        });
+      }
+    });
+
+    return result;
+  }, [activeFilters]);
+  // Función optimizada para manejar cambios de filtro
+  const handleFilterChange = useCallback((column: string, selectedValues: string[]) => {
+    setActiveFilters(prev => {
+      // Si no hay cambio, no actualizar
+      const currentValues = prev[column] || [];
+      if (JSON.stringify(currentValues.sort()) === JSON.stringify(selectedValues.sort())) {
+        return prev;
+      }
+
+      const newFilters = { ...prev };
+
+      if (selectedValues.length === 0) {
+        delete newFilters[column];
+      } else {
+        newFilters[column] = selectedValues;
+      }
+
+      return newFilters;
+    });
+  }, []);
+
+  // Funciones específicas para cada filtro
+  const handleTipoPrecioFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.tipoPrecio;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('tipoPrecio', selectedValues);
+  }, [handleFilterChange]);
+
+  const handleMarcaFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.marca;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('marca', selectedValues);
+  }, [handleFilterChange]);
+
+  const handleColorFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.color;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('color', selectedValues);
+  }, [handleFilterChange]);
+
+  const handleTipoMonturaFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.tipoMontura;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('tipoMontura', selectedValues);
+  }, [handleFilterChange]);
+
+  const handleImporteFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.importe;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('importe', selectedValues);
+  }, [handleFilterChange]);
+
+  const handleSerieFilter = useCallback((filteredByThisColumn: any[]) => {
+    const selectedValues = filteredByThisColumn.map(item => {
+      const value = item.serie;
+      return value === null || value === undefined ? '(En blanco)' : String(value);
+    });
+    handleFilterChange('serie', selectedValues);
+  }, [handleFilterChange]);
+
+  // Calcular datos disponibles para cada filtro
+  const dataForMarca = useMemo(() => {
+    let result = combinaciones;
+    if (activeFilters.tipoPrecio) {
+      result = result.filter(item => {
+        const value = item.tipoPrecio;
+        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+        return activeFilters.tipoPrecio.includes(normalizedValue);
+      });
+    }
+    return result;
+  }, [activeFilters.tipoPrecio]);
+
+  const dataForColor = useMemo(() => {
+    let result = combinaciones;
+    if (activeFilters.tipoPrecio) {
+      result = result.filter(item => {
+        const value = item.tipoPrecio;
+        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+        return activeFilters.tipoPrecio.includes(normalizedValue);
+      });
+    }
+    if (activeFilters.marca) {
+      result = result.filter(item => {
+        const value = item.marca;
+        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+        return activeFilters.marca.includes(normalizedValue);
+      });
+    }
+    return result;
+  }, [activeFilters.tipoPrecio, activeFilters.marca]);
+
+  const dataForTipoMontura = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marca', 'color'].forEach(column => {
+      if (activeFilters[column]) {
+        result = result.filter(item => {
+          const value = item[column as keyof typeof item];
+          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+          return activeFilters[column].includes(normalizedValue);
+        });
+      }
+    });
+    return result;
+  }, [activeFilters.tipoPrecio, activeFilters.marca, activeFilters.color]);
+
+  const dataForSerie = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marca', 'color', 'tipoMontura'].forEach(column => {
+      if (activeFilters[column]) {
+        result = result.filter(item => {
+          const value = item[column as keyof typeof item];
+          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+          return activeFilters[column].includes(normalizedValue);
+        });
+      }
+    });
+    return result;
+  }, [activeFilters.tipoPrecio, activeFilters.marca, activeFilters.color, activeFilters.tipoMontura]);
+
+  const dataForImporte = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marca', 'color', 'tipoMontura', 'serie'].forEach(column => {
+      if (activeFilters[column]) {
+        result = result.filter(item => {
+          const value = item[column as keyof typeof item];
+          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+          return activeFilters[column].includes(normalizedValue);
+        });
+      }
+    });
+    return result;
+  }, [activeFilters.tipoPrecio, activeFilters.marca, activeFilters.color, activeFilters.tipoMontura, activeFilters.serie]);
+
 
   return (
     <div className="mx-auto flex flex-col gap-4">
@@ -88,10 +247,53 @@ export const SinComisionLenteContactoPage = () => {
         handleDownload={descargar}
         isDownload={isDownload}
       />
-      <FiltroComisionProducto setFiltro={setFiltro} />
+      <div className="flex gap-4 justify-center items-center mx-auto p-5 bg-sky-50 rounded-lg border border-sky-300">
+        <SelectFilter
+          data={combinaciones}
+          column="tipoPrecio"
+          onFilter={handleTipoPrecioFilter}
+          placeholder="Buscar tipo precio..."
+          allowSorting={false}
+        />
+        <SelectFilter
+          data={dataForMarca}
+          column="marca"
+          onFilter={handleMarcaFilter}
+          placeholder="Buscar marca..."
+          allowSorting={false}
+        />
+        <SelectFilter
+          data={dataForColor}
+          column="color"
+          onFilter={handleColorFilter}
+          placeholder="Buscar color..."
+          allowSorting={true}
+        />
+        <SelectFilter
+          data={dataForTipoMontura}
+          column="tipoMontura"
+          onFilter={handleTipoMonturaFilter}
+          placeholder="Buscar tipo montura..."
+          allowSorting={true}
+        />
+        <SelectFilter
+          data={dataForSerie}
+          column="serie"
+          onFilter={handleSerieFilter}
+          placeholder="Buscar serie..."
+          allowSorting={true}
+        />
+        <SelectFilter
+          data={dataForImporte}
+          column="importe"
+          onFilter={handleImporteFilter}
+          placeholder="Buscar importe..."
+          allowSorting={true}
+        />
+      </div>
       <p className="mx-2 text-xs text-gray-500 dark:text-gray-400">
-        Mostrando <span className="font-medium">{datosPaginados.length}</span>{" "}
-        de <span className="font-medium">{filtrarCombinacion.length}</span>{" "}
+        Mostrando <span className="font-medium">{filteredData.length}</span>{" "}
+        de <span className="font-medium">{filteredData.length}</span>{" "}
         registros
       </p>
 
@@ -117,8 +319,8 @@ export const SinComisionLenteContactoPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filtrarCombinacion &&
-                filtrarCombinacion.map((combinacion: Datum, index: number) => (
+              {filteredData &&
+                filteredData.map((combinacion: Datum, index: number) => (
                   <tr
                     key={combinacion._id + index}
                     className="border-b border-gray-200"
@@ -155,15 +357,15 @@ export const SinComisionLenteContactoPage = () => {
           </table>
 
           {/* Paginación mejorada */}
-          {Object.keys(filtro).length == 0 && (
-          <Paginador
-            filtrar={filtrarCombinacion}
-            page={page}
-            setPage={setPage}
-          />)}
+          {Object.keys(activeFilters).length == 0 && (
+            <Paginador
+              filtrar={filteredData}
+              page={page}
+              setPage={setPage}
+            />)}
           {/* Mensaje cuando no hay datos */}
           <Mensaje
-            numeroElementos={filtrarCombinacion.length}
+            numeroElementos={filteredData.length}
             isLoading={isLoading}
             mensaje="No se encontraron registros con los filtros aplicados"
             icono={<Frown className="w-12 h-12 text-gray-500" />}
@@ -177,7 +379,7 @@ export const SinComisionLenteContactoPage = () => {
         setOpen={setOpen}
         open={open}
         setActualizar={setActualizar}
-        
+
       />
     </div>
   );

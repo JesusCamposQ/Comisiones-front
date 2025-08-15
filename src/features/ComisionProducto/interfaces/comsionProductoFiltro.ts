@@ -22,4 +22,10 @@ export interface ComisionProducto {
   comision?: number;
   flag?: string;
 }
-  
+
+
+export interface CampoFiltro {
+  key: keyof ComsionProductoFiltro;
+  name: string;
+  placeholder: string;
+}
