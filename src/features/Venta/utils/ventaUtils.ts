@@ -61,7 +61,7 @@ export const calcularComision = (
       ],
       [{ monto: 0 }, { monto: Infinity }]
     );
-;
+  ;
 
     if (empresa === "OPTICENTRO") {
       if (gestor) {

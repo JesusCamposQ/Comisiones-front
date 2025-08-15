@@ -20,7 +20,7 @@ import TipoColorLentePage from '../features/TipoColorLente/TipoColorLentePage';
 import TipoLentePage from '../features/TipoLente/TipoLentePage';
 import TipoMonturaPage from '../features/TipoMontura/TipoMonturaPage';
 import TratamientoPage from '../features/Tratamiento/TratamientoPage';
-import VentaPage from '../features/Venta/VentaPage';
+import VentaPage from '../features/Venta/page/VentaPage';
 import {AutenticacionPage} from '../features/Autenticacion/page/AutenticacionPage'
 
 const AppRoutes = () => {
@@ -48,6 +48,7 @@ const AppRoutes = () => {
       <Route path="/tipomontura" element={<TipoMonturaPage />} />
       <Route path="/tratamiento" element={<TratamientoPage />} />
       <Route path="/venta" element={<VentaPage />} />
+     
     </Routes>
   );
 };
