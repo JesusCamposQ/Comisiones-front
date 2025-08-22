@@ -1,4 +1,3 @@
-import { da } from "date-fns/locale";
 
 export interface Usuario {
     _id: string;

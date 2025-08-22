@@ -11,7 +11,6 @@ import { eliminarUsuario, obtenerUsuario } from "../services/serviciosUsuario";
 import { Button } from "@/components/ui/button";
 import { Pencil, PlusCircle, Trash2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { ModalUsuarioEditar } from "../components/ModalUsuarioEditar";
 import { useEffect, useState } from "react";
 import { Usuario } from "../interfaces/usuario.interface";
 import { Badge } from "@/components/ui/badge";

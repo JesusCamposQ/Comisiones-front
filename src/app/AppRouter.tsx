@@ -29,7 +29,6 @@ import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 import CargarComisionServicioPage from '@/features/ComisionServicio/pages/CargarComisionServicioPage';
 import { ListarAsesorPage } from '@/features/Asesor/page/ListarAsesorPage';
 import { VentasErrorPage } from '@/features/Venta/page/VentasErrorPage';
-import { EditarUsuarioPage } from '@/features/Usuario/pages/EditarUsuarioPage';
 
 function AppRouter() {
 

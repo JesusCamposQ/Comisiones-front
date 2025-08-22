@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Ban, Eye, EyeOff } from "lucide-react";
+import {  useEffect, useState } from "react";
+import { Ban} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,12 +12,12 @@ import {
 } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
 import { ErrorUser, Usuario } from "../interfaces/usuario.interface";
-import { crearUsuario, editarUsuario } from "../services/serviciosUsuario";
+import { editarUsuario } from "../services/serviciosUsuario";
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate, useParams } from "react-router";
+
 import { AxiosError } from "axios";
 import { ListarAsesor } from "../components/ListarAsesor";
-import { da } from "date-fns/locale";
+
 
 interface Props {
   usuario: Usuario;
