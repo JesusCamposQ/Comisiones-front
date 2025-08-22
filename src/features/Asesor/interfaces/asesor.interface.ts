@@ -4,3 +4,10 @@ export interface Asesor {
     sucursalNombre:string,
     idSucursal:string,
 }
+
+export interface AsesorSinUsuario {
+    id:string,
+    nombre:string,
+    sucursal:string,
+  
+}

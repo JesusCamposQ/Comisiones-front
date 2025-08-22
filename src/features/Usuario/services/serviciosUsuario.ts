@@ -32,10 +32,13 @@ export const eliminarUsuario = async (id: string) => {
 
 export const editarUsuario = async (usuario: Usuario) => {
     try {
+        console.log('service', usuario._id);
+        
         const resultado = await api.patch("api/usuario/" + usuario._id, usuario);
         return resultado;
     } catch (error) {
-        console.log(error);
+        throw error
+
     }
 }
 

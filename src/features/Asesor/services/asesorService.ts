@@ -1,5 +1,6 @@
 import api from "@/app/service/api"
 import { ListarAsesorI } from "../interface/asesor"
+import { AsesorSinUsuario } from "../interfaces/asesor.interface"
 
 
 export const listarAsesor=async():Promise<ListarAsesorI[]>=> {
@@ -19,6 +20,16 @@ export const gestor=async(id:string, gestor:boolean):Promise<{status:number}>=> 
                 gestor:gestor
             }
         )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+
+export const listarAsesorSinUsuario=async():Promise<AsesorSinUsuario[]>=> {
+    try {
+        const response = await  api.get(`api/asesor/sin/usuario`)
         return response.data
     } catch (error) {
         throw error

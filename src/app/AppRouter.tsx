@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Layout/Layout';
 import { CombinacionRecetaPage } from '@/features/CombinacionReceta';
 import { Autenticacion } from '@/features/Autenticacion/components/Autenticacion';
-import { UsuarioPage } from '@/features/Usuario/UsuarioPage';
+import { UsuarioPage } from '@/features/Usuario/pages/UsuarioPage';
 import { UsuarioRegistroPage } from '@/features/Usuario/pages/UsuarioRegistroPage';
 import { useContext } from 'react';
 import { TokenContext } from '@/features/Autenticacion/context/TokenProvider';
@@ -29,6 +29,7 @@ import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 import CargarComisionServicioPage from '@/features/ComisionServicio/pages/CargarComisionServicioPage';
 import { ListarAsesorPage } from '@/features/Asesor/page/ListarAsesorPage';
 import { VentasErrorPage } from '@/features/Venta/page/VentasErrorPage';
+import { EditarUsuarioPage } from '@/features/Usuario/pages/EditarUsuarioPage';
 
 function AppRouter() {
 
@@ -71,6 +72,7 @@ function AppRouter() {
           <Route path="/actualizar/combinaciones" element={<ActualizarComisionesPage />} />
           <Route path="/listar/asesores" element={<ListarAsesorPage />} />
           <Route path="/ventas/invalidas" element={<VentasErrorPage/>} />
+       
         </Route> :
           <Route path="/" element={<Autenticacion />} />
         }

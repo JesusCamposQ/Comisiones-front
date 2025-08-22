@@ -1,11 +1,15 @@
+import { da } from "date-fns/locale";
+
 export interface Usuario {
     _id: string;
     nombre: string;
     apellidos: string;
     username: string;
     password?: string;
+    sucursales?: dataAsesor[];
     rol: string;
     flag?: string;
+    asesorUsuario?:string[]
 }
 
 export enum Role {
@@ -23,4 +27,7 @@ export interface ErrorUser {
 export interface Error {
     propiedad: string;
     errors:    string[];
+}
+interface dataAsesor {
+    sucursal:string, asesor:string
 }
