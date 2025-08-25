@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Ban, Eye, EyeOff } from "lucide-react";
+import {  useEffect, useState } from "react";
+import { Ban} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,15 +11,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { AsesorSeleccionadoI, ErrorUser, Usuario } from "../interfaces/usuario.interface";
-import { crearUsuario } from "../services/serviciosUsuario";
+import { ErrorUser, Usuario } from "../interfaces/usuario.interface";
+import { editarUsuario } from "../services/serviciosUsuario";
 import { Toaster, toast } from "react-hot-toast";
-import { useNavigate } from "react-router";
+
 import { AxiosError } from "axios";
 import { ListarAsesor } from "../components/ListarAsesor";
 
-export const UsuarioRegistroPage = () => {
-  const navigate = useNavigate();
+
+interface Props {
+  usuario: Usuario;
+  refetch:()=>void;
+  setMostrarEdicion:(value:boolean)=>void;
+  mostrarEdicion:boolean;
+
+}
+
+
+
+export const EditarUsuarioPage = ({
+  usuario,
+  refetch,
+  mostrarEdicion,
+  setMostrarEdicion
+}: Props) => {  
   const {
     register,
     handleSubmit,
@@ -29,59 +44,65 @@ export const UsuarioRegistroPage = () => {
   } = useForm<Usuario>();
 
 
-  const [error, setError] = useState<any[]>([]);
-  const [errorUser, setErrorUser] = useState<string>()
-  const [showPassword, setShowPassword] = useState(false);
-    const [asesorSelect, setAsesorSelect] = useState<AsesorSeleccionadoI>({
-      apellidos:"",
-      nombres:"",
-      usuario:""
-    });
-  const [asesores, setAsesores]=useState<string[]>([])
+  const [asesores, setAsesores] = useState<string[]>([])
   const rolSeleccionado = watch("rol")
+  useEffect(() => {
+    setValue("rol", usuario.rol)
+    setValue("apellidos", usuario.apellidos)
+    setValue("nombre", usuario.nombre)
+    const data: string[] = []
 
-  useEffect(()=>{
-    console.log("se");
-    setValue("nombre", asesorSelect.nombres)
-    setValue("apellidos", asesorSelect.apellidos)
-    setValue("username", asesorSelect.usuario)
     
-  },[asesorSelect])
+    if (usuario.sucursales && usuario.sucursales.length > 0) {
+      for (const da of usuario.sucursales) {
+        if(da.asesor){
+        data.push(da.asesor)
+        }
+      }
+    }
+;
+    
+    setAsesores(data)
+  }, [usuario])
+
   const onSubmit = async (data: Usuario) => {
     data.asesorUsuario = asesores
+    data._id = usuario._id
+    console.log('a', data);
+    
     try {
-      const response = await crearUsuario(data);
+    ;
+      
+        const response = await editarUsuario(data);
+        console.log(response);
+        
+        if (response?.status === 200) {
 
-      if (response?.status === 201) {
-        setError([])
-        setErrorUser('')
-        toast.success("Usuario creado exitosamente");
-        setTimeout(() => {
-          navigate("/usuarios");
-        }, 1000);
-      } else {
-        setError([])
-        toast.error("Error: " + response?.status);
-      }
+          toast.success("Usuario creado exitosamente");
+          refetch()
+          setMostrarEdicion(!mostrarEdicion)
+        } else {
+
+          toast.error("Error: " + response?.status);
+        }
+      
+
     } catch (error) {
-      setError([])
+ console.log(error);
       const e = error as AxiosError<ErrorUser>;
 
       if (e.status == 400) {
-        e.response?.data.errors &&
-          Array.isArray(e.response?.data.errors) &&
-          setError(e.response.data.errors);
+
       }
 
       if (e.status == 409) {
-        setErrorUser('')
-        setErrorUser('El usuario ya existe')
+
       }
       toast.error("Error al crear el usuario");
     }
   };
 
-console.log('asesore selccionador', asesores);
+
 
 
   return (
@@ -107,8 +128,8 @@ console.log('asesore selccionador', asesores);
               </Label>
               <Input
                 id="nombre"
-              
                 placeholder="Ingresa tu nombre"
+
                 {...register("nombre", { required: true })}
                 className="border-blue-200 focus-visible:ring-blue-500"
               />
@@ -128,7 +149,7 @@ console.log('asesore selccionador', asesores);
               </Label>
               <Input
                 id="apellidos"
-                 
+
                 placeholder="Ingresa tus apellidos"
                 {...register("apellidos", { required: true })}
                 className="border-blue-200 focus-visible:ring-blue-500"
@@ -140,7 +161,7 @@ console.log('asesore selccionador', asesores);
               )}
             </div>
 
-            <div className="space-y-2">
+            {/*  <div className="space-y-2">
               <Label
                 htmlFor="username"
                 className="text-sm font-medium text-blue-800"
@@ -148,7 +169,6 @@ console.log('asesore selccionador', asesores);
                 Nombre de usuario
               </Label>
               <Input
-            
                 id="username"
                 placeholder="Ingresa tu nombre de usuario"
                 {...register("username", { required: true })}
@@ -164,7 +184,7 @@ console.log('asesore selccionador', asesores);
                   {errorUser}
                 </div>
               )}
-            </div>
+            </div> 
 
             <div className="space-y-2">
               <Label
@@ -220,7 +240,7 @@ console.log('asesore selccionador', asesores);
                   })}
                 </div>
               )}
-            </div>
+            </div>*/}
 
             <div className="space-y-2">
               <Label
@@ -231,6 +251,7 @@ console.log('asesore selccionador', asesores);
               </Label>
               <select
                 id="rol"
+
                 {...register("rol", { required: true })}
                 className="border-blue-200 focus:ring-blue-500"
               >
@@ -263,7 +284,7 @@ console.log('asesore selccionador', asesores);
 
       {
         (rolSeleccionado === "GESTOR" || rolSeleccionado === "ASESOR") && <>
-          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} setAsesorData={setAsesorSelect}/>
+          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} />
 
         </>
       }

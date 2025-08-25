@@ -1,11 +1,14 @@
+
 export interface Usuario {
     _id: string;
     nombre: string;
     apellidos: string;
     username: string;
     password?: string;
+    sucursales?: dataAsesor[];
     rol: string;
     flag?: string;
+    asesorUsuario?:string[]
 }
 
 export enum Role {
@@ -24,3 +27,13 @@ export interface Error {
     propiedad: string;
     errors:    string[];
 }
+interface dataAsesor {
+    sucursal:string, asesor:string
+}
+
+export interface AsesorSeleccionadoI {
+    nombres:string
+    apellidos:string
+    usuario:string
+}
+
