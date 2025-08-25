@@ -1,8 +1,18 @@
 import { AsesorSinUsuario } from "@/features/Asesor/interfaces/asesor.interface";
 import { listarAsesorSinUsuario } from "@/features/Asesor/services/asesorService";
 import { useEffect, useState } from "react";
+import { AsesorSeleccionadoI } from "../interfaces/usuario.interface";
+import { extraerApellido, extraerNombre, generarUsuaurio } from "../util/usuarioUtil";
 
-export const ListarAsesor = ({asesoresSeleccionados,setAsesoresSeleccionados}:{asesoresSeleccionados:string[] , setAsesoresSeleccionados:(asesor:string[])=> void}) => {
+export const ListarAsesor = ({
+  asesoresSeleccionados,
+  setAsesoresSeleccionados,
+  setAsesorData,
+}: {
+  asesoresSeleccionados: string[];
+  setAsesoresSeleccionados: (asesor: string[]) => void;
+  setAsesorData?: (data: AsesorSeleccionadoI) => void;
+}) => {
   const [asesores, setAsesores] = useState<AsesorSinUsuario[]>([]);
   const [busqueda, setBusqueda] = useState("");
   const [paginaActual, setPaginaActual] = useState(1);
@@ -41,14 +51,25 @@ export const ListarAsesor = ({asesoresSeleccionados,setAsesoresSeleccionados}:{a
     }
   };
 
-
-const toggleSeleccion = (id: string) => {
-  if (asesoresSeleccionados.includes(id)) {
-    setAsesoresSeleccionados(asesoresSeleccionados.filter((item: string) => item !== id));
-  } else {
-    setAsesoresSeleccionados([...asesoresSeleccionados, id]);
-  }
-};
+  const toggleSeleccion = (id: string, nombre: string) => {
+    const nombreAsesor = extraerNombre(nombre.trim());
+    const apellidos = extraerApellido(nombre.trim());
+    const usuario = generarUsuaurio(nombreAsesor, apellidos);
+    if(setAsesorData){
+    setAsesorData({
+      nombres: nombreAsesor,
+      apellidos: apellidos,
+      usuario:usuario
+    });
+    }
+    if (asesoresSeleccionados.includes(id)) {
+      setAsesoresSeleccionados(
+        asesoresSeleccionados.filter((item: string) => item !== id)
+      );
+    } else {
+      setAsesoresSeleccionados([...asesoresSeleccionados, id]);
+    }
+  };
 
   return (
     <div className="p-6">
@@ -85,8 +106,8 @@ const toggleSeleccion = (id: string) => {
               <td className="py-2 px-4 border-b text-center">
                 <input
                   type="checkbox"
-                checked={asesoresSeleccionados.includes(asesor.id)}
-            onChange={() => toggleSeleccion(asesor.id)}
+                  checked={asesoresSeleccionados.includes(asesor.id)}
+                  onChange={() => toggleSeleccion(asesor.id, asesor.nombre)}
                 />
               </td>
               <td className="py-2 px-4 border-b">{asesor.nombre}</td>
@@ -115,10 +136,11 @@ const toggleSeleccion = (id: string) => {
         </button>
 
         {Array.from({ length: totalPaginas }, (_, i) => i + 1)
-          .filter((num) =>
-            Math.abs(num - paginaActual) <= 2 ||
-            num === 1 ||
-            num === totalPaginas
+          .filter(
+            (num) =>
+              Math.abs(num - paginaActual) <= 2 ||
+              num === 1 ||
+              num === totalPaginas
           )
           .map((num, index, array) => {
             const prev = array[index - 1];

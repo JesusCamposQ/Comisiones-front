@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ban, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { ErrorUser, Usuario } from "../interfaces/usuario.interface";
+import { AsesorSeleccionadoI, ErrorUser, Usuario } from "../interfaces/usuario.interface";
 import { crearUsuario } from "../services/serviciosUsuario";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -24,6 +24,7 @@ export const UsuarioRegistroPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch
   } = useForm<Usuario>();
 
@@ -31,9 +32,21 @@ export const UsuarioRegistroPage = () => {
   const [error, setError] = useState<any[]>([]);
   const [errorUser, setErrorUser] = useState<string>()
   const [showPassword, setShowPassword] = useState(false);
+    const [asesorSelect, setAsesorSelect] = useState<AsesorSeleccionadoI>({
+      apellidos:"",
+      nombres:"",
+      usuario:""
+    });
   const [asesores, setAsesores]=useState<string[]>([])
   const rolSeleccionado = watch("rol")
 
+  useEffect(()=>{
+    console.log("se");
+    setValue("nombre", asesorSelect.nombres)
+    setValue("apellidos", asesorSelect.apellidos)
+    setValue("username", asesorSelect.usuario)
+    
+  },[asesorSelect])
   const onSubmit = async (data: Usuario) => {
     data.asesorUsuario = asesores
     try {
@@ -94,6 +107,7 @@ console.log('asesore selccionador', asesores);
               </Label>
               <Input
                 id="nombre"
+              
                 placeholder="Ingresa tu nombre"
                 {...register("nombre", { required: true })}
                 className="border-blue-200 focus-visible:ring-blue-500"
@@ -114,6 +128,7 @@ console.log('asesore selccionador', asesores);
               </Label>
               <Input
                 id="apellidos"
+                 
                 placeholder="Ingresa tus apellidos"
                 {...register("apellidos", { required: true })}
                 className="border-blue-200 focus-visible:ring-blue-500"
@@ -133,6 +148,7 @@ console.log('asesore selccionador', asesores);
                 Nombre de usuario
               </Label>
               <Input
+            
                 id="username"
                 placeholder="Ingresa tu nombre de usuario"
                 {...register("username", { required: true })}
@@ -247,7 +263,7 @@ console.log('asesore selccionador', asesores);
 
       {
         (rolSeleccionado === "GESTOR" || rolSeleccionado === "ASESOR") && <>
-          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} />
+          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} setAsesorData={setAsesorSelect}/>
 
         </>
       }

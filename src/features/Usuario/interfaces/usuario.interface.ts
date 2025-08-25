@@ -30,3 +30,10 @@ export interface Error {
 interface dataAsesor {
     sucursal:string, asesor:string
 }
+
+export interface AsesorSeleccionadoI {
+    nombres:string
+    apellidos:string
+    usuario:string
+}
+
