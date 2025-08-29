@@ -76,108 +76,153 @@ export const RegistroSinComisionReceta = () => {
     }
   };
 
-  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const filteredData = useMemo(() => {
-    let result = combinacion;
+  const combinaciones: CombinacionResponse[] = combinacion || [];
+  
+    const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
+    const filteredData = useMemo(() => {
+      let result = combinaciones;
+  
+      // Aplicar filtros en el orden correcto
+      const filterOrder = [
+        'tipoPrecio',
+        'material',
+        'tipoLente',
+        'rango',
+        'colorLente',
+        'marcaLente',
+        'tratamiento',
+        'tipoColorLente',
+        'importe',
+      ]
+      filterOrder.forEach(column => {
+        const filterValues = activeFilters[column];
+        if (filterValues && filterValues.length > 0) {
+          result = result.filter(item => {
+            const value = item[column as keyof typeof item];
+            const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+            return filterValues.includes(normalizedValue);
+          });
+        }
+      });
+  
+      return result;
+    }, [activeFilters]);
+    // Función optimizada para manejar cambios de filtro
+    const handleFilterChange = useCallback((column: string, selectedValues: string[]) => {
+      setActiveFilters(prev => {
+        // Si no hay cambio, no actualizar
+        const currentValues = prev[column] || [];
+        if (JSON.stringify(currentValues.sort()) === JSON.stringify(selectedValues.sort())) {
+          return prev;
+        }
+  
+        const newFilters = { ...prev };
+  
+        if (selectedValues.length === 0) {
+          delete newFilters[column];
+        } else {
+          newFilters[column] = selectedValues;
+        }
+  
+        return newFilters;
+      });
+    }, []);
+  
+    // Funciones específicas para cada filtro
+    const handleTipoPrecioFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.tipoPrecio;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('tipoPrecio', selectedValues);
+    }, [handleFilterChange]);
 
-    // Aplicar filtros en el orden correcto
-    const filterOrder = ['tipoLente', 'material', 'colorLente', 'marcaLente', 'tratamiento', 'tipoColorLente', 'rango'];
+    const handleMaterialFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.material;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('material', selectedValues);
+    }, [handleFilterChange]);
 
-    filterOrder.forEach(column => {
-      const filterValues = activeFilters[column];
-      if (filterValues && filterValues.length > 0) {
-        result = result.filter(item => {
-          const value = item[column as keyof typeof item];
-          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
-          return filterValues.includes(normalizedValue);
-        });
-      }
-    });
+    const handleTipoLenteFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.tipoLente;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('tipoLente', selectedValues);
+    }, [handleFilterChange]);
 
-    return result;
-  }, [activeFilters]);
-  // Función optimizada para manejar cambios de filtro
-  const handleFilterChange = useCallback((column: string, selectedValues: string[]) => {
-    setActiveFilters(prev => {
-      // Si no hay cambio, no actualizar
-      const currentValues = prev[column] || [];
-      if (JSON.stringify(currentValues.sort()) === JSON.stringify(selectedValues.sort())) {
-        return prev;
-      }
+    const handleRangoFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.rango;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('rango', selectedValues);
+    }, [handleFilterChange]);
 
-      const newFilters = { ...prev };
+    const handleColorLenteFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.colorLente;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('colorLente', selectedValues);
+    }, [handleFilterChange]);
 
-      if (selectedValues.length === 0) {
-        delete newFilters[column];
-      } else {
-        newFilters[column] = selectedValues;
-      }
+    const handleMarcaLenteFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.marcaLente;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('marcaLente', selectedValues);
+    }, [handleFilterChange]);
 
-      return newFilters;
-    });
-  }, []);
+    const handleTratamientoFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.tratamiento;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('tratamiento', selectedValues);
+    }, [handleFilterChange]);
 
-  // Funciones específicas para cada filtro
-  const handleTipoLenteFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.tipoLente;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('tipoLente', selectedValues);
-  }, [handleFilterChange]);
+    const handleTipoColorLenteFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.tipoColorLente;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('tipoColorLente', selectedValues);
+    }, [handleFilterChange]);
 
-  const handleMaterialFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.material;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('material', selectedValues);
-  }, [handleFilterChange]);
-
-  const handleColorLenteFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.colorLente;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('colorLente', selectedValues);
-  }, [handleFilterChange]);
-
-  const handleMarcaLenteFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.marcaLente;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('marcaLente', selectedValues);
-  }, [handleFilterChange]);
-
-  const handleTratamientoFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.tratamiento;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('tratamiento', selectedValues);
-  }, [handleFilterChange]);
-
-  const handleTipoColorLenteFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.tipoColorLente;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('tipoColorLente', selectedValues);
-  }, [handleFilterChange]);
-
-  const handleRangoFilter = useCallback((filteredByThisColumn: any[]) => {
-    const selectedValues = filteredByThisColumn.map(item => {
-      const value = item.rango;
-      return value === null || value === undefined ? '(En blanco)' : String(value);
-    });
-    handleFilterChange('rango', selectedValues);
-  }, [handleFilterChange]);
+    const handleImporteFilter = useCallback((filteredByThisColumn: any[]) => {
+      const selectedValues = filteredByThisColumn.map(item => {
+        const value = item.importe;
+        return value === null || value === undefined ? '(En blanco)' : String(value);
+      });
+      handleFilterChange('importe', selectedValues);
+    }, [handleFilterChange]);
 
   // Calcular datos disponibles para cada filtro
+  const dataForMarcaLente = useMemo(() => {
+    let result = combinaciones;
+    if (activeFilters.tipoPrecio) {
+      result = result.filter(item => {
+        const value = item.tipoPrecio;
+        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+        return activeFilters.tipoPrecio.includes(normalizedValue);
+      });
+    }
+    return result;
+  }, [activeFilters.tipoPrecio]);
 
-  const dataForMaterial = useMemo(() => {
-    let result = combinacion;
+  const dataForColorLente = useMemo(() => {
+    let result = combinaciones;
+    if (activeFilters.tipoPrecio) {
+      result = result.filter(item => {
+        const value = item.tipoPrecio;
+        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+        return activeFilters.tipoPrecio.includes(normalizedValue);
+      });
+    }
     if (activeFilters.material) {
       result = result.filter(item => {
         const value = item.material;
@@ -185,19 +230,12 @@ export const RegistroSinComisionReceta = () => {
         return activeFilters.material.includes(normalizedValue);
       });
     }
-    if (activeFilters.tipoLente) {
-      result = result.filter(item => {
-        const value = item.tipoLente;
-        const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
-        return activeFilters.tipoLente.includes(normalizedValue);
-      });
-    }
     return result;
-  }, [activeFilters.material, activeFilters.tipoLente]);
+  }, [activeFilters.tipoPrecio, activeFilters.marca]);
 
-  const dataForColorLente = useMemo(() => {
-    let result = combinacion;
-    ['tipoLente', 'material', 'colorLente'].forEach(column => {
+  const dataForTipoLente = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente'].forEach(column => {
       if (activeFilters[column]) {
         result = result.filter(item => {
           const value = item[column as keyof typeof item];
@@ -207,11 +245,11 @@ export const RegistroSinComisionReceta = () => {
       }
     });
     return result;
-  }, [activeFilters.material, activeFilters.tipoLente, activeFilters.marcaLente, activeFilters.colorLente]);
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente]);
 
-  const dataForMarcaLente = useMemo(() => {
-    let result = combinacion;
-    ['tipoLente', 'material', 'colorLente', 'marcaLente'].forEach(column => {
+  const dataForMaterial = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente', 'tipoLente'].forEach(column => {
       if (activeFilters[column]) {
         result = result.filter(item => {
           const value = item[column as keyof typeof item];
@@ -221,11 +259,11 @@ export const RegistroSinComisionReceta = () => {
       }
     });
     return result;
-  }, [activeFilters.tipoLente, activeFilters.material, activeFilters.colorLente, activeFilters.marcaLente]);
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente, activeFilters.tipoLente]);
 
   const dataForTratamiento = useMemo(() => {
-    let result = combinacion;
-    ['tipoLente', 'material', 'colorLente', 'marcaLente', 'tratamiento'].forEach(column => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente', 'tipoLente', 'material'].forEach(column => {
       if (activeFilters[column]) {
         result = result.filter(item => {
           const value = item[column as keyof typeof item];
@@ -235,11 +273,11 @@ export const RegistroSinComisionReceta = () => {
       }
     });
     return result;
-  }, [activeFilters.tipoLente, activeFilters.material, activeFilters.colorLente, activeFilters.marcaLente, activeFilters.tratamiento]);
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente, activeFilters.tipoLente, activeFilters.material]);
 
   const dataForTipoColorLente = useMemo(() => {
-    let result = combinacion;
-    ['tipoLente', 'material', 'colorLente', 'marcaLente', 'tratamiento', 'tipoColorLente'].forEach(column => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente', 'tipoLente', 'material', 'tratamiento'].forEach(column => {
       if (activeFilters[column]) {
         result = result.filter(item => {
           const value = item[column as keyof typeof item];
@@ -249,11 +287,11 @@ export const RegistroSinComisionReceta = () => {
       }
     });
     return result;
-  }, [activeFilters.tipoLente, activeFilters.material, activeFilters.colorLente, activeFilters.marcaLente, activeFilters.tratamiento, activeFilters.tipoColorLente]);
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente, activeFilters.tipoLente, activeFilters.material, activeFilters.tratamiento]);
 
   const dataForRango = useMemo(() => {
-    let result = combinacion;
-    ['tipoLente', 'material', 'colorLente', 'marcaLente', 'tratamiento', 'tipoColorLente', 'rango'].forEach(column => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente', 'tipoLente', 'material', 'tratamiento', 'tipoColorLente'].forEach(column => {
       if (activeFilters[column]) {
         result = result.filter(item => {
           const value = item[column as keyof typeof item];
@@ -263,9 +301,21 @@ export const RegistroSinComisionReceta = () => {
       }
     });
     return result;
-  }, [activeFilters.tipoLente, activeFilters.material, activeFilters.colorLente, activeFilters.marcaLente, activeFilters.tratamiento, activeFilters.tipoColorLente, activeFilters.rango]);
-
-
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente, activeFilters.tipoLente, activeFilters.material, activeFilters.tratamiento, activeFilters.tipoColorLente]);
+   
+  const dataForImporte = useMemo(() => {
+    let result = combinaciones;
+    ['tipoPrecio', 'marcaLente', 'colorLente', 'tipoLente', 'material', 'tratamiento', 'tipoColorLente', 'rango'].forEach(column => {
+      if (activeFilters[column]) {
+        result = result.filter(item => {
+          const value = item[column as keyof typeof item];
+          const normalizedValue = value === null || value === undefined ? '(En blanco)' : String(value);
+          return activeFilters[column].includes(normalizedValue);
+        });
+      }
+    });
+    return result;
+  }, [activeFilters.tipoPrecio, activeFilters.marcaLente, activeFilters.colorLente, activeFilters.tipoLente, activeFilters.material, activeFilters.tratamiento, activeFilters.tipoColorLente, activeFilters.rango]);
 
   return (
     <div className="mx-auto flex flex-col gap-4">
@@ -278,7 +328,14 @@ export const RegistroSinComisionReceta = () => {
       />
       <div className="flex gap-4 justify-center items-center mx-auto p-5 bg-sky-50 rounded-lg border border-sky-300">
         <SelectFilter
-          data={combinacion}
+          data={combinaciones}
+          column="tipoPrecio"
+          onFilter={handleTipoPrecioFilter}
+          placeholder="Buscar tipo precio..."
+          allowSorting={false}
+        />
+        <SelectFilter
+          data={dataForTipoLente}
           column="tipoLente"
           onFilter={handleTipoLenteFilter}
           placeholder="Buscar tipo lente..."
@@ -324,6 +381,13 @@ export const RegistroSinComisionReceta = () => {
           column="rango"
           onFilter={handleRangoFilter}
           placeholder="Buscar rango..."
+          allowSorting={true}
+        />
+        <SelectFilter
+          data={dataForImporte}
+          column="importe"
+          onFilter={handleImporteFilter}
+          placeholder="Buscar importe..."
           allowSorting={true}
         />
       </div>

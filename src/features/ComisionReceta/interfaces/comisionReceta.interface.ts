@@ -7,10 +7,9 @@ export interface IComisionReceta {
 }
 
 export interface IComisionRecetaData {
-  combinacionReceta: string
+  combinacionReceta: string;
   data: IComisionReceta[];
 }
-
 
 export interface CombinacionResponse {
   _id: string;
@@ -21,8 +20,6 @@ export interface CombinacionResponse {
   marcaLente: string;
   tratamiento: string;
   tipoColorLente: string;
-    tipoPrecio: string;
-        importe: number;
+  tipoPrecio: string;
+  importe: number;
 }
-
-
