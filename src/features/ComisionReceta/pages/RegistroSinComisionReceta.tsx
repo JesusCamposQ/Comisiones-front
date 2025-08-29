@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import obtenerSinComsion, {
-  descargarSinComision,
-} from "../services/obtenerSinComision";
+import obtenerSinComsion from "../services/obtenerSinComision";
 import { ModalRegistroSinComision } from "../components/ModalRegistroSinComision";
 import toast, { Toaster } from "react-hot-toast";
 import {
@@ -11,6 +9,7 @@ import { Banner } from "@/shared/components/Banner/Banner";
 import { BookPlus } from "lucide-react";
 import Paginador from "@/shared/components/Paginador/Paginador";
 import { SelectFilter } from "@/components/Filtro/SelectFilter";
+import { exportarExcelReceta } from "../utils/exportarExcelReceta";
 
 interface FormValues {
   idcombinacion: string;
@@ -70,10 +69,10 @@ export const RegistroSinComisionReceta = () => {
   };
   const descargar = async () => {
     setIsDownload(true);
-    const response = await descargarSinComision();
-    if (response.status === 200) {
-      setIsDownload(false);
+    if (filteredData) {
+      exportarExcelReceta(filteredData);
     }
+    setIsDownload(false);
   };
 
   const combinaciones: CombinacionResponse[] = combinacion || [];
