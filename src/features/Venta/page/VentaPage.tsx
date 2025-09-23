@@ -227,7 +227,7 @@ const VentaPage = () => {
                     {formatoMoneda(totalImporte(venta.ventas), venta.sucursal)}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatoMoneda(venta.totalDescuento, venta.sucursal)}
+                    {venta.totalDescuento}
                   </TableCell>
                   <TableCell className="text-right">
                     {formatoMoneda(venta.montoTotal, venta.sucursal)}
