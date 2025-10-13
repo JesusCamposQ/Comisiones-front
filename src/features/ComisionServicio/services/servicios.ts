@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import { DataResponse } from "../interfaces/comisionServicio.interface";
 import { ComisionSinServicio, ServicioSinComision } from "../interfaces/comisionSinServicio";
 

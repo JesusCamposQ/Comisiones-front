@@ -1,4 +1,4 @@
-import api from "@/app/service/api"
+import api from "@/app/config/api"
 import { Empresa } from "../interfaces/empresa.interface";
 
 export const obtenerEmpresas = async (): Promise<Empresa[]> => {

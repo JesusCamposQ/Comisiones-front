@@ -3,23 +3,28 @@ import {
   CircleDollarSign,
   BadgeDollarSign,
   Target,
-} from "lucide-react"
+  Box,
+  FileBox,
+  LineChart,
+  UserCog,
+  BarChart,
+} from "lucide-react";
 
-import { NavMain } from "@/app/Layout/components/nav-main"
-import { NavUser } from "@/app/Layout/components/nav-user"
-import { TeamSwitcher } from "@/app/Layout/components/team-switcher"
+import { NavMain } from "@/app/Layout/components/nav-main";
+import { NavUser } from "@/app/Layout/components/nav-user";
+import { TeamSwitcher } from "@/app/Layout/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {
   user: {
-    name: localStorage.getItem('username') || '',
+    name: localStorage.getItem("username") || "",
   },
   teams: [
     {
@@ -30,117 +35,105 @@ const data = {
   ],
   navMain: [
     {
-      title: "Comisiones",
+      title: "Ventas",
       url: "/ventas",
-      icon: CircleDollarSign,
+      icon: BarChart,
       isActive: true,
+
       items: [
         {
-          title: "Por Ventas",
-          url: "#",
-          items: [
-            {
-              title: "Comisiones Sucursal",
-              url: "/ventas",
-            },
-             {
-              title: "Ventas inválidas",
-              url: "/ventas/invalidas",
-            },
-          ],
+          title: "Comisiones por Venta",
+          url: "/ventas",
         },
         {
-          title: "Registro",
-          url: "#",
-          items: [
-            {
-              title: "Recetas sin Comisión",
-              url: "/comision/registro/receta",
-            },
-          ],
-        },
-        {
-          title: "Gestión Comisión",
-          url: "#",
-          items: [
-            {
-              title: "Ver Combinaciones",
-              url: "/comision/gestion/receta",
-            },
-            {
-              title: "Cargar Combinaciones",
-              url: "/cargar/combinaciones",
-            },
-            {
-              title: "Actualizar Combinaciones",
-              url: "/actualizar/combinaciones",
-            },
-            {
-              title: "Cargar Comision Producto",
-              url: "/cargar/comision/producto",
-            },
-          ],
-        },
-        {
-          title: "Por Producto",
-          url: "#",
-          items: [
-            {
-              title: "Monturas",
-              url: "/comision/gestion/producto/montura",
-            },
-            {
-              title: "Monturas sin Comisión",
-              url: "/comision/gestion/producto/sin-comision/montura",
-            },
-            {
-              title: "Gafas",
-              url: "/comision/gestion/producto/gafas",
-            },
-            {
-              title: "Gafas sin Comisión",
-              url: "/comision/gestion/producto/sin-comision/gafas",
-            },
-            {
-              title: "Lentes Contacto",
-              url: "/comision/gestion/producto/lente-contacto",
-            },
-            {
-              title: "Lentes sin Comisión",
-              url: "/comision/gestion/producto/sin-comision/lente-contacto",
-            },
-          ],
-        },
-        {
-          title: "Servicios",
-          url: "#",
-          items: [
-            {
-              title: "Servicios",
-              url: "/comision/gestion/servicio",
-            },
-            {
-              title: "Servicios sin Comisión",
-              url: "/comision/gestion/servicio/sin-comision",
-            },
-            {
-              title: "Cargar Comision Servicio",
-              url: "/cargar/comision/servicio",
-            },
-          ],
+          title: "Ventas inválidas",
+          url: "/ventas/invalidas",
         },
       ],
     },
-    // {
-    //   title: "Productos",
-    //   url: "#",
-    //   icon: ShoppingBag,
-    //   items: [],
-    // },
+    {
+      title: "Combinaciones",
+      url: "#",
+      icon:FileBox,
+      items: [
+        {
+          title: "Ver Combinaciones",
+          url: "/comision/gestion/receta",
+        },
+        {
+          title: "Recetas sin Comisión",
+          url: "/comision/registro/receta",
+        },
+        {
+          title: "Cargar Combinaciones",
+          url: "/cargar/combinaciones",
+        },
+        /* {
+              title: "Actualizar Combinaciones",
+              url: "/actualizar/combinaciones",
+            },*/
+      ],
+    },
+    {
+      title: "Producto",
+      url: "#",
+              icon: Box,
+      items: [
+        {
+          title: "Cargar Comision Producto",
+          url: "/cargar/comision/producto",
+        },
+        {
+          title: "listar Monturas",
+          url: "/comision/gestion/producto/montura",
+        },
+        {
+          title: "Monturas sin Comisión",
+          url: "/comision/gestion/producto/sin-comision/montura",
+        },
+        {
+          title: "listar Gafas",
+          url: "/comision/gestion/producto/gafas",
+        },
+        {
+          title: "Gafas sin Comisión",
+          url: "/comision/gestion/producto/sin-comision/gafas",
+        },
+        {
+          title: "listar lentes Contacto",
+          url: "/comision/gestion/producto/lente-contacto",
+        },
+        {
+          title: "Lentes de contacto sin Comisión",
+          url: "/comision/gestion/producto/sin-comision/lente-contacto",
+        },
+      ],
+    },
+
+    {
+      title: "Servicios",
+      url: "#",
+      icon:FileBox,
+      items: [
+        {
+          title: "listar servicios",
+          url: "/comision/gestion/servicio",
+        },
+        {
+          title: "Servicios sin Comisión",
+          url: "/comision/gestion/servicio/sin-comision",
+        },
+        {
+          title: "Cargar Comision Servicio",
+          url: "/cargar/comision/servicio",
+        },
+      ],
+    },
+
     {
       title: "Llaves",
       url: "/llaves",
-      icon: Target,
+      icon: LineChart,
       items: [
         {
           title: "Ver Llaves",
@@ -153,22 +146,22 @@ const data = {
       ],
     },
     {
-      title: "Organización",
+      title: "Gestion de usuarios",
       url: "/usuarios",
-      icon: Building,
+      icon: UserCog,
       items: [
         {
           title: "Usuarios",
           url: "/usuarios",
         },
-         {
+        {
           title: "Asesor",
           url: "/listar/asesores",
         },
       ],
     },
-  ]  
-}
+  ],
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -184,5 +177,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

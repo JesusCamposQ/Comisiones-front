@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 interface TipoPrecio {
     id:string
     nombre:string

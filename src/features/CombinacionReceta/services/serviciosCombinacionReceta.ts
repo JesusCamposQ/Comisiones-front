@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import { CombinacionResponse, filtroCombinacionRecetaI } from "../interfaces/comisiones.interface";
 
 export const obtenerCombinacionReceta = async (limite: number, pagina: number, filter:filtroCombinacionRecetaI): Promise<CombinacionResponse> => {

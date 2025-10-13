@@ -1,5 +1,5 @@
 import { Usuario } from "../interfaces/usuario.interface";
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 
 export const obtenerUsuario = async () : Promise<Usuario[]> => {
     try {

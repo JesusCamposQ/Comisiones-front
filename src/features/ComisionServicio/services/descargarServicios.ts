@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 
 export const descargarServicios = async () => {
   try {

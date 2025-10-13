@@ -1,4 +1,4 @@
-import api from "@/app/service/api"
+import api from "@/app/config/api"
 import { ListarAsesorI } from "../interface/asesor"
 import { AsesorSinUsuario } from "../interfaces/asesor.interface"
 

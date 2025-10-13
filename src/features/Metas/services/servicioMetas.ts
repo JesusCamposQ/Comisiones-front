@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import { Datum, Metas } from "../interfaces/metas.interface";
 import { Marcas } from "../interfaces/marcas.interface";
 import { Llave, LlavesData } from "../interfaces/llaves.inteface";

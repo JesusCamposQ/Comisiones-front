@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import { Venta } from "../interfaces/venta.interface";
 import { FiltroI } from "../interfaces/filtro.interface";
 

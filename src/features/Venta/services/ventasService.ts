@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import {  VentasInvalidasI} from "../interfaces/venta.interface";
 
 export async function listarVentasInvalidas(fechaInicio:Date, fechaFin:Date):Promise<VentasInvalidasI[]>{    

@@ -1,4 +1,4 @@
-import api from "@/app/service/api";
+import api from "@/app/config/api";
 import { IComisionRecetaData } from "@/features/ComisionReceta/interfaces/comisionReceta.interface";
 
 export const registrarComisionReceta = async (comisionReceta: IComisionRecetaData) => {
