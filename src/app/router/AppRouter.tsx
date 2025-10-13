@@ -1,8 +1,8 @@
-import ProductoPage from '../features/Producto/ProductoPage';
-import VentaPage from '../features/Venta/page/VentaPage';
+import ProductoPage from '../../features/Producto/ProductoPage';
+import VentaPage from '../../features/Venta/page/VentaPage';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './Layout/Layout';
+import Layout from '../Layout/Layout';
 import { CombinacionRecetaPage } from '@/features/CombinacionReceta';
 import { Autenticacion } from '@/features/Autenticacion/components/Autenticacion';
 import { UsuarioPage } from '@/features/Usuario/pages/UsuarioPage';
@@ -29,6 +29,7 @@ import { MetasListadoPage } from '@/features/Metas/pages/MetasListadoPage';
 import CargarComisionServicioPage from '@/features/ComisionServicio/pages/CargarComisionServicioPage';
 import { ListarAsesorPage } from '@/features/Asesor/page/ListarAsesorPage';
 import { VentasErrorPage } from '@/features/Venta/page/VentasErrorPage';
+import { RangoComisionProductoPage } from '@/features/RangoComisionProducto/page/RangoComisionProductoPage';
 
 function AppRouter() {
 
@@ -71,6 +72,7 @@ function AppRouter() {
           <Route path="/actualizar/combinaciones" element={<ActualizarComisionesPage />} />
           <Route path="/listar/asesores" element={<ListarAsesorPage />} />
           <Route path="/ventas/invalidas" element={<VentasErrorPage/>} />
+             <Route path="rango/comision/producto" element={<RangoComisionProductoPage/>} />
        
         </Route> :
           <Route path="/" element={<Autenticacion />} />
