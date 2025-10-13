@@ -16,8 +16,6 @@ import { editarUsuario } from "../services/serviciosUsuario";
 import { Toaster, toast } from "react-hot-toast";
 
 import { AxiosError } from "axios";
-import { ListarAsesor } from "../components/ListarAsesor";
-
 
 interface Props {
   usuario: Usuario;
@@ -40,12 +38,12 @@ export const EditarUsuarioPage = ({
     handleSubmit,
     formState: { errors },
     setValue,
-    watch
+
   } = useForm<Usuario>();
 
 
   const [asesores, setAsesores] = useState<string[]>([])
-  const rolSeleccionado = watch("rol")
+
   useEffect(() => {
     setValue("rol", usuario.rol)
     setValue("apellidos", usuario.apellidos)
@@ -88,7 +86,6 @@ export const EditarUsuarioPage = ({
       
 
     } catch (error) {
- console.log(error);
       const e = error as AxiosError<ErrorUser>;
 
       if (e.status == 400) {
@@ -259,9 +256,6 @@ export const EditarUsuarioPage = ({
                   Selecciona un rol
                 </option>
                 <option value="ADMINISTRADOR">Administrador</option>
-                <option value="GESTOR">Gestor</option>
-                <option value="ASESOR">Asesor</option>
-
               </select>
               {errors.rol && (
                 <p className="text-red-600 text-sm flex items-center gap-1">
@@ -282,12 +276,7 @@ export const EditarUsuarioPage = ({
         </CardContent>
       </Card>
 
-      {
-        (rolSeleccionado === "GESTOR" || rolSeleccionado === "ASESOR") && <>
-          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} />
-
-        </>
-      }
+      
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Ban, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,12 +11,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
-import { AsesorSeleccionadoI, ErrorUser, Usuario } from "../interfaces/usuario.interface";
+import { ErrorUser, Usuario } from "../interfaces/usuario.interface";
 import { crearUsuario } from "../services/serviciosUsuario";
 import { Toaster, toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { AxiosError } from "axios";
-import { ListarAsesor } from "../components/ListarAsesor";
 
 export const UsuarioRegistroPage = () => {
   const navigate = useNavigate();
@@ -24,31 +23,17 @@ export const UsuarioRegistroPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch
   } = useForm<Usuario>();
 
 
   const [error, setError] = useState<any[]>([]);
   const [errorUser, setErrorUser] = useState<string>()
   const [showPassword, setShowPassword] = useState(false);
-    const [asesorSelect, setAsesorSelect] = useState<AsesorSeleccionadoI>({
-      apellidos:"",
-      nombres:"",
-      usuario:""
-    });
-  const [asesores, setAsesores]=useState<string[]>([])
-  const rolSeleccionado = watch("rol")
+ 
+ 
 
-  useEffect(()=>{
-    console.log("se");
-    setValue("nombre", asesorSelect.nombres)
-    setValue("apellidos", asesorSelect.apellidos)
-    setValue("username", asesorSelect.usuario)
-    
-  },[asesorSelect])
   const onSubmit = async (data: Usuario) => {
-    data.asesorUsuario = asesores
+
     try {
       const response = await crearUsuario(data);
 
@@ -81,7 +66,7 @@ export const UsuarioRegistroPage = () => {
     }
   };
 
-console.log('asesore selccionador', asesores);
+
 
 
   return (
@@ -238,9 +223,6 @@ console.log('asesore selccionador', asesores);
                   Selecciona un rol
                 </option>
                 <option value="ADMINISTRADOR">Administrador</option>
-                <option value="GESTOR">Gestor</option>
-                <option value="ASESOR">Asesor</option>
-
               </select>
               {errors.rol && (
                 <p className="text-red-600 text-sm flex items-center gap-1">
@@ -261,12 +243,7 @@ console.log('asesore selccionador', asesores);
         </CardContent>
       </Card>
 
-      {
-        (rolSeleccionado === "GESTOR" || rolSeleccionado === "ASESOR") && <>
-          <ListarAsesor asesoresSeleccionados={asesores} setAsesoresSeleccionados={setAsesores} setAsesorData={setAsesorSelect}/>
-
-        </>
-      }
+     
     </div>
   );
 };
