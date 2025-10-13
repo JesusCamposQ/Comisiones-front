@@ -29,15 +29,15 @@ import { MetasListadoPage } from "@/features/Metas/pages/MetasListadoPage";
 import CargarComisionServicioPage from "@/features/ComisionServicio/pages/CargarComisionServicioPage";
 import { ListarAsesorPage } from "@/features/Asesor/page/ListarAsesorPage";
 import { VentasErrorPage } from "@/features/Venta/page/VentasErrorPage";
-import { RangoComisionProductoPage } from "@/features/RangoComisionProducto/page/RangoComisionProductoPage";
+import { ListarRangoComisionProductoPage } from "@/features/RangoComisionProducto/page/ListarRangoComisionProductoPage";
 
 function AppRouter() {
-  const { isAunteticacion, token } = useContext(TokenContext);
+  const { isAunteticacion } = useContext(TokenContext);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Autenticacion />} />
-        {token && isAunteticacion ? (
+        {  isAunteticacion ? (
           <Route path="/" element={<Layout />}>
             <Route path="/ventas" element={<VentaPage />} />
             <Route path="/productos" element={<ProductoPage />}>
@@ -125,9 +125,10 @@ function AppRouter() {
             <Route path="/listar/asesores" element={<ListarAsesorPage />} />
             <Route path="/ventas/invalidas" element={<VentasErrorPage />} />
             <Route
-              path="rango/comision/producto"
-              element={<RangoComisionProductoPage />}
+              path="listar/rango/comision/producto"
+              element={<ListarRangoComisionProductoPage />}
             />
+           
           </Route>
         ) : (
           <Route path="/" element={<Autenticacion />} />

@@ -54,7 +54,7 @@ const data = {
     {
       title: "Combinaciones",
       url: "#",
-      icon:FileBox,
+      icon: FileBox,
       items: [
         {
           title: "Ver Combinaciones",
@@ -77,8 +77,12 @@ const data = {
     {
       title: "Producto",
       url: "#",
-              icon: Box,
+      icon: Box,
       items: [
+        {
+          title: "listar Comision por rango",
+          url: "listar/rango/comision/producto",
+        },
         {
           title: "Cargar Comision Producto",
           url: "/cargar/comision/producto",
@@ -113,7 +117,7 @@ const data = {
     {
       title: "Servicios",
       url: "#",
-      icon:FileBox,
+      icon: FileBox,
       items: [
         {
           title: "listar servicios",

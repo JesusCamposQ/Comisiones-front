@@ -2,6 +2,7 @@ import AppRouter from "./app/router/AppRouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { TokenProvider } from "@/features/Autenticacion/context/TokenProvider";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -10,6 +11,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TokenProvider>   <AppRouter /></TokenProvider>
       <ReactQueryDevtools initialIsOpen={false} />
+      <Toaster/>
     </QueryClientProvider>
   )
 }
