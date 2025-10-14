@@ -5,8 +5,7 @@ import {
 import {
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
+  SidebarMenuItem
 } from "@/components/ui/sidebar"
 import { AppWindow } from "lucide-react"
 
