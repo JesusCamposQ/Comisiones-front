@@ -17,7 +17,7 @@ export const ListarRangoComisionProductoPage = () => {
         toast.error("Error: " + error);
       }
     })();
-  }, []);
+  }, [realod]);
 
   return (
     <div className="p-4">
