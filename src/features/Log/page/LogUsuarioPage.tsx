@@ -37,6 +37,7 @@ export const LogUsuarioPage = () => {
           <table className="min-w-full table-auto border border-gray-300 text-sm">
             <thead className="bg-gray-100">
               <tr>
+                 <th className="px-4 py-2 border">Estado</th>
                 <th className="px-4 py-2 border">Descripción</th>
 
                 <th className="px-4 py-2 border">IP</th>
@@ -48,6 +49,7 @@ export const LogUsuarioPage = () => {
             <tbody>
               {data.map((log) => (
                 <tr key={log._id} className="hover:bg-gray-50">
+                     <td className="px-4 py-2 border">{log.estado}</td>
                   <td className="px-4 py-2 border">{log.descripcion}</td>
 
                   <td className="px-4 py-2 border">{log.ip}</td>

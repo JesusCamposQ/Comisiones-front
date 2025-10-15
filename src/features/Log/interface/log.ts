@@ -15,4 +15,6 @@ export interface LogActividadI {
   body: string; 
   usuario: string;
   fecha:string
+
+  estado:string
 }
