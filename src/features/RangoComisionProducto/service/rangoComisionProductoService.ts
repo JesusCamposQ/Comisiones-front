@@ -18,4 +18,14 @@ export async function  registrarRangoCOmisionProducto(data:rangoCOmisionProducto
   } catch (error) {
     throw error;
   }
+  
+}
+
+export async function eliminarComisionRangoProducto(id:string):Promise<AxiosResponse> {
+    try {      
+    const response = await api.delete(`api/rango/comision/producto/${id}`)
+    return response
+  } catch (error) {
+    throw error;
+  }
 }

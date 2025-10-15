@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { RegistrarRangoComisionProductoModal } from "../modal/RegistrarRangoComisionProductoModal";
 import toast from "react-hot-toast";
-import { listarRangoCOmisionProducto } from "../service/rangoComisionProductoService";
+import { eliminarComisionRangoProducto, listarRangoCOmisionProducto } from "../service/rangoComisionProductoService";
 import { rangoCOmisionProductoI } from "../interface/rangoCOmisionProducto";
 import { Trash2 } from "lucide-react";
 
 export const ListarRangoComisionProductoPage = () => {
   const [data, setData] = useState<rangoCOmisionProductoI[]>([]);
-    const [realod, setReload]= useState<boolean>(false)
+  const [realod, setReload] = useState<boolean>(false)
   useEffect(() => {
     (async () => {
       try {
@@ -19,6 +19,20 @@ export const ListarRangoComisionProductoPage = () => {
     })();
   }, [realod]);
 
+
+  const btnEliminar =async (id: string) => {
+    try {
+      const response = await eliminarComisionRangoProducto(id)
+      console.log(response);
+      
+      if(response.status == 200){
+        setReload(!realod)
+      }
+    } catch (error) {
+      toast.error("Error: " + error);
+    }
+  }
+
   return (
     <div className="p-4">
       {/* Título */}
@@ -26,7 +40,7 @@ export const ListarRangoComisionProductoPage = () => {
         Rango de Comisiones para Producto
       </h1>
 
-      <RegistrarRangoComisionProductoModal  reload={realod} setReload={setReload}/>
+      <RegistrarRangoComisionProductoModal reload={realod} setReload={setReload} />
 
       <div className="mt-6 overflow-x-auto">
         <table className="min-w-full border border-gray-300 rounded-md">
@@ -60,7 +74,9 @@ export const ListarRangoComisionProductoPage = () => {
                       {/*<button className="text-blue-600 hover:text-blue-800">
                         <Edit size={18} />
                       </button>*/}
-                      <button className="text-red-600 hover:text-red-800">
+                      <button className="text-red-600 hover:text-red-800"
+                        onClick={() => btnEliminar(item._id)}
+                      >
                         <Trash2 size={18} />
                       </button>
                     </div>
