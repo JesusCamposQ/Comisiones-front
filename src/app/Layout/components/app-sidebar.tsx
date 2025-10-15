@@ -7,6 +7,7 @@ import {
   LineChart,
   UserCog,
   BarChart,
+  ClipboardList,
 } from "lucide-react";
 
 import { NavMain } from "@/app/Layout/components/nav-main";
@@ -163,7 +164,26 @@ const data = {
         },
       ],
     },
+
+     {
+      title: "Log",
+      url: "#",
+      icon: ClipboardList,
+      items: [
+        {
+          title: "Actvidad del sistema",
+          url: "/log/actividad",
+        },
+        {
+          title: "Actvidad de ingresos de usuario",
+          url: "log/usuario",
+        }
+      ],
+    },
+
   ],
+
+  
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {

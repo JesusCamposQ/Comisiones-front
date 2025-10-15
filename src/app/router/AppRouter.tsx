@@ -30,6 +30,8 @@ import CargarComisionServicioPage from "@/features/ComisionServicio/pages/Cargar
 import { ListarAsesorPage } from "@/features/Asesor/page/ListarAsesorPage";
 import { VentasErrorPage } from "@/features/Venta/page/VentasErrorPage";
 import { ListarRangoComisionProductoPage } from "@/features/RangoComisionProducto/page/ListarRangoComisionProductoPage";
+import { LogActividadPage } from "@/features/Log/page/LogActividadPage";
+import { LogUsuarioPage } from "@/features/Log/page/LogUsuarioPage";
 
 function AppRouter() {
   const { isAunteticacion } = useContext(TokenContext);
@@ -128,6 +130,16 @@ function AppRouter() {
               path="listar/rango/comision/producto"
               element={<ListarRangoComisionProductoPage />}
             />
+            <Route
+              path="log/actividad"
+              element={<LogActividadPage />}
+            />
+
+             <Route
+              path="log/usuario"
+              element={<LogUsuarioPage />}
+            />
+           
            
           </Route>
         ) : (
