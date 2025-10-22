@@ -9,3 +9,13 @@ export async function listarPrecios():Promise<precioI[]> {
         throw error
     }
 }
+
+
+export async function listarPreciosPorScursal(sucursales:string[]):Promise<precioI[]> {
+    try {
+        const response = await api.post("api/precios/sucursal", {sucursal:sucursales})
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
