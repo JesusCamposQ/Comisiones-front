@@ -66,7 +66,7 @@ export const EditarUsuarioPage = ({
   const onSubmit = async (data: Usuario) => {
     data.asesorUsuario = asesores
     data._id = usuario._id
-    console.log('a', data);
+
     
     try {
     ;

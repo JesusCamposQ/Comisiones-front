@@ -6,7 +6,6 @@ const registrarComisionProducto = async (comisionProducto: IComisionProductoData
     const response = await api.post("/api/comision/producto", comisionProducto);
     return response;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

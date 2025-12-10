@@ -112,6 +112,8 @@ const VentaPage = () => {
       setIsloading(true);
       const { empresa, sucursales, ...rest } = filtro;
       const response = await obtenerVentas(rest);
+      console.log(response);
+      
       setVentas(response);
       setVentas(() => crearDatosConCamposCalculados(response));
       setIsloading(false);

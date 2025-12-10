@@ -51,9 +51,11 @@ export const calcularComision = (
     : 0;
 
   let comisionProducto = 0;
-  console.log(empresa);
+ 
   
   if (Array.isArray(comisiones) && comisiones.length > 0) {
+    console.log(comisiones);
+    
     const [mayorMonto, menorMonto] = comisiones.reduce(
       ([mayor, menor], actual) => [
         actual.monto > mayor.monto ? actual : mayor,
@@ -89,11 +91,12 @@ export const calcularComision = (
     }
   }
 
-  console.log(llave);
+
   if (gestor || llave) {
     llave = true;
   }
 
+  
   return {
     comison: descontarPorcentajeAcomision(comisionProducto, porcentaje),
     llave,
