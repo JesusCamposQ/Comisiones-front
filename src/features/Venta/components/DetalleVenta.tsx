@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import { calcularComision, porcentaje } from "../utils/ventaUtils";
 import { Calendar, Clock } from "lucide-react";
-import { formatDate, formatearFecha } from "@/app/utils/formaterFecha";
+import { formatDate} from "@/app/utils/formaterFecha";
 
 export const DetalleVenta = ({
   ventas,
