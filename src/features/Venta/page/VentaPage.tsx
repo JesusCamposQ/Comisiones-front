@@ -121,6 +121,7 @@ const VentaPage = () => {
     }
   };
 
+
   if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -227,7 +228,7 @@ const VentaPage = () => {
                     {formatoMoneda(totalImporte(venta.ventas), venta.sucursal)}
                   </TableCell>
                   <TableCell className="text-right">
-                    {venta.totalDescuento}
+                    {formatoMoneda(venta.totalDescuento,venta.sucursal)}
                   </TableCell>
                   <TableCell className="text-right">
                     {formatoMoneda(venta.montoTotal, venta.sucursal)}
