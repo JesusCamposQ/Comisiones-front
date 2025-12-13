@@ -30,3 +30,6 @@ dist-ssr
 .env
 
 create_feature.sh
+
+#pnpm
+pnpm-lock.yaml

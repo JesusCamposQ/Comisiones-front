@@ -13,10 +13,10 @@ import type { Sucursal } from "@/features/Sucursal/interfaces/sucursal.interface
 import { obtenerSucursalByEmpresa } from "@/features/Sucursal/services/obtenerSurcusal"
 import type { FiltroI } from "@/features/Venta/interfaces/filtro.interface"
 import { formatDate } from "@/shared/utils/formatDate"
-import { DatePickerWithPresets } from "./components/data-picker-with-presets"
 import obtenerTipoVentas from "@/features/Venta/services/obternerTipoVenta"
 import type { TipoVenta } from "@/features/Venta/interfaces/tipoVenta.interface"
 import toast, { Toaster } from "react-hot-toast"
+import { DateCalendarWithPresetsMUI } from "./components/DateCalendarWithPresetsMUI"
 
 interface FiltroProps {
     setFiltros: Dispatch<SetStateAction<FiltroI>>
@@ -302,20 +302,21 @@ export default function FiltroOC({ setFiltros, initialFilters }: FiltroProps) {
                             <div className="w-full space-y-4 sm:space-y-0 sm:flex items-center sm:gap-4">
                                 <div className="flex flex-col w-full sm:w-auto">
                                     <span className="text-sm text-gray-500 mb-1 sm:hidden">De:</span>
-                                    <DatePickerWithPresets
-                                        label="Fecha de Inicio"
-                                        date={filtro.fechaInicio}
-                                        setDate={(date: Date) => setFiltro(prev => ({ ...prev, fechaInicio: date }))}
-                                        className="w-full text-gray-500"
+                                    <DateCalendarWithPresetsMUI
+                                    label="Fecha de Inicio"
+                                    date={filtro.fechaInicio ?? null}
+                                    setDate={(date) => setFiltro((prev) => ({ ...prev, fechaInicio: date }))}
+                                    buttonWidth="100%"
                                     />
+
                                 </div>
                                 <div className="flex flex-col w-full sm:w-auto">
                                     <span className="text-sm text-gray-500 mb-1 sm:hidden">al:</span>
-                                    <DatePickerWithPresets
-                                        label="Fecha de Fin"
-                                        date={filtro.fechaFin}
-                                        setDate={(date: Date) => setFiltro(prev => ({ ...prev, fechaFin: date }))}
-                                        className="w-full text-gray-500"
+                                    <DateCalendarWithPresetsMUI
+                                    label="Fecha de Fin"
+                                    date={filtro.fechaFin ?? null}
+                                    setDate={(date) => setFiltro((prev) => ({ ...prev, fechaFin: date }))}
+                                    buttonWidth="100%"
                                     />
                                 </div>
                             </div>
