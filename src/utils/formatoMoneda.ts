@@ -1,4 +1,5 @@
 function formatoMoneda(number: number, sucursal?: string) {
+
     if(!sucursal){
       return number.toLocaleString('es-BO',{
         minimumFractionDigits: 2,

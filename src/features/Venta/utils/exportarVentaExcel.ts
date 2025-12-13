@@ -44,8 +44,9 @@ export const exportarVentaExcel = async (
     { header: "comision", key: "comision" },
     { header: "Porcentaje", key: "porcentaje" },
     { header: "llave desbloqueda", key: "llave" },
-        { header: "Medio par", key: "medioPar" },
-    { header: "fecha de  finalizacion", key: "fecha" },
+    { header: "Medio par", key: "medioPar" },
+    { header: "fecha de venta", key: "fechaVenta" },
+    { header: "fecha de  finalizacion", key: "fechaFinalizacion" },
   ];
 
   for (const venta of ventas) {
@@ -81,8 +82,7 @@ export const exportarVentaExcel = async (
         venta.lenteDeContacto,
         venta.empresa,
         venta.sucursal,
-        venta.gestor,
-
+        venta.gestor
       )
         ? "SI"
         : "NO",
@@ -116,9 +116,9 @@ export const exportarVentaExcel = async (
           ),
           venta.sucursal,
           venta.gestor
-        ) ;
-        const llave =  comision1.llave  ? 'SI':'NO'
-      
+        );
+        const llave = comision1.llave ? "SI" : "NO";
+
         worksheetTwo.addRow({
           sucursal: venta.sucursal,
           asesor: venta.asesor,
@@ -157,14 +157,20 @@ export const exportarVentaExcel = async (
           comision: comision.comison,
           porcentaje: porcentaje(item.importe, comision1.comison).toFixed(2),
           llave: llave,
-          medioPar: item.combinacion ? item.combinacion.medioPar ? 'SI'  :'NO':'' ,
-          fecha: detalle.fechaFinalizacion,
+          medioPar: item.combinacion
+            ? item.combinacion.medioPar
+              ? "SI"
+              : "NO"
+            : "",
+          fechaVenta: detalle.fechaVenta,
+          fechaFinalizacion: detalle.fechaFinalizacion,
         });
       }
     }
   }
 
   worksheetOne.getRow(1).font = { bold: true };
+  worksheetTwo.getRow(1).font = { bold: true };
 
   const buffer = await workbook.xlsx.writeBuffer();
 

@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { calcularComision, porcentaje } from "../utils/ventaUtils";
+import { Calendar, Clock } from "lucide-react";
+import { formatDate, formatearFecha } from "@/app/utils/formaterFecha";
 
 export const DetalleVenta = ({
   ventas,
@@ -30,10 +32,11 @@ export const DetalleVenta = ({
   lenteDeContacto: number;
   empresa: string;
   sucursal: string;
-  gestor:boolean,
-  asesor:string
+  gestor: boolean,
+  asesor: string
 }) => {
- 
+
+
   return (
     <div className="w-[98%] m-auto p-4 my-4 bg-gray-50 rounded-lg shadow-md">
       <Table>
@@ -52,8 +55,22 @@ export const DetalleVenta = ({
         <TableBody>
           {ventas.map((venta, index) => (
             <TableRow key={index}>
-              <TableCell className="text-center" colSpan={2}>{venta.idVenta}</TableCell>
-              <TableCell>{venta.precio}</TableCell>
+              <TableCell className="text-center" colSpan={2}>
+                <div className="space-y-1 flex flex-col gap-1">
+                  <div className="font-semibold text-[#0056B3] text-left">{venta.idVenta}</div>
+                  <div className="flex flex-col gap-1 text-xs text-muted-foreground bg-white p-2 rounded-lg border-1">
+                    <div className="flex items-center gap-1 ">
+                      <Calendar className="h-3 w-3 text-[#20C997] font-semibold"  />
+                      <span className="text-[#20C997] font-semibold">Venta: {formatDate(venta.fechaVenta)}</span>
+                    </div>
+                    <div className="flex items-center gap-1 ">
+                      <Clock className="h-3 w-3 text-[#E74C3C] font-semibold" />
+                      <span className="text-[#E74C3C] font-semibold">Fin: {formatDate(venta.fechaFinalizacion)}</span>
+                    </div>
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell style={{fontWeight: 500}}>{venta.precio}</TableCell>
               <TableCell className="text-right">{venta.precioTotal}</TableCell>
               <TableCell className="text-right">{venta.descuento}</TableCell>
               <TableCell className="text-right">{porcentaje(venta.precioTotal, venta.descuento)} %</TableCell>
@@ -73,7 +90,7 @@ export const DetalleVenta = ({
                       {
 
                         venta.detalle.map((item, i) => {
-                          const comision = calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento), sucursal,gestor )
+                          const comision = calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento), sucursal, gestor)
 
                           return <TableRow key={i} className="border-t border-zinc-300">
                             <TableCell className="px-2 py-1 bg-gray-100 text-left w-[500px] whitespace-pre-wrap break-words text-xs font-semibold" colSpan={2} >
@@ -91,7 +108,7 @@ export const DetalleVenta = ({
                             </TableCell>
                             <TableCell className="px-2 py-1 text-right">{item.importe}</TableCell>
                             <TableCell className="px-4 py-1 text-right">{comision.comison}</TableCell>
-                            <TableCell className="px-4 py-1 text-right">{porcentaje(item.importe, calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento),sucursal,gestor).comison).toFixed(2)} %</TableCell>
+                            <TableCell className="px-4 py-1 text-right">{porcentaje(item.importe, calcularComision(item.comisiones, gafaVip, monturaVip, lenteDeContacto, metaProductosVip, empresa, porcentaje(venta.detalle.reduce((acc, item) => acc + item.importe, 0), venta.descuento), sucursal, gestor).comison).toFixed(2)} %</TableCell>
                           </TableRow>
                         })
 
