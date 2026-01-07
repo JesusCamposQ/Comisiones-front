@@ -110,3 +110,31 @@ export interface VentasInvalidasI {
   asesor:string
   sucursal:string
 }
+
+
+interface DetalleVenta {
+  cantidad: number;
+  descripcion: string;
+  importe: number;
+  rubro: string;
+  venta: string;
+  marca?: string;                // Opcional, porque algunos productos no tienen marca
+  producto?: string;             // Opcional, solo algunos tienen id de producto
+  combinacionReceta?: string;    // Opcional, solo lentes
+  medioPar?: boolean;  
+  _id: string;          // Opcional, solo lentes
+ 
+}
+
+export interface VentaI {
+  _id: string;
+  id_venta: string;
+  tipoVenta: string;
+  sucursal: string;
+  precio: string;
+  precioTotal: number;
+  montoTotal: number;
+  comisiona: boolean;
+  descuento: number;
+  detalleVenta: DetalleVenta[];
+}

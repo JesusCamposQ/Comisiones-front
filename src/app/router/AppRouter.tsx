@@ -32,6 +32,7 @@ import { VentasErrorPage } from "@/features/Venta/page/VentasErrorPage";
 import { ListarRangoComisionProductoPage } from "@/features/RangoComisionProducto/page/ListarRangoComisionProductoPage";
 import { LogActividadPage } from "@/features/Log/page/LogActividadPage";
 import { LogUsuarioPage } from "@/features/Log/page/LogUsuarioPage";
+import { CorregirVentas } from "@/features/Venta/page/CorregirVentas";
 
 function AppRouter() {
   const { isAunteticacion } = useContext(TokenContext);
@@ -126,6 +127,7 @@ function AppRouter() {
             />
             <Route path="/listar/asesores" element={<ListarAsesorPage />} />
             <Route path="/ventas/invalidas" element={<VentasErrorPage />} />
+              <Route path="/ventas/corregir" element={<CorregirVentas />} />
             <Route
               path="listar/rango/comision/producto"
               element={<ListarRangoComisionProductoPage />}

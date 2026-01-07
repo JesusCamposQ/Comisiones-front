@@ -49,6 +49,10 @@ const data = {
           title: "Ventas inválidas",
           url: "/ventas/invalidas",
         },
+         {
+          title: "Corregir ventas",
+          url: "/ventas/corregir",
+        },
       ],
     },
     {
