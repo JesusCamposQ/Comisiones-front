@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { actualizarMontos, BuscarVentaPorId } from "../services/ventasService";
 import type { VentaI } from "../interfaces/venta.interface";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export const CorregirVentas = () => {
   const [idVenta, setIdVenta] = useState<string>("");
@@ -10,8 +10,6 @@ export const CorregirVentas = () => {
   const [precioTotal, setPrecioTotal] = useState<number>(0);
   const [montoTotal, setMontoTotal] = useState<number>(0);
   const [descuento, setDescuento] = useState<number>(0);
-
-  // 🔍 Buscar venta
   const btnBuscarVenta = async () => {
     try {
       const response = await BuscarVentaPorId(idVenta);
@@ -58,7 +56,7 @@ export const CorregirVentas = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-
+      <Toaster/>
       {/* Buscador */}
       <div className="flex flex-col md:flex-row items-center gap-3 mb-6">
         <input
