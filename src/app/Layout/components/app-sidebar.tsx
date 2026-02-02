@@ -42,8 +42,12 @@ const data = {
 
       items: [
         {
-          title: "Comisiones por Venta",
+          title: "Comisiones Venta",
           url: "/ventas",
+        },
+          {
+          title: "Ventas comisión 1",
+          url: "/ventas/comision/uno",
         },
         {
           title: "Ventas inválidas",
@@ -54,6 +58,7 @@ const data = {
           url: "/ventas/corregir",
         },
       ],
+    
     },
     {
       title: "Combinaciones",

@@ -1,5 +1,5 @@
 import ProductoPage from "../../features/Producto/ProductoPage";
-import VentaPage from "../../features/Venta/page/VentaPage";
+import {VentaPage} from "../../features/Venta/page/VentaPage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "../Layout/Layout";
@@ -33,6 +33,7 @@ import { ListarRangoComisionProductoPage } from "@/features/RangoComisionProduct
 import { LogActividadPage } from "@/features/Log/page/LogActividadPage";
 import { LogUsuarioPage } from "@/features/Log/page/LogUsuarioPage";
 import { CorregirVentas } from "@/features/Venta/page/CorregirVentas";
+import { VentasComision1 } from "@/features/Venta/page/VentasComision1";
 
 function AppRouter() {
   const { isAunteticacion } = useContext(TokenContext);
@@ -140,6 +141,10 @@ function AppRouter() {
              <Route
               path="log/usuario"
               element={<LogUsuarioPage />}
+            />
+             <Route
+              path="/ventas/comision/uno"
+              element={<VentasComision1 />}
             />
            
            

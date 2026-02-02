@@ -23,7 +23,7 @@ interface FiltroProps {
     initialFilters: FiltroI
 }
 
-export default function FiltroOC({ setFiltros, initialFilters }: FiltroProps) {
+export  function FiltroVentas({ setFiltros, initialFilters }: FiltroProps) {
 
     const { data: empresas = [] } = useQuery<Empresa[]>({
         queryKey: ["empresas"],

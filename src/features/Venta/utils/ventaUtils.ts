@@ -135,7 +135,7 @@ export function calcularComisionTotal(
         );
         return acc + comision.comison;
       }, 0)
-    );
+    );  
   }, 0);
 }
 

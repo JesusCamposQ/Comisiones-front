@@ -45,7 +45,7 @@ const crearDatosConCamposCalculados = (datosBase: Venta[]) => {
   }));
 };
 
-export const VentaPage = () => {
+export const VentasComision1 = () => {
   const [ventas, setVentas] = useState<Venta[]>([]);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [totales, setTotales] = useState<Totales>({
