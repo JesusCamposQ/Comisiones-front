@@ -15,7 +15,7 @@ import { Pencil, Trash2 } from "lucide-react"
 import { eliminarCombinacionReceta } from "../services/serviciosCombinacionReceta"
 import toast, { Toaster } from "react-hot-toast"
 import { Dispatch, SetStateAction } from "react"
-import { ModalEditar } from "../../../shared/components/ModalEditar"
+import { ModalEditar } from "../modal/ModalEditar"
 
 interface DetalleComisionProps {
     comisiones: ComisionReceta[]
