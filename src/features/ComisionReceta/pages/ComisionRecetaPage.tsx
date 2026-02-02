@@ -4,8 +4,8 @@ import { IComisionReceta, IComisionRecetaData } from "../interfaces/comisionRece
 import { useQueryClient } from "@tanstack/react-query";
 import {registrarComisionReceta} from "../services/registrarComisionReceta";
 import { useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision";
-import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision";
+import { Button } from "@/app/components/ui/button";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2 } from "lucide-react";
 

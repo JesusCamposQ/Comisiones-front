@@ -1,9 +1,9 @@
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/app/components/ui/table";
 import { Dispatch, SetStateAction, useCallback, useRef } from "react";
 import { CampoFiltro, ComsionProductoFiltro } from "../interfaces/comsionProductoFiltro";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
 
 interface Props {
     setFiltro: Dispatch<SetStateAction<ComsionProductoFiltro>>;

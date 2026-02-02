@@ -8,25 +8,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 
 import { Venta } from "../interfaces/venta.interface";
 import obtenerVentas from "../services/obtenerVentas";
 import { DetalleVenta } from "../components/DetalleVenta";
 import { FiltroI } from "../interfaces/filtro.interface";
-import { formatDate } from "@/shared/utils/formatDate";
-import {FiltroVentas} from "@/shared/components/Filtro/FiltroOC";
+import { formatDate } from "@/app/utils/formatDate";
+import {FiltroVentas} from "@/app/components/FiltroVentas";
 import {
   calcularComisionTotal,
   extraerLlave,
   totalImporte,
 } from "../utils/ventaUtils";
 import { Totales } from "../interfaces/totales.interface";
-import formatoMoneda from "@/utils/formatoMoneda";
+import formatoMoneda from "@/app/utils/formatoMoneda";
 import { exportarVentaExcel } from "../utils/exportarVentaExcel";
-import { Ordenar } from "@/shared/components/Ordenar/Ordenar";
-import { ButtonDescarga } from "@/components/buttonDescarga";
-import { Badge } from "@/components/ui/badge";
+import { Ordenar } from "@/app/components/Ordenar";
+import { ButtonDescarga } from "@/app/components/buttonDescarga";
+import { Badge } from "@/app/components/ui/badge";
 
 const crearDatosConCamposCalculados = (datosBase: Venta[]) => {
   return datosBase.map((item) => ({
@@ -209,7 +209,7 @@ export const VentaPage = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {ventas?.map((venta: Venta, index: number) => (
+            {ventas.map((venta: Venta, index: number) => (
               <>
                 <TableRow key={index}>
                   <TableCell className="font-medium">

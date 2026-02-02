@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction, useState } from "react"
 import { ComisionProducto } from "../interfaces/comsionProductoFiltro"
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision"
-import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision"
+import { Button } from "@/app/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import { ModalEditar } from "@/features/ComisionProducto/modal/ModalEditar";
 import toast, { Toaster } from "react-hot-toast"

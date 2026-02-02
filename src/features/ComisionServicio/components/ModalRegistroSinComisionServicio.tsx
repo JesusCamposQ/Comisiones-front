@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/app/components/ui/dialog"
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Glasses, Plus, Trash2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision";
-import formatoMoneda from "@/utils/formatoMoneda";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision";
+import formatoMoneda from "@/app/utils/formatoMoneda";
 import { Datum, DatumSinComision, ServicioSinComision } from "../interfaces/comisionSinServicio";
 import { registrarComisionServicio } from "../services/servicios";
 

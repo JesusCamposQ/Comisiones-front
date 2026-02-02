@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Datum } from "../interfaces/comisionSinServicio";
-import { paginador } from "@/shared/utils/paginador";
+import { paginador } from "@/app/utils/paginador";
 
 interface Props {
     servicios: Datum[];

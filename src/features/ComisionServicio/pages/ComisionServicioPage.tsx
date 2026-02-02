@@ -6,17 +6,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { DetalleComisionServicio } from "../components/DetalleComisionServicio";
 import { Servicio } from "../interfaces/comisionServicio.interface";
 import { Toaster } from "react-hot-toast";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 import { FiltroComisionServicio } from "../components/FiltroComisionServicio";
 import { FiltrarServicios } from "../hooks/FiltrarServicios";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import obtenerServicios from "../services/servicios";
 import { descargarServicios } from "../services/descargarServicios";
 

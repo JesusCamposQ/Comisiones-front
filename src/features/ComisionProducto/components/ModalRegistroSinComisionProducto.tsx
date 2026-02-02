@@ -1,19 +1,19 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/app/components/ui/dialog"
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Glasses, Plus, Trash2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision";
 import { IComisionProducto, IComisionProductoData } from "../interfaces/comisionProducto.interface";
 import registrarComisionProducto from "../services/registrarComisionProducto";
-import formatoMoneda from "@/utils/formatoMoneda";
+import formatoMoneda from "@/app/utils/formatoMoneda";
 
 interface FormValues {
   idcombinacion: string;

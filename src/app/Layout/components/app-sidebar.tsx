@@ -19,7 +19,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar";
+} from "@/app/components/ui/sidebar";
 
 // This is sample data.
 const data = {

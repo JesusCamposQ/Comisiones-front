@@ -7,14 +7,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table_detalle_comision";
+} from "@/app/components/ui/table_detalle_comision";
 import { useQuery } from "@tanstack/react-query";
 
 import { Datum, Metas } from "../interfaces/metas.interface";
 import { obtenerEmpresas } from "../../Empresa/services/obternerEmpresas";
 import { obtenerSucursalByEmpresa } from "../../Sucursal/services/obtenerSurcusal";
 import { Sucursal } from "../../Sucursal/interfaces/sucursal.interface";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { Building2, Download, Plus, Target, Trash2 } from "lucide-react";
 import { toast, Toaster } from "react-hot-toast";
 import { registrarMetas } from "../services/servicioMetas";
@@ -24,8 +24,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+} from "@/app/components/ui/card";
+import { Label } from "@/app/components/ui/label";
 
 export const RegistroMetasPage = () => {
   const [datos, setDatos] = useState<Datum[]>();

@@ -1,7 +1,7 @@
 import { Ban, Pencil } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import { useForm } from "react-hook-form";
 import { Usuario } from "../interfaces/usuario.interface";
 import { editarUsuario } from "../services/serviciosUsuario";
@@ -12,7 +12,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {

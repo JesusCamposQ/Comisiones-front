@@ -5,22 +5,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table_detalle_comision";
+} from "@/app/components/ui/table_detalle_comision";
 import { useQuery } from "@tanstack/react-query";
 import { eliminarUsuario, obtenerUsuario } from "../services/serviciosUsuario";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { Pencil, PlusCircle, Trash2 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Usuario } from "../interfaces/usuario.interface";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/app/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/app/components/ui/card";
 import { Link,  } from "react-router";
 import { EditarUsuarioPage } from "./EditarUsuarioPage";
 

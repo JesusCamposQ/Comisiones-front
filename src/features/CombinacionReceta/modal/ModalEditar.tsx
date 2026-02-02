@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/app/components/ui/dialog"
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Save } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/app/components/ui/input";
 
 import { editarCombinacionReceta } from "../services/serviciosCombinacionReceta";
 

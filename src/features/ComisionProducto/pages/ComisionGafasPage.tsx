@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table"
+} from "@/app/components/ui/table"
 
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from "react";
@@ -15,11 +15,11 @@ import { Datum } from "../interfaces/producto.interface";
 import { obtenerComisionProductoGafa } from "../services/serviciosComisionProducto";
 import { DetalleComisionProducto } from "../components/DetalleComisionProducto";
 import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import { ComsionProductoFiltro } from "../interfaces/comsionProductoFiltro";
 import { FiltroComisionProducto } from "../components/FiltroComisionProducto";
 import { exportarProducto } from "../utils/descargarExcel";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 
 
 const ComisionGafasPage = () => {

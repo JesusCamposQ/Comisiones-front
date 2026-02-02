@@ -1,8 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision";
-import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision";
+import { Button } from "@/app/components/ui/button";
 import toast, { Toaster } from "react-hot-toast";
 import { Trash2 } from "lucide-react";
 import { IComisionProducto, IComisionProductoData } from "../interfaces/comisionProducto.interface";

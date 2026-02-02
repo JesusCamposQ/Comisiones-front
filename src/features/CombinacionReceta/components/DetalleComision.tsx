@@ -7,10 +7,10 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table_detalle_comision"
+} from "@/app/components/ui/table_detalle_comision"
 
 import { ComisionReceta } from "../interfaces/comisiones.interface"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/app/components/ui/button"
 import { Pencil, Trash2 } from "lucide-react"
 import { eliminarCombinacionReceta } from "../services/serviciosCombinacionReceta"
 import toast, { Toaster } from "react-hot-toast"

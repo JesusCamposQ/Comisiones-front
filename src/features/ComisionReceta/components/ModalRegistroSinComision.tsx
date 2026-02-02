@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -24,8 +24,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table_detalle_comision";
-import formatoMoneda from "@/utils/formatoMoneda";
+} from "@/app/components/ui/table_detalle_comision";
+import formatoMoneda from "@/app/utils/formatoMoneda";
 
 interface FormValues {
   idcombinacion: string;

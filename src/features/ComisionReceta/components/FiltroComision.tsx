@@ -1,8 +1,8 @@
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/app/components/ui/table";
 import { Dispatch, SetStateAction } from "react";
 import { ComsionRecetaFiltro } from "../interfaces/comsionRecetaFiltro";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 
 interface Props {
   setFiltro: Dispatch<SetStateAction<ComsionRecetaFiltro>>;

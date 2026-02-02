@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { CombinacionResponse } from "../interfaces/comisionReceta.interface";
 import { ComsionRecetaFiltro } from "../interfaces/comsionRecetaFiltro";
-import { paginador } from "@/shared/utils/paginador";
+import { paginador } from "@/app/utils/paginador";
 
 interface Props {
     combinaciones: CombinacionResponse[];

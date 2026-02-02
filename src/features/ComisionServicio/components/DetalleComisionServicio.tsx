@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table_detalle_comision"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table_detalle_comision"
 import { ComisionServicio } from "../interfaces/comisionServicio.interface"
 
 export const DetalleComisionServicio = ({comisionesServicio}: {comisionesServicio: ComisionServicio[]}) => {

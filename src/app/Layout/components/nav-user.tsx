@@ -6,7 +6,7 @@ import {
 import {
   Avatar,
   AvatarFallback,
-} from "@/components/ui/avatar"
+} from "@/app/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,13 +14,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/app/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/app/components/ui/sidebar"
 
 export function NavUser({
   user,

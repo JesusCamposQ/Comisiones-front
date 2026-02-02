@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table"
+} from "@/app/components/ui/table"
 
 import { useQuery } from '@tanstack/react-query';
 import { useState } from "react";

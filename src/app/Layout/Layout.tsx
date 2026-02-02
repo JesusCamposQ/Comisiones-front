@@ -1,10 +1,10 @@
 import { AppSidebar } from "@/app/Layout/components/app-sidebar"
-import { Separator } from "@/components/ui/separator"
+import { Separator } from "@/app/components/ui/separator"
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/app/components/ui/sidebar"
 import { Outlet } from "react-router"
 
 export default function Layout() {

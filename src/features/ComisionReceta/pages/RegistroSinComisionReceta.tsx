@@ -5,10 +5,10 @@ import toast, { Toaster } from "react-hot-toast";
 import {
   CombinacionResponse,
 } from "../interfaces/comisionReceta.interface";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 import { BookPlus } from "lucide-react";
-import Paginador from "@/shared/components/Paginador/Paginador";
-import { SelectFilter } from "@/components/Filtro/SelectFilter";
+import Paginador from "@/app/components/Paginador";
+import { SelectFilter } from "@/app/components/SelectFilter";
 import { exportarExcelReceta } from "../utils/exportarExcelReceta";
 
 interface FormValues {

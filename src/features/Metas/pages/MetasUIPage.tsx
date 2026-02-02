@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
+import { Badge } from "@/app/components/ui/badge";
+import { Separator } from "@/app/components/ui/separator";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import {
   Building2,
   Package,
@@ -31,10 +31,10 @@ import { obtenerSucursalByEmpresa } from "@/features/Sucursal/services/obtenerSu
 import { Sucursal } from "@/features/Sucursal/interfaces/sucursal.interface";
 import { obtenerMarcas, registrarLlaves } from "../services/servicioMetas";
 import { Datum, Marcas } from "../interfaces/marcas.interface";
-import Paginador from "@/shared/components/Paginador/Paginador";
+import Paginador from "@/app/components/Paginador";
 import { Llave, LlavesData } from "../interfaces/llaves.inteface";
 import toast, { Toaster } from "react-hot-toast";
-import formatoMoneda from "@/utils/formatoMoneda";
+import formatoMoneda from "@/app/utils/formatoMoneda";
 import { AxiosError } from "axios";
 
 

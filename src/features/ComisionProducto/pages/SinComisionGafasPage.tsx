@@ -4,13 +4,13 @@ import { BookPlus, Frown } from "lucide-react";
 import { Datum } from "../interfaces/producto.interface";
 import { ModalRegistroSinComisionProducto } from "../components/ModalRegistroSinComisionProducto";
 import toast, { Toaster } from "react-hot-toast";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 import { obtenerSinComisionProductoGafa } from "../services/serviciosComisionProducto";
 import { exportarExcelProducto } from "../utils/exportarExcelProducto";
-import Paginador from "@/shared/components/Paginador/Paginador";
-import { Mensaje } from "@/shared/components/Mensaje/Mensaje";
+import Paginador from "@/app/components/Paginador";
+import { Mensaje } from "@/app/components/Mensaje";
 
-import { SelectFilter } from "@/components/Filtro/SelectFilter";
+import { SelectFilter } from "@/app/components/SelectFilter";
 
 interface FormValues {
   idcombinacion: string;

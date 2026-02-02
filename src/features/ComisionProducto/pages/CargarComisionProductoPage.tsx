@@ -1,8 +1,8 @@
 import type React from "react"
 
 import { useState, useRef } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/app/components/ui/button"
+import { Card, CardContent } from "@/app/components/ui/card"
 import { Upload, File, CheckCircle, X, Cloud } from "lucide-react"
 import { cargarSinComisionProducto } from "../services/obtenerSinComsionProducto"
 import toast, { Toaster } from "react-hot-toast"

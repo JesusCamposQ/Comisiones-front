@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
   TableCaption
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import toast, { Toaster } from "react-hot-toast";
 export const ListarAsesor = () => {
   const [asesores, setAsesores] = useState<ListarAsesorI[]>([]);

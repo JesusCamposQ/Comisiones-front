@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
   TableFooter,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 
 import { obtenerCombinacionReceta } from "../services/serviciosCombinacionReceta";
 import { Fragment, useEffect, useState } from "react";
@@ -19,7 +19,7 @@ import {
 import { DetalleComision } from "../components/DetalleComision";
 import descargarCombinacionReceta from "../services/descargaCombinacionReceta";
 import { Buscador } from "../components/Buscador";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 //import Londing from "@/shared/components/Londing";
 
 const CombinacionRecetaPage = () => {

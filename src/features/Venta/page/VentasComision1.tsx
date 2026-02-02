@@ -8,25 +8,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 
 import { Venta } from "../interfaces/venta.interface";
 import obtenerVentas from "../services/obtenerVentas";
 import { DetalleVenta } from "../components/DetalleVenta";
 import { FiltroI } from "../interfaces/filtro.interface";
-import { formatDate } from "@/shared/utils/formatDate";
-import {FiltroVentas} from "@/shared/components/Filtro/FiltroOC";
+import { formatDate } from "@/app/utils/formatDate";
+import { FiltroVentas } from "@/app/components/FiltroVentas";
 import {
   calcularComisionTotal,
-  extraerLlave,
   totalImporte,
 } from "../utils/ventaUtils";
 import { Totales } from "../interfaces/totales.interface";
-import formatoMoneda from "@/utils/formatoMoneda";
-import { exportarVentaExcel } from "../utils/exportarVentaExcel";
-import { Ordenar } from "@/shared/components/Ordenar/Ordenar";
-import { ButtonDescarga } from "@/components/buttonDescarga";
-import { Badge } from "@/components/ui/badge";
+import formatoMoneda from "@/app/utils/formatoMoneda";
+import { exportarVentaComision1Excel } from "../utils/exportarVentaExcel";
+import { Ordenar } from "@/app/components/Ordenar";
+import { ButtonDescarga } from "@/app/components/buttonDescarga";
+import { Badge } from "@/app/components/ui/badge";
+import { calcularComisionTotal1 } from "../utils/ventaComision1";
 
 const crearDatosConCamposCalculados = (datosBase: Venta[]) => {
   return datosBase.map((item) => ({
@@ -113,7 +113,7 @@ export const VentasComision1 = () => {
       const { empresa, sucursales, ...rest } = filtro;
       const response = await obtenerVentas(rest);
       console.log(response);
-      
+
       setVentas(response);
       setVentas(() => crearDatosConCamposCalculados(response));
       setIsloading(false);
@@ -136,9 +136,7 @@ export const VentasComision1 = () => {
   const toggleDetalle = (index: number) => {
     setExpandedRowIndex((prevIndex) => (prevIndex === index ? null : index));
   };
-  
-   
-    
+
   return (
     <div className="flex flex-col w-full h-full gap-4 min-h-screen bg-gradient-to-br from-gray-50 to-neutral-50 p-4">
       <FiltroVentas setFiltros={setFiltro} initialFilters={filtro} />
@@ -146,7 +144,7 @@ export const VentasComision1 = () => {
       <div className="flex justify-end mb-2 mx-10">
         <ButtonDescarga
           handleDownload={() =>
-            exportarVentaExcel(ventas, filtro.fechaInicio, filtro.fechaFin)
+            exportarVentaComision1Excel(ventas, filtro.fechaInicio, filtro.fechaFin)
           }
           isDownload={isLoading}
         />
@@ -204,12 +202,12 @@ export const VentasComision1 = () => {
                   rename="Total comisión"
                 />
               </TableHead>
-              <TableHead className="text-center">LLAVE</TableHead>
+
               <TableHead className="text-center">VENTAS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {ventas?.map((venta: Venta, index: number) => (
+            {ventas.map((venta: Venta, index: number) => (
               <>
                 <TableRow key={index}>
                   <TableCell className="font-medium">
@@ -230,7 +228,7 @@ export const VentasComision1 = () => {
                     {formatoMoneda(totalImporte(venta.ventas), venta.sucursal)}
                   </TableCell>
                   <TableCell className="text-right">
-                    {formatoMoneda(venta.totalDescuento,venta.sucursal)}
+                    {formatoMoneda(venta.totalDescuento, venta.sucursal)}
                   </TableCell>
                   <TableCell className="text-right">
                     {formatoMoneda(venta.montoTotal, venta.sucursal)}
@@ -238,36 +236,11 @@ export const VentasComision1 = () => {
 
                   <TableCell className="text-right">
                     {formatoMoneda(
-                      calcularComisionTotal(
-                        venta.ventas,
-                        venta.metaProductosVip,
-                        venta.gafaVip,
-                        venta.monturaVip,
-                        venta.lenteDeContacto,
-                        venta.empresa,
-                        venta.sucursal,
-                        venta.gestor
+                      calcularComisionTotal1(
+                        venta.ventas
                       ),
                       venta.sucursal,
-               
-                    
                     )}
-                  </TableCell>
-
-                  <TableCell className="text-right">
-                    {extraerLlave(
-                      venta.ventas,
-                      venta.metaProductosVip,
-                      venta.gafaVip,
-                      venta.monturaVip,
-                      venta.lenteDeContacto,
-                      venta.empresa,
-                      venta.sucursal,
-                      venta.gestor,
-         
-                    )
-                      ? <p className="text-green-500 font-semibold underline">SI</p>
-                      : <p>NO</p>}
                   </TableCell>
                   <TableCell className="text-right">
                     <button
@@ -301,7 +274,6 @@ export const VentasComision1 = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={2}>Total</TableCell>
-
               <TableCell className="text-right">
                 {totales.totalTickets}
               </TableCell>

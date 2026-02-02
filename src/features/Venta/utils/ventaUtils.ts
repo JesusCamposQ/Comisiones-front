@@ -54,7 +54,6 @@ export const calcularComision = (
  
   
   if (Array.isArray(comisiones) && comisiones.length > 0) {
-    console.log(comisiones);
     
     const [mayorMonto, menorMonto] = comisiones.reduce(
       ([mayor, menor], actual) => [

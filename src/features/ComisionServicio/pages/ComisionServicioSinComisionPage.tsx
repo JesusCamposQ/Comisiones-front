@@ -6,12 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BookPlus } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 import { FiltroComisionServicio } from "../components/FiltroComisionServicio";
 import { useFiltrarSinServicios } from "../hooks/FiltrarSinServicios";
 import { Datum } from "../interfaces/comisionSinServicio";

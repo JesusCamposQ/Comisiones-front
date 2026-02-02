@@ -10,7 +10,7 @@ import { Datum, Producto } from "../interfaces/producto.interface";
 import { FiltroComisionProducto } from "../components/FiltroComisionProducto";
 import { ModalRegistroSinComisionProducto } from "../components/ModalRegistroSinComisionProducto";
 import toast, { Toaster } from "react-hot-toast";
-import { Banner } from "@/shared/components/Banner/Banner";
+import { Banner } from "@/app/components/Banner";
 
 interface FormValues {
   idcombinacion: string;

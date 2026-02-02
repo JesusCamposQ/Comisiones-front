@@ -1,71 +1,51 @@
-import { Comision, MetaProductosVip } from "../interfaces/venta.interface";
-import { descontarPorcentajeAcomision } from "./ventaUtils";
+import { Comision,  VentaElement } from "../interfaces/venta.interface";
+import { descontarPorcentajeAcomision, porcentaje } from "./ventaUtils";
 
 export const calcularComision1 = (
   comisiones: Comision[],
-  gafaVip: number,
-  monturaVip: number,
-  lenteDeContacto: number,
-  metaProductosVip: MetaProductosVip | null,
-  empresa: string,
+
   porcentaje: number,
-  sucursal: string,
-  gestor: boolean
+
 ) => {
-  let llave: boolean = false;
-  const productovip = gafaVip + monturaVip;
 
-  const llaveVip = metaProductosVip
-    ? metaProductosVip.gafa + metaProductosVip.montura
-    : 0;
+  let comision = 0;
 
-  let comisionProducto = 0;
- 
-  
+
   if (Array.isArray(comisiones) && comisiones.length > 0) {
-    console.log(comisiones);
-    
-    const [mayorMonto, menorMonto] = comisiones.reduce(
+   
+    const [mayorMonto, _] = comisiones.reduce(
       ([mayor, menor], actual) => [
         actual.monto > mayor.monto ? actual : mayor,
         actual.monto < menor.monto ? actual : menor,
       ],
-      [{ monto: 0 }, { monto: Infinity }]
+      [{ monto: 0 }, { monto: 0 }]
     );
-  ;
 
-    if (empresa === "OPTICENTRO") {
-      if (gestor) {
-        comisionProducto += mayorMonto.monto;
-        llave = true;
-      } else {
-        if (
-          metaProductosVip &&
-          gestor == false &&
-          productovip >= llaveVip &&
-          lenteDeContacto >= metaProductosVip.lenteDeContacto
-        ) {
-          comisionProducto += mayorMonto.monto;
-          llave = true;
-        } else if (sucursal === "OPTICENTRO PARAGUAY") {
-          comisionProducto += mayorMonto.monto;
-        } else {
-          comisionProducto += menorMonto.monto;
-        }
-      }
-    } else if (empresa === "OPTISERVICE S.R.L") {
-      comisionProducto += menorMonto.monto;
-    } else {
-      comisionProducto += mayorMonto.monto;
-    }
+    comision += mayorMonto.monto;
   }
 
+  return descontarPorcentajeAcomision(comision, porcentaje)
 
-  if (gestor || llave) {
-    llave = true;
-  }
-  
-  return {
-    comison: descontarPorcentajeAcomision(comisionProducto, porcentaje)
-  };
-};
+}
+
+export function calcularComisionTotal1(
+  ventas: VentaElement[],
+) {
+  return ventas.reduce((acc, venta) => {
+    const importeTotal = venta.detalle.reduce(
+      (acc, detalle) => acc + detalle.importe,
+      0
+    );
+    const porcentajeDescuento = porcentaje(importeTotal, venta.descuento);
+    return (
+      acc +
+      venta.detalle.reduce((acc, detalle) => {
+        const comision = calcularComision1(
+          detalle.comisiones,
+          porcentajeDescuento,
+        );
+        return acc + comision;
+      }, 0)
+    );
+  }, 0);
+}

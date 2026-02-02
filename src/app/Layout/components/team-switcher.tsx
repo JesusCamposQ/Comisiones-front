@@ -1,12 +1,12 @@
 import {
   DropdownMenu,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/app/components/ui/dropdown-menu"
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem
-} from "@/components/ui/sidebar"
+} from "@/app/components/ui/sidebar"
 import { AppWindow } from "lucide-react"
 
 export function TeamSwitcher({

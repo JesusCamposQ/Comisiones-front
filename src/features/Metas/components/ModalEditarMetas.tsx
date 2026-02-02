@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/app/components/ui/dialog";
 import { Datum } from "../interfaces/metas.interface";
 import { Dispatch, SetStateAction } from "react";
 import { editarMetas } from "../services/servicioMetas";

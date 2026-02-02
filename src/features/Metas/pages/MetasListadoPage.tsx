@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import {
   Table,
   TableBody,
@@ -6,12 +6,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { eliminarLlave, obtenerLlaves } from "../services/servicioMetas";
 import type { Llave } from "../interfaces/llaves.inteface";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Badge } from "@/app/components/ui/badge";
+import { Button } from "@/app/components/ui/button";
 import { Trash } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
 

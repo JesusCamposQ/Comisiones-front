@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/app/components/ui/card";
 import {
   Table,
   TableBody,
@@ -6,19 +6,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/app/components/ui/table";
 import { format } from "date-fns";
 import { useState } from "react";
 import { listarVentasInvalidas } from "../services/ventasService";
 import { VentasInvalidasI } from "../interfaces/venta.interface";
-import { Calendar } from "@/components/ui/calendar";
+import { Calendar } from "@/app/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+} from "@/app/components/ui/popover";
+import { Button } from "@/app/components/ui/button";
+import { cn } from "@/app/utils/cn";
 import { exportarVentasInvalidas } from "../utils/exportarVentasInvalidas";
 
 import { Loader } from "@/app/components/Loader";

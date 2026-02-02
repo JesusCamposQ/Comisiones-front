@@ -1,15 +1,15 @@
 import {  useEffect, useState } from "react";
 import { Ban} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/app/components/ui/card";
 import { useForm } from "react-hook-form";
 import { ErrorUser, Usuario } from "../interfaces/usuario.interface";
 import { editarUsuario } from "../services/serviciosUsuario";

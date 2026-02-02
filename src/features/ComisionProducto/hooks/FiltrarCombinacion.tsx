@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Datum } from "../interfaces/producto.interface";
 import { ComsionProductoFiltro } from "../interfaces/comsionProductoFiltro";
-import { paginador } from "@/shared/utils/paginador";
+import { paginador } from "@/app/utils/paginador";
 
 interface PropsFiltrarCombinacion {
     combinaciones: Datum[];
