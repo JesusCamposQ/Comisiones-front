@@ -46,7 +46,7 @@ const data = {
           url: "/ventas",
         },
           {
-          title: "Ventas comisión 1",
+          title: "Comisiones Venta (V.2)",
           url: "/ventas/comision/uno",
         },
         {
